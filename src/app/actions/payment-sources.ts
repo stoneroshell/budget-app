@@ -56,3 +56,23 @@ export async function createPaymentSource(
   revalidatePath(`/dashboard/${budgetId}`);
   return {};
 }
+
+export async function deletePaymentSource(id: string, budgetId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { error } = await supabase
+    .from("payment_sources")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", user.id);
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/dashboard/${budgetId}`);
+  return {};
+}

@@ -82,11 +82,6 @@ export default async function BudgetDetailPage({
               >
                 <div>
                   <span className="text-white">{e.description}</span>
-                  {e.payment_label && (
-                    <span className="ml-2 text-sm text-charcoal-300">
-                      ({e.payment_label})
-                    </span>
-                  )}
                 </div>
                 <span className="font-medium text-white">
                   {formatCurrency(Number(e.amount))}
