@@ -1,0 +1,48 @@
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { signOut } from "@/app/actions/auth";
+import Link from "next/link";
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  return (
+    <div className="min-h-screen bg-charcoal-950">
+      <header className="border-b border-charcoal-500 bg-charcoal-900/80">
+        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+          <Link
+            href="/dashboard"
+            className="text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
+          >
+            Budget App
+          </Link>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-charcoal-300 truncate max-w-[180px]">
+              {user.email}
+            </span>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="text-sm text-charcoal-300 hover:text-white transition-colors duration-200"
+              >
+                Sign out
+              </button>
+            </form>
+          </div>
+        </div>
+      </header>
+      <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
+    </div>
+  );
+}

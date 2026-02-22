@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Charcoal (styles.md) */
+    --color-charcoal-bg: #0F0F0F;
+    --color-charcoal-surface: #1A1A1A;
+    --color-charcoal-elevated: #252525;
+    --color-charcoal-border: #2E2E2E;
+    --color-charcoal-muted: #737373;
+    /* Accents */
+    --color-accent-violet: #8B5CF6;
+    --color-accent-cyan: #06B6D4;
+    --color-accent-amber: #F59E0B;
+    --color-accent-rose: #F43F5E;
+    --color-accent-emerald: #10B981;
+    --color-accent-blue: #3B82F6;
+  }
+
+  html {
+    @apply bg-charcoal-950 text-white antialiased;
+  }
+
+  body {
+    @apply min-h-screen font-sans;
+    line-height: 1.5;
+  }
+
+  /* Focus ring for accessibility (styles.md: 2px outline in primary accent) */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent-violet-500 ring-offset-2 ring-offset-charcoal-900;
+  }
+}
