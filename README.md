@@ -1,4 +1,4 @@
-# Budget App
+# Guap
 
 Monthly budgeting web app with Supabase auth and PostgreSQL. Phase 1: auth, one budget per month/year, expenses, and total spent.
 

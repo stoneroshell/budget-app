@@ -78,7 +78,7 @@ export default async function DashboardPage() {
                         className={`max-w-full overflow-hidden font-semibold ${text}`}
                         style={{ fontSize: "9cqi" }}
                       >
-                        Net {formatCurrency(b.netIncome)}
+                        {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
                       </span>
                     </div>
                   </div>

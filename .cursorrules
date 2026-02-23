@@ -24,6 +24,11 @@
       "match": "\\.tsx?$",
       "mcp": ["ESLint / Code Quality MCP"],
       "description": "For all TS/TSX files, prefer ESLint MCP to maintain clean code."
+    },
+    {
+    "match": ".*\\.ts(x)?|.*\\.js(x)?|.*\\.css|.*\\.json",
+    "mcp": ["CRLF / Line Ending Fix MCP"],
+    "description": "Automatically suggest converting files to LF line endings to avoid Git CRLF warnings on Windows."
     }
   ]
 }

@@ -15,7 +15,7 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "Budget App",
+  title: "Guap",
   description: "Monthly budgeting with smart insights",
 };
 

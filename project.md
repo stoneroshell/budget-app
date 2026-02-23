@@ -1,4 +1,4 @@
-Budget App – Project Overview
+Guap – Project Overview
 
 Project Vision
 

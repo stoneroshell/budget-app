@@ -1,5 +1,7 @@
 # Site design practices
 
+**App name:** Guap.
+
 General visual and interaction guidelines inspired by [Liveblocks](https://liveblocks.io/?ref=godly): dark charcoal base with vivid, saturated color highlights for data and emphasis.
 
 ---
@@ -106,6 +108,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 - **CSS variables:** Define charcoal shades and the six accents as variables (e.g. `--color-charcoal-bg`, `--color-accent-violet`) for theming and consistency.
 - **Tailwind:** Map the palette to theme colors (e.g. `charcoal-900/800/700`, `accent-violet`, `accent-cyan`) and use semantic names (e.g. `success`, `warning`, `error`) that map to emerald, amber, rose.
 - **Dark-only:** This spec is for a dark theme; if you add a light theme later, define a parallel palette and surface rules.
+- **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling.
 
 ---
 

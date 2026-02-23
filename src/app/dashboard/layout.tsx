@@ -25,7 +25,7 @@ export default async function DashboardLayout({
             href="/dashboard"
             className="text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
           >
-            Budget App
+            Guap
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-charcoal-300 truncate max-w-[180px]">
