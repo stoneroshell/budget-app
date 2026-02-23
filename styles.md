@@ -45,6 +45,25 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 - **Status:** Prefer emerald = success, amber = warning, rose = error, blue/cyan = info.
 - **One primary accent:** Choose one (e.g. violet) for main CTAs and key interactive emphasis; use others for supporting roles.
 
+### Needs / Wants (category themes)
+
+Official colors for budget categories. Use consistently so users instantly recognize needs vs wants.
+
+| Category | Official hex   | Use |
+|----------|----------------|-----|
+| **Needs**  | `#06B6D4` (cyan)  | Needs category labels, indicators, and **all numbers** that represent needs (amounts, totals, percentages). |
+| **Wants**  | `#F59E0B` (amber) | Wants category labels, indicators, and **all numbers** that represent wants (amounts, totals, percentages). |
+
+**Secondary (subtle) variants** — Less saturated, for backgrounds, borders, or when the primary would be too strong:
+
+| Name              | Hex       | Use |
+|-------------------|-----------|-----|
+| **needs-secondary**  | `#0E7490` | Soft needs tint: subtle backgrounds, borders, or secondary needs UI. Same hue as needs, lower saturation. |
+| **wants-secondary**  | `#B45309` | Soft wants tint: subtle backgrounds, borders, or secondary wants UI. Same hue as wants, lower saturation. |
+
+- **Numbers:** Any value that reflects a needs total, needs spent, needs remaining, or needs percentage should be rendered in the needs color (`#06B6D4`). Likewise, any value for wants should use the wants color (`#F59E0B`). Apply to tables, cards, summaries, and charts.
+- **When to use secondary:** Use needs-secondary / wants-secondary for large or low-emphasis areas (e.g. category row backgrounds, left borders, hover states) so the primary color stays reserved for the main numbers and labels.
+
 ---
 
 ## 3. Typography
@@ -81,7 +100,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 - **Badges / tags**
   - Small, pill-shaped. Background = accent at low opacity or solid accent with contrasting text.
 - **Data display**
-  - Numbers and key metrics: consider bold + accent color for positive/negative or category.
+  - Numbers and key metrics: consider bold + accent color for positive/negative or category. **Needs** amounts use needs color (`#06B6D4`); **wants** amounts use wants color (`#F59E0B`).
   - Tables: Zebra or alternating row tint at very low opacity; accent for headers or key columns.
 - **Alerts / banners**
   - Success: emerald tint; warning: amber; error: rose; info: blue or cyan. Icon + short copy.
@@ -107,7 +126,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 ## 8. Implementation notes
 
 - **CSS variables:** Define charcoal shades and the six accents as variables (e.g. `--color-charcoal-bg`, `--color-accent-violet`) for theming and consistency.
-- **Tailwind:** Map the palette to theme colors (e.g. `charcoal-900/800/700`, `accent-violet`, `accent-cyan`) and use semantic names (e.g. `success`, `warning`, `error`) that map to emerald, amber, rose.
+- **Tailwind:** Map the palette to theme colors (e.g. `charcoal-900/800/700`, `accent-violet`, `accent-cyan`) and use semantic names (e.g. `success`, `warning`, `error`) that map to emerald, amber, rose. Expose **needs** (`#06B6D4`) and **wants** (`#F59E0B`) as semantic colors (e.g. `needs`, `wants` or `accent-needs`, `accent-wants`) for category-based numbers and labels. Expose **needs-secondary** (`#0E7490`) and **wants-secondary** (`#B45309`) for subtle backgrounds, borders, and secondary UI.
 - **Dark-only:** This spec is for a dark theme; if you add a light theme later, define a parallel palette and surface rules.
 - **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling. Render **Guap** and other display titling in the **Gothic Modern** display font (`public/fonts/gothic_modern.woff2`).
 

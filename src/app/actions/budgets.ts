@@ -140,3 +140,21 @@ export async function updateBudgetIncome(id: string, income: number) {
   revalidatePath(`/dashboard/${id}`);
   return {};
 }
+
+export async function deleteBudget(budgetId: string): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { error } = await supabase
+    .from("budgets")
+    .delete()
+    .eq("id", budgetId)
+    .eq("user_id", user.id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/dashboard");
+  return {};
+}

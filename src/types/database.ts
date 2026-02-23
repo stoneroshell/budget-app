@@ -121,6 +121,20 @@ export interface Database {
           user_id?: string | null;
         };
       };
+      user_hidden_categories: {
+        Row: {
+          user_id: string;
+          category_id: string;
+        };
+        Insert: {
+          user_id: string;
+          category_id: string;
+        };
+        Update: {
+          user_id?: string;
+          category_id?: string;
+        };
+      };
     };
   };
 }

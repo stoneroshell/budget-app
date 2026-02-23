@@ -106,7 +106,7 @@ export function CreateBudgetForm() {
                 step="0.01"
                 required
                 placeholder="0.00"
-                className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-white placeholder-charcoal-300 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+                className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-white placeholder-charcoal-300 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
               />
             </div>
           </div>

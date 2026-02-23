@@ -41,6 +41,11 @@ const config: Config = {
         error: "#F43F5E",
         warning: "#F59E0B",
         info: "#3B82F6",
+        // Needs / Wants category themes (styles.md)
+        needs: "#06B6D4",
+        wants: "#F59E0B",
+        "needs-secondary": "#0E7490",
+        "wants-secondary": "#B45309",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

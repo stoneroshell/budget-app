@@ -13,6 +13,7 @@ import {
 } from "@/lib/helpers";
 import { AddExpenseForm } from "./AddExpenseForm";
 import { ExpenseList } from "./ExpenseList";
+import { DeleteBudgetButton } from "./DeleteBudgetButton";
 
 export default async function BudgetDetailPage({
   params,
@@ -78,15 +79,15 @@ export default async function BudgetDetailPage({
           Grouped totals
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4 text-center">
-            <p className="text-sm text-charcoal-300">Needs</p>
-            <p className="text-lg font-semibold text-white">
+          <div className="rounded-lg border border-charcoal-500 border-l-4 border-l-needs-secondary bg-needs-secondary/10 p-4 text-center">
+            <p className="text-sm text-needs">Needs</p>
+            <p className="text-lg font-semibold text-needs">
               {formatCurrency(bySuper.needs)}
             </p>
           </div>
-          <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4 text-center">
-            <p className="text-sm text-charcoal-300">Wants</p>
-            <p className="text-lg font-semibold text-white">
+          <div className="rounded-lg border border-charcoal-500 border-l-4 border-l-wants-secondary bg-wants-secondary/10 p-4 text-center">
+            <p className="text-sm text-wants">Wants</p>
+            <p className="text-lg font-semibold text-wants">
               {formatCurrency(bySuper.wants)}
             </p>
           </div>
@@ -104,10 +105,36 @@ export default async function BudgetDetailPage({
               {byCategory.map((row, i) => (
                 <li
                   key={i}
-                  className="flex justify-between gap-2"
+                  className={`flex justify-between gap-2 rounded px-2 py-1 ${
+                    row.supercategory === "needs"
+                      ? "border-l-2 border-l-needs-secondary bg-needs-secondary/10 pl-3"
+                      : row.supercategory === "wants"
+                        ? "border-l-2 border-l-wants-secondary bg-wants-secondary/10 pl-3"
+                        : ""
+                  }`}
                 >
-                  <span className="text-charcoal-200">{row.categoryName}</span>
-                  <span className="text-white">{formatCurrency(row.amount)}</span>
+                  <span
+                    className={
+                      row.supercategory === "needs"
+                        ? "text-needs"
+                        : row.supercategory === "wants"
+                          ? "text-wants"
+                          : "text-charcoal-200"
+                    }
+                  >
+                    {row.categoryName}
+                  </span>
+                  <span
+                    className={
+                      row.supercategory === "needs"
+                        ? "text-needs font-medium"
+                        : row.supercategory === "wants"
+                          ? "text-wants font-medium"
+                          : "text-white"
+                    }
+                  >
+                    {formatCurrency(row.amount)}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -124,6 +151,8 @@ export default async function BudgetDetailPage({
         <h2 className="mb-3 text-center text-lg font-medium text-white">Expenses</h2>
         <ExpenseList expenses={expenses} categories={categories} budgetId={id} />
       </section>
+
+      <DeleteBudgetButton budgetId={id} />
     </div>
   );
 }
