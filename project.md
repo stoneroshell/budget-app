@@ -10,7 +10,7 @@ Project Vision
 
         Automatically categorizes expenses
 
-        Organizes spending into Needs vs Wants
+        Organizes spending into Needs, Wants, and Misc
 
         Provides vivid, interactive data visualization
 
@@ -106,17 +106,17 @@ Core Features
 
         Optionally add payment source label (e.g. “Chase Freedom”, “Debit Card”)
 
-        Auto-assign category based on description
+        Auto-assign category based on description (or Misc when no rule matches)
 
-        Manually override category if needed
+        Manually override category when adding or when editing an existing expense (e.g. small dropdown or icon per row)
 
 4. Categories System
 
-    Global seed categories (shared by all users) plus option for users to add custom categories. All user-created categories are tracked.
+    Single categories table: seed categories plus user-created custom categories. The app presents one unified list to the user (no distinction between “global” vs “custom” in the UI).
 
-    Categories (examples: Rent, Groceries, Restaurants, Transportation, Utilities, Entertainment, Insurance, Subscriptions) are assigned to one of two supercategories: Needs or Wants. Exact mapping of which categories count as Needs vs Wants can be decided later.
+    Each category has a supercategory: Needs, Wants, or Misc. The exact seed list (category names and their Needs/Wants/Misc mapping) is defined in Phase 2.
 
-    The rule-based categorizer assigns each expense to one of these categories (seed or custom); categories then roll up into Needs vs Wants for insights and charts.
+    The rule-based categorizer assigns each expense to a category (or to the system “Misc” category when no rule matches); categories roll up into Needs / Wants / Misc for insights and charts.
 
 5. Auto-Categorization Strategy (v1)
 
@@ -134,7 +134,7 @@ Core Features
 
         categorizeExpense(description: string): Category (or category_id)
 
-    Keep the interface minimal so it can later be swapped with AI without changing the app structure.
+    Rules live in code (keyword → category) for a minimal, swappable interface; keep the surface small so it can later be replaced with AI without changing the app structure.
 
 6. Dashboard & Data Visualization
 Required Charts
@@ -238,7 +238,7 @@ Categories
 
     name
 
-    supercategory (needs | wants)
+    supercategory (needs | wants | misc)
 
 Expenses
 
@@ -337,15 +337,19 @@ Phase 1 – Concrete Plan (implementation order)
 
 Phase 2 – Categorization System
 
-    Create categories table
+    Create categories table (single table; seed + user-created; supercategory: needs | wants | misc).
 
-    Implement rule-based auto-categorization
+    Define exact seed list: category names and their Needs / Wants / Misc mapping (part of Phase 2 scope).
 
-    Add manual category override
+    Add system category “Misc” (supercategory misc) for expenses that don’t match any rule; categorizer assigns to Misc by default when no keyword matches.
 
-    Implement Needs vs Wants grouping
+    Implement rule-based auto-categorization in code (e.g. lib/categorization); rules in code, minimal interface.
 
-    Display grouped totals
+    Manual category override: when adding an expense (suggest then allow override) and when editing an existing expense (minimal UI, e.g. small dropdown or icon to change category).
+
+    No backfill of existing expenses with null category_id: show them as uncategorized until the user sets a category; allow manual edit to assign.
+
+    Implement Needs / Wants / Misc grouping and display grouped totals on the budget detail page only (not dashboard).
 
 Phase 3 – Dashboard & Visualizations
 

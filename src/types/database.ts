@@ -101,6 +101,26 @@ export interface Database {
           created_at?: string;
         };
       };
+      categories: {
+        Row: {
+          id: string;
+          name: string;
+          supercategory: string;
+          user_id: string | null;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          supercategory: string;
+          user_id?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          supercategory?: string;
+          user_id?: string | null;
+        };
+      };
     };
   };
 }
@@ -112,3 +132,5 @@ export type PaymentSource = Database["public"]["Tables"]["payment_sources"]["Row
 export type BudgetInsert = Database["public"]["Tables"]["budgets"]["Insert"];
 export type ExpenseInsert = Database["public"]["Tables"]["expenses"]["Insert"];
 export type PaymentSourceInsert = Database["public"]["Tables"]["payment_sources"]["Insert"];
+export type Category = Database["public"]["Tables"]["categories"]["Row"];
+export type CategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
