@@ -12,6 +12,7 @@ import {
   groupExpensesByCategory,
 } from "@/lib/helpers";
 import { AddExpenseForm } from "./AddExpenseForm";
+import { EditableIncome } from "./EditableIncome";
 import { ExpenseList } from "./ExpenseList";
 import { DeleteBudgetButton } from "./DeleteBudgetButton";
 
@@ -36,15 +37,15 @@ export default async function BudgetDetailPage({
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center gap-4">
+      <div className="relative flex items-center justify-center py-1">
         <Link
           href="/dashboard"
-          className="shrink-0 text-charcoal-300 hover:text-white transition-colors duration-200"
+          className="absolute left-0 shrink-0 text-charcoal-300 hover:text-white transition-colors duration-200"
           aria-label="Back to budgets"
         >
           ← Back
         </Link>
-        <h1 className="min-w-0 flex-1 text-center text-2xl font-semibold text-white tracking-tight">
+        <h1 className="text-2xl font-semibold text-white tracking-tight">
           {formatMonthYear(budget.month, budget.year)}
         </h1>
       </div>
@@ -52,9 +53,7 @@ export default async function BudgetDetailPage({
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
           <p className="text-sm text-charcoal-300">Income</p>
-          <p className="text-xl font-semibold text-white">
-            {formatCurrency(Number(budget.income))}
-          </p>
+          <EditableIncome budgetId={id} income={Number(budget.income)} />
         </div>
         <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
           <p className="text-sm text-charcoal-300">Spent</p>

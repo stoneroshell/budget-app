@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { updateExpenseCategory } from "@/app/actions/expenses";
 import {
@@ -34,6 +34,15 @@ export function ExpenseList({
   >(null);
   const [deletePending, setDeletePending] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [openComboboxExpenseId, setOpenComboboxExpenseId] = useState<
+    string | null
+  >(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [expenseIdForNewCategory, setExpenseIdForNewCategory] = useState<
+    string | null
+  >(null);
+  const comboboxRef = useRef<HTMLDivElement>(null);
 
   async function handleCategoryChange(
     expenseId: string,
@@ -43,11 +52,14 @@ export function ExpenseList({
     if (!result?.error) router.refresh();
   }
 
-  function openAddCategory() {
-    setAddName("");
+  function openAddCategoryForExpense(expenseId: string, prefillName: string) {
+    setAddName(prefillName);
     setAddSupercategory("wants");
     setAddError(null);
+    setExpenseIdForNewCategory(expenseId);
     setShowAddCategory(true);
+    setOpenComboboxExpenseId(null);
+    setSearchQuery("");
   }
 
   function openDeleteConfirm(categoryId: string) {
@@ -79,9 +91,27 @@ export function ExpenseList({
       setAddError(result.error);
       return;
     }
+    if (result?.id && expenseIdForNewCategory) {
+      await updateExpenseCategory(expenseIdForNewCategory, result.id);
+    }
+    setExpenseIdForNewCategory(null);
     setShowAddCategory(false);
     router.refresh();
   }
+
+  useEffect(() => {
+    if (openComboboxExpenseId === null) return;
+    const handleClickOutside = (ev: MouseEvent) => {
+      if (
+        comboboxRef.current &&
+        !comboboxRef.current.contains(ev.target as Node)
+      ) {
+        setOpenComboboxExpenseId(null);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [openComboboxExpenseId]);
 
   if (expenses.length === 0) {
     return (
@@ -109,27 +139,134 @@ export function ExpenseList({
           >
             <div className="flex min-w-0 flex-1 items-center gap-2">
               <span className="text-white">{e.description}</span>
-              <div className="flex items-center gap-1">
-                <select
-                  aria-label={`Category for ${e.description}`}
-                  value={e.category_id ?? miscCategoryId}
-                  onChange={(ev) => handleCategoryChange(e.id, ev.target.value)}
-                  className="shrink-0 rounded border border-charcoal-500 bg-charcoal-800 px-2 py-1 text-sm text-charcoal-200 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
-                >
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={openAddCategory}
-                  aria-label="Add custom category"
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-accent-violet-500 bg-charcoal-800/80 text-accent-violet-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
-                >
-                  <span className="text-sm font-medium leading-none">+</span>
-                </button>
+              <div
+                ref={
+                  openComboboxExpenseId === e.id ? comboboxRef : undefined
+                }
+                className="relative flex shrink-0 items-center gap-1"
+              >
+                {(() => {
+                  const selectedId = e.category_id ?? miscCategoryId;
+                  const selectedCategory = categories.find(
+                    (c) => c.id === selectedId
+                  );
+                  const selectedName = selectedCategory?.name ?? "Misc";
+                  const isOpen = openComboboxExpenseId === e.id;
+                  const searchLower = searchQuery.toLowerCase();
+                  const filteredCategories = categories.filter((c) =>
+                    c.name.toLowerCase().includes(searchLower)
+                  );
+                  const optionCount = 1 + filteredCategories.length;
+
+                  function handleComboboxKeyDown(
+                    ev: React.KeyboardEvent<HTMLInputElement>
+                  ) {
+                    if (!isOpen) return;
+                    if (ev.key === "ArrowDown") {
+                      ev.preventDefault();
+                      setFocusedIndex((i) =>
+                        i < optionCount - 1 ? i + 1 : i
+                      );
+                    } else if (ev.key === "ArrowUp") {
+                      ev.preventDefault();
+                      setFocusedIndex((i) => (i > 0 ? i - 1 : 0));
+                    } else if (ev.key === "Enter") {
+                      ev.preventDefault();
+                      const safeIndex = Math.min(
+                        focusedIndex,
+                        optionCount - 1
+                      );
+                      if (safeIndex === 0) {
+                        openAddCategoryForExpense(e.id, searchQuery.trim());
+                      } else {
+                        const cat = filteredCategories[safeIndex - 1];
+                        if (cat) {
+                          handleCategoryChange(e.id, cat.id);
+                          setOpenComboboxExpenseId(null);
+                        }
+                      }
+                    } else if (ev.key === "Escape") {
+                      ev.preventDefault();
+                      setOpenComboboxExpenseId(null);
+                    }
+                  }
+
+                  return (
+                    <>
+                      <input
+                        type="text"
+                        aria-label={`Category for ${e.description}`}
+                        aria-expanded={isOpen}
+                        aria-autocomplete="list"
+                        role="combobox"
+                        value={isOpen ? searchQuery : selectedName}
+                        onChange={(ev) =>
+                          setSearchQuery(ev.target.value)
+                        }
+                        onFocus={() => {
+                          setOpenComboboxExpenseId(e.id);
+                          setSearchQuery(selectedName);
+                          setFocusedIndex(0);
+                        }}
+                        onKeyDown={handleComboboxKeyDown}
+                        className="w-32 shrink-0 rounded border border-charcoal-500 bg-charcoal-800 px-2 py-1 text-sm text-charcoal-200 transition-colors duration-150 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+                      />
+                      {isOpen && (
+                        <ul
+                          role="listbox"
+                          className="absolute left-0 top-full z-10 mt-1 max-h-56 w-48 overflow-auto rounded-lg border border-charcoal-500 bg-charcoal-800 py-1 shadow-lg"
+                          aria-label="Category"
+                        >
+                          <li
+                            role="option"
+                            aria-selected={focusedIndex === 0}
+                            className="cursor-pointer px-3 py-2 text-sm font-medium text-accent-violet-500 transition-colors duration-150 hover:bg-charcoal-700"
+                            onMouseEnter={() => setFocusedIndex(0)}
+                            onClick={() =>
+                              openAddCategoryForExpense(
+                                e.id,
+                                searchQuery.trim()
+                              )
+                            }
+                          >
+                            Create new
+                          </li>
+                          {filteredCategories.map((c, idx) => {
+                            const optionIndex = idx + 1;
+                            const isFocused = focusedIndex === optionIndex;
+                            return (
+                              <li
+                                key={c.id}
+                                role="option"
+                                aria-selected={isFocused}
+                                className={`cursor-pointer px-3 py-2 text-sm transition-colors duration-150 ${
+                                  isFocused
+                                    ? "bg-charcoal-700"
+                                    : "text-charcoal-200 hover:bg-charcoal-700"
+                                } ${
+                                  categorySuper.get(c.id) === "needs"
+                                    ? "text-needs"
+                                    : categorySuper.get(c.id) === "wants"
+                                      ? "text-wants"
+                                      : ""
+                                }`}
+                                onMouseEnter={() =>
+                                  setFocusedIndex(optionIndex)
+                                }
+                                onClick={() => {
+                                  handleCategoryChange(e.id, c.id);
+                                  setOpenComboboxExpenseId(null);
+                                }}
+                              >
+                                {c.name}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </>
+                  );
+                })()}
                 {(e.category_id ?? miscCategoryId) !== miscCategoryId && (
                   <button
                     type="button"
@@ -137,9 +274,9 @@ export function ExpenseList({
                       openDeleteConfirm(e.category_id ?? miscCategoryId)
                     }
                     aria-label="Remove category"
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 transition-opacity hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
                   >
-                    <span className="text-sm font-medium leading-none">−</span>
+                    <span className="text-xs font-medium leading-none">−</span>
                   </button>
                 )}
               </div>
@@ -169,6 +306,7 @@ export function ExpenseList({
           onClick={() => {
             setShowAddCategory(false);
             setAddError(null);
+            setExpenseIdForNewCategory(null);
           }}
         >
           <div
@@ -247,6 +385,7 @@ export function ExpenseList({
                   onClick={() => {
                     setShowAddCategory(false);
                     setAddError(null);
+                    setExpenseIdForNewCategory(null);
                   }}
                   className="flex-1 rounded-md border border-charcoal-500 px-3 py-2 text-sm font-medium text-charcoal-200 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
                 >

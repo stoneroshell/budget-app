@@ -51,7 +51,7 @@ export async function getMiscCategoryId(): Promise<string | null> {
 export async function createCategory(
   name: string,
   supercategory: Supercategory
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; id?: string }> {
   const supabase = await createClient();
   const {
     data: { user },
@@ -63,16 +63,20 @@ export async function createCategory(
   if (supercategory !== "needs" && supercategory !== "wants")
     return { error: "Custom categories must be Needs or Wants." };
 
-  const { error } = await supabase.from("categories").insert({
-    name: trimmed,
-    supercategory,
-    user_id: user.id,
-  } as CategoryInsert);
+  const { data, error } = await supabase
+    .from("categories")
+    .insert({
+      name: trimmed,
+      supercategory,
+      user_id: user.id,
+    } as CategoryInsert)
+    .select("id")
+    .single();
 
   if (error) {
     return { error: error.message };
   }
-  return {};
+  return { id: data?.id };
 }
 
 export async function deleteOrHideCategory(

@@ -1,0 +1,38 @@
+[
+  {
+    "categoryName": "Rent",
+    "keywords": ["rent", "landlord", "lease"]
+  },
+  {
+    "categoryName": "Groceries",
+    "keywords": ["grocery", "groceries", "safeway", "kroger", "trader joe", "whole foods", "aldi", "costco", "walmart"]
+  },
+  {
+    "categoryName": "Utilities",
+    "keywords": ["electric", "water", "gas bill", "internet", "utility", "utilities", "pge", "comcast", "xfinity"]
+  },
+  {
+    "categoryName": "Insurance",
+    "keywords": ["insurance"]
+  },
+  {
+    "categoryName": "Transportation",
+    "keywords": ["uber", "lyft", "transit", "metro", "bus ", "train", "transportation"]
+  },
+  {
+    "categoryName": "Gas",
+    "keywords": ["shell", "chevron", "exxon", "mobil", "gas station", " arco ", " 76 "]
+  },
+  {
+    "categoryName": "Restaurants",
+    "keywords": ["chipotle", "restaurant", "mcdonald", "starbucks", "dining", "doordash", "grubhub", "ubereats"]
+  },
+  {
+    "categoryName": "Subscriptions",
+    "keywords": ["netflix", "spotify", "hulu", "disney+", "subscription", "subscriptions", "patreon", "onlyfans"]
+  },
+  {
+    "categoryName": "Entertainment",
+    "keywords": ["movie", "cinema", "game", "steam", "playstation", "xbox", "hobby", "entertainment", "concert", "amusement"]
+  }
+]
