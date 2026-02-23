@@ -48,6 +48,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 ## 3. Typography
 
 - **Primary font:** Inter for UI and body text. Use a reliable fallback stack (e.g. `Inter, system-ui, sans-serif`).
+- **Text alignment:** Prefer center-aligned text over left-aligned for headings, cards, and primary content where it improves balance and focus.
 - **Headings:** Clear hierarchy (e.g. one h1 per page). Slightly tighter letter-spacing on large display type.
 - **Body:** Comfortable line-height (1.5–1.6). Use muted gray for secondary text.
 - **Code / data:** Monospace for code and numeric data; consider a dedicated mono font. Keep code blocks on a darker surface with a subtle border.

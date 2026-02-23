@@ -12,6 +12,20 @@ export const MONTH_NAMES = [
   "July", "August", "September", "October", "November", "December",
 ] as const;
 
+export const MONTH_ABBREV = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+] as const;
+
+export function getMonthAbbrev(month: number): string {
+  return MONTH_ABBREV[month - 1] ?? "";
+}
+
+/** Uppercase 3-letter month code (e.g. JAN, FEB) for display in budget cards. */
+export function getMonthAbbrevUpper(month: number): string {
+  return (MONTH_ABBREV[month - 1] ?? "").toUpperCase();
+}
+
 export function formatMonthYear(month: number, year: number): string {
   return `${MONTH_NAMES[month - 1]} ${year}`;
 }

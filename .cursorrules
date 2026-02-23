@@ -1,0 +1,29 @@
+{
+  "rules": [
+    {
+      "match": "supabase|from\\(",
+      "mcp": ["Supabase MCP"],
+      "description": "Always use Supabase MCP when writing Supabase queries, database interactions, or auth logic."
+    },
+    {
+      "match": "select|insert|update|delete",
+      "mcp": ["SQL/Postgres MCP"],
+      "description": "Use SQL/Postgres MCP for database queries, aggregations, and schema suggestions."
+    },
+    {
+      "match": "className=.*",
+      "mcp": ["Tailwind MCP"],
+      "description": "Use Tailwind MCP when editing className strings for styling or layout."
+    },
+    {
+      "match": "import.*eslint",
+      "mcp": ["ESLint / Code Quality MCP"],
+      "description": "Use ESLint / Code Quality MCP to suggest React and Next.js best practices."
+    },
+    {
+      "match": "\\.tsx?$",
+      "mcp": ["ESLint / Code Quality MCP"],
+      "description": "For all TS/TSX files, prefer ESLint MCP to maintain clean code."
+    }
+  ]
+}

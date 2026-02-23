@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { BudgetInsert } from "@/types/database";
+import type { Budget, BudgetInsert } from "@/types/database";
 
 export async function createBudget(formData: FormData) {
   const supabase = await createClient();
@@ -66,6 +66,42 @@ export async function getBudgets() {
     .order("month", { ascending: false });
 
   return data ?? [];
+}
+
+export type BudgetWithNetIncome = Budget & { netIncome: number };
+
+export async function getBudgetsWithNetIncome(): Promise<BudgetWithNetIncome[]> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data: budgets } = await supabase
+    .from("budgets")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("year", { ascending: false })
+    .order("month", { ascending: false });
+
+  if (!budgets?.length) return [];
+
+  const budgetIds = budgets.map((b) => b.id);
+  const { data: expenses } = await supabase
+    .from("expenses")
+    .select("budget_id, amount")
+    .in("budget_id", budgetIds);
+
+  const totalByBudgetId: Record<string, number> = {};
+  for (const e of expenses ?? []) {
+    const id = e.budget_id;
+    totalByBudgetId[id] = (totalByBudgetId[id] ?? 0) + Number(e.amount);
+  }
+
+  return budgets.map((b) => ({
+    ...b,
+    netIncome: Number(b.income) - (totalByBudgetId[b.id] ?? 0),
+  }));
 }
 
 export async function getBudgetById(id: string) {

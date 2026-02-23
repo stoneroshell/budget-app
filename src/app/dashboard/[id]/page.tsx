@@ -27,30 +27,30 @@ export default async function BudgetDetailPage({
       <div className="flex items-center gap-4">
         <Link
           href="/dashboard"
-          className="text-charcoal-300 hover:text-white transition-colors duration-200"
+          className="shrink-0 text-charcoal-300 hover:text-white transition-colors duration-200"
           aria-label="Back to budgets"
         >
           ← Back
         </Link>
-        <h1 className="text-2xl font-semibold text-white tracking-tight">
+        <h1 className="min-w-0 flex-1 text-center text-2xl font-semibold text-white tracking-tight">
           {formatMonthYear(budget.month, budget.year)}
         </h1>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5">
+        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
           <p className="text-sm text-charcoal-300">Income</p>
           <p className="text-xl font-semibold text-white">
             {formatCurrency(Number(budget.income))}
           </p>
         </div>
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5">
+        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
           <p className="text-sm text-charcoal-300">Spent</p>
           <p className="text-xl font-semibold text-white">
             {formatCurrency(spent)}
           </p>
         </div>
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5">
+        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
           <p className="text-sm text-charcoal-300">Remaining</p>
           <p
             className={`text-xl font-semibold ${
@@ -63,12 +63,12 @@ export default async function BudgetDetailPage({
       </div>
 
       <section>
-        <h2 className="mb-3 text-lg font-medium text-white">Add expense</h2>
+        <h2 className="mb-3 text-center text-lg font-medium text-white">Add expense</h2>
         <AddExpenseForm budgetId={id} paymentSources={paymentSources} />
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-medium text-white">Expenses</h2>
+        <h2 className="mb-3 text-center text-lg font-medium text-white">Expenses</h2>
         {expenses.length === 0 ? (
           <p className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center text-charcoal-300">
             No expenses yet. Add one above.
