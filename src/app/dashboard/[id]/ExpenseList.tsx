@@ -2,7 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { updateExpenseCategory } from "@/app/actions/expenses";
+import {
+  updateExpenseCategory,
+  deleteExpense as deleteExpenseAction,
+} from "@/app/actions/expenses";
 import {
   createCategory,
   deleteOrHideCategory,
@@ -42,7 +45,15 @@ export function ExpenseList({
   const [expenseIdForNewCategory, setExpenseIdForNewCategory] = useState<
     string | null
   >(null);
+  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null);
   const comboboxRef = useRef<HTMLDivElement>(null);
+
+  async function handleDeleteExpense(expenseId: string) {
+    setDeletingExpenseId(expenseId);
+    const result = await deleteExpenseAction(expenseId);
+    setDeletingExpenseId(null);
+    if (!result?.error) router.refresh();
+  }
 
   async function handleCategoryChange(
     expenseId: string,
@@ -205,7 +216,7 @@ export function ExpenseList({
                         }
                         onFocus={() => {
                           setOpenComboboxExpenseId(e.id);
-                          setSearchQuery(selectedName);
+                          setSearchQuery("");
                           setFocusedIndex(0);
                         }}
                         onKeyDown={handleComboboxKeyDown}
@@ -274,24 +285,36 @@ export function ExpenseList({
                       openDeleteConfirm(e.category_id ?? miscCategoryId)
                     }
                     aria-label="Remove category"
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 transition-opacity hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
                   >
                     <span className="text-xs font-medium leading-none">−</span>
                   </button>
                 )}
               </div>
             </div>
-            <span
-              className={
-                categorySuper.get(e.category_id ?? miscCategoryId) === "needs"
-                  ? "font-medium text-needs"
-                  : categorySuper.get(e.category_id ?? miscCategoryId) === "wants"
-                    ? "font-medium text-wants"
-                    : "font-medium text-white"
-              }
-            >
-              {formatCurrency(Number(e.amount))}
-            </span>
+            <div className="flex items-center gap-2">
+              <span
+                className={
+                  categorySuper.get(e.category_id ?? miscCategoryId) === "needs"
+                    ? "font-medium text-needs"
+                    : categorySuper.get(e.category_id ?? miscCategoryId) ===
+                        "wants"
+                      ? "font-medium text-wants"
+                      : "font-medium text-white"
+                }
+              >
+                {formatCurrency(Number(e.amount))}
+              </span>
+              <button
+                type="button"
+                onClick={() => handleDeleteExpense(e.id)}
+                disabled={deletingExpenseId === e.id}
+                aria-label={`Delete expense ${e.description}`}
+                className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 disabled:opacity-50"
+              >
+                <span className="text-xs font-medium leading-none">×</span>
+              </button>
+            </div>
           </li>
           );
         })}

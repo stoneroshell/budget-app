@@ -110,3 +110,39 @@ export async function updateExpenseCategory(
   revalidatePath(`/dashboard/${expense.budget_id}`);
   return {};
 }
+
+export async function deleteExpense(expenseId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data: expense } = await supabase
+    .from("expenses")
+    .select("budget_id")
+    .eq("id", expenseId)
+    .single();
+
+  if (!expense) return { error: "Expense not found." };
+
+  const { data: budget } = await supabase
+    .from("budgets")
+    .select("id")
+    .eq("id", expense.budget_id)
+    .eq("user_id", user.id)
+    .single();
+
+  if (!budget) return { error: "Not allowed." };
+
+  const { error } = await supabase
+    .from("expenses")
+    .delete()
+    .eq("id", expenseId);
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/dashboard/${expense.budget_id}`);
+  return {};
+}

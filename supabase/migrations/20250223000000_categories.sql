@@ -42,6 +42,13 @@ insert into public.categories (name, supercategory, user_id) values
   ('Insurance', 'needs', null),
   ('Transportation', 'needs', null),
   ('Gas', 'needs', null),
+  ('Home Maintenance', 'needs', null),
+  ('Debt Payments', 'needs', null),
+  ('Healthcare', 'needs', null),
   ('Restaurants', 'wants', null),
   ('Entertainment', 'wants', null),
-  ('Subscriptions', 'wants', null);
+  ('Subscriptions', 'wants', null),
+  ('Gifts', 'wants', null),
+  ('Bars', 'wants', null),
+  ('Travel', 'wants', null),
+  ('Shopping', 'wants', null);
