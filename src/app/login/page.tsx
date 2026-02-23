@@ -15,7 +15,7 @@ export default async function LoginPage() {
   return (
     <div className="min-h-screen bg-charcoal-950 flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-sm rounded-lg bg-charcoal-900 border border-charcoal-500 p-8 shadow-xl text-center">
-        <h1 className="text-2xl font-semibold text-white mb-2 tracking-tight">
+        <h1 className="font-display text-2xl font-semibold text-white mb-2 tracking-tight">
           Guap
         </h1>
         <p className="text-charcoal-300 text-sm mb-6">

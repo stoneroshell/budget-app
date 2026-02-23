@@ -23,7 +23,7 @@ export default async function DashboardLayout({
         <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
           <Link
             href="/dashboard"
-            className="text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
+            className="font-display text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
           >
             Guap
           </Link>

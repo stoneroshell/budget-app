@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,6 +15,12 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
+const gothicModern = localFont({
+  src: "../../public/fonts/gothic_modern.woff2",
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Guap",
   description: "Monthly budgeting with smart insights",
@@ -25,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable}`}>
+    <html lang="en" className={`${inter.variable} ${interTight.variable} ${gothicModern.variable}`}>
       <body className="min-h-screen font-sans antialiased">{children}</body>
     </html>
   );

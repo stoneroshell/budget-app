@@ -50,6 +50,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 ## 3. Typography
 
 - **Primary font:** Inter for UI and body text. Use a reliable fallback stack (e.g. `Inter, system-ui, sans-serif`).
+- **Display font:** Gothic Modern (`gothic_modern.woff2`) for site titling. Use for the app name **Guap** (login heading, header logo) and other prominent display headings where a distinct title treatment is desired. Apply via the `font-display` utility or `fontFamily.display` in Tailwind.
 - **Text alignment:** Prefer center-aligned text over left-aligned for headings, cards, and primary content where it improves balance and focus.
 - **Headings:** Clear hierarchy (e.g. one h1 per page). Slightly tighter letter-spacing on large display type.
 - **Body:** Comfortable line-height (1.5–1.6). Use muted gray for secondary text.
@@ -108,7 +109,7 @@ Primary sources of non-charcoal color. Use for data series, status, tags, and fo
 - **CSS variables:** Define charcoal shades and the six accents as variables (e.g. `--color-charcoal-bg`, `--color-accent-violet`) for theming and consistency.
 - **Tailwind:** Map the palette to theme colors (e.g. `charcoal-900/800/700`, `accent-violet`, `accent-cyan`) and use semantic names (e.g. `success`, `warning`, `error`) that map to emerald, amber, rose.
 - **Dark-only:** This spec is for a dark theme; if you add a light theme later, define a parallel palette and surface rules.
-- **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling.
+- **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling. Render **Guap** and other display titling in the **Gothic Modern** display font (`public/fonts/gothic_modern.woff2`).
 
 ---
 

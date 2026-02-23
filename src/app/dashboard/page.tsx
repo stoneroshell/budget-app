@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
-        <h1 className="text-2xl font-semibold text-white tracking-tight">Your budgets</h1>
+        <h1 className="font-display text-6xl font-semibold text-white tracking-tight">Budgets</h1>
         <CreateBudgetForm />
       </div>
 
@@ -48,35 +48,34 @@ export default async function DashboardPage() {
                 <Link
                   href={`/dashboard/${b.id}`}
                   className={`@container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center hover:bg-charcoal-800/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
-                  style={{ padding: "2.5cqi" }}
                 >
-                  <div className="flex min-h-0 flex-1 flex-col gap-0">
-                    <div className="flex min-h-0 flex-[0.9] flex-col items-center justify-center gap-0 overflow-hidden py-0">
+                  <div
+                    className="grid min-h-0 flex-1 w-full"
+                    style={{ gridTemplateRows: "2fr 1fr 1fr", padding: "3cqi" }}
+                  >
+                    <div
+                      className="flex min-h-0 items-center justify-center overflow-hidden"
+                      style={{ paddingBottom: "2cqi" }}
+                    >
                       <span
-                        className="inline-block max-w-full overflow-hidden text-ellipsis font-semibold text-white font-inter-tight leading-[0.82] select-none"
-                        style={{
-                          fontSize: "45cqi",
-                          letterSpacing: "0.02em",
-                          transform: "scaleY(1.18)",
-                          transformOrigin: "center",
-                        }}
+                        className="font-display max-w-full overflow-hidden text-ellipsis font-semibold text-white select-none leading-[0.85]"
+                        style={{ fontSize: "40cqi", letterSpacing: "0.02em" }}
                       >
                         {getMonthAbbrevUpper(b.month)}
                       </span>
+                    </div>
+                    <div className="flex min-h-0 items-center justify-center overflow-hidden">
                       <span
-                        className="max-w-full overflow-hidden text-ellipsis font-medium text-white leading-none"
-                        style={{ fontSize: "15cqi", marginTop: "6cqi" }}
+                        className="max-w-full overflow-hidden text-ellipsis font-medium text-white"
+                        style={{ fontSize: "10cqi" }}
                       >
                         {b.year}
                       </span>
                     </div>
-                    <div
-                      className="flex flex-[0.1] min-h-0 shrink-0 items-center justify-center overflow-hidden"
-                      style={{ paddingLeft: "2cqi", paddingRight: "2cqi" }}
-                    >
+                    <div className="flex min-h-0 items-center justify-center overflow-hidden">
                       <span
-                        className={`max-w-full overflow-hidden font-semibold ${text}`}
-                        style={{ fontSize: "9cqi" }}
+                        className={`max-w-full overflow-hidden text-ellipsis font-semibold ${text}`}
+                        style={{ fontSize: "8cqi" }}
                       >
                         {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
                       </span>
