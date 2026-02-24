@@ -104,3 +104,22 @@ export function formatCurrency(value: number): string {
     maximumFractionDigits: 2,
   }).format(value);
 }
+
+/** Percentage of income spent (0–100). Returns 0 if income is 0 or negative. */
+export function percentOfIncomeSpent(spent: number, income: number): number {
+  if (income <= 0) return 0;
+  return Math.min(100, (spent / income) * 100);
+}
+
+/** Needs and wants as percentage of (needs + wants). Misc excluded. */
+export function needsWantsRatio(
+  bySuper: SupercategoryTotals
+): { needsPercent: number; wantsPercent: number } {
+  const total = bySuper.needs + bySuper.wants;
+  if (total <= 0)
+    return { needsPercent: 0, wantsPercent: 0 };
+  return {
+    needsPercent: (bySuper.needs / total) * 100,
+    wantsPercent: (bySuper.wants / total) * 100,
+  };
+}

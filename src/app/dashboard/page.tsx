@@ -1,7 +1,25 @@
 import Link from "next/link";
-import { getBudgetsWithNetIncome } from "@/app/actions/budgets";
-import { formatCurrency, getMonthAbbrevUpper } from "@/lib/helpers";
+import { getBudgetsWithNetIncome, getBudgetById } from "@/app/actions/budgets";
+import { getExpensesByBudgetId } from "@/app/actions/expenses";
+import { getCategories } from "@/app/actions/categories";
+import {
+  formatCurrency,
+  getMonthAbbrevUpper,
+  formatMonthYear,
+  totalSpent,
+  groupExpensesBySupercategory,
+  groupExpensesByCategory,
+  percentOfIncomeSpent,
+  needsWantsRatio,
+} from "@/lib/helpers";
+import {
+  buildLineChartData,
+  buildDonutChartData,
+} from "@/lib/dashboard-chart-data";
 import { CreateBudgetForm } from "./CreateBudgetForm";
+import { DonutChartSpending } from "@/components/charts/DonutChartSpending";
+import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
+import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
 
 function getNetColorClass(
   netIncome: number,
@@ -21,16 +39,53 @@ function getNetColorClass(
   return { border: "border-charcoal-500", text: "text-charcoal-300" };
 }
 
-export default async function DashboardPage() {
+type PageProps = {
+  searchParams: Promise<{ budget?: string }>;
+};
+
+export default async function DashboardPage({ searchParams }: PageProps) {
+  const { budget: budgetParam } = await searchParams;
   const budgets = await getBudgetsWithNetIncome();
   const minNet = budgets.length ? Math.min(...budgets.map((b) => b.netIncome)) : 0;
   const maxNet = budgets.length ? Math.max(...budgets.map((b) => b.netIncome)) : 0;
   const isSingleOrTied = budgets.length <= 1 || minNet === maxNet;
 
+  const selectedId =
+    budgetParam && budgets.some((b) => b.id === budgetParam)
+      ? budgetParam
+      : budgets[0]?.id ?? null;
+
+  let budget: Awaited<ReturnType<typeof getBudgetById>> = null;
+  let expenses: Awaited<ReturnType<typeof getExpensesByBudgetId>> = [];
+  let categories: Awaited<ReturnType<typeof getCategories>> = [];
+
+  if (selectedId) {
+    const [budgetResult, expensesResult, categoriesResult] = await Promise.all([
+      getBudgetById(selectedId),
+      getExpensesByBudgetId(selectedId),
+      getCategories(),
+    ]);
+    budget = budgetResult;
+    expenses = expensesResult;
+    categories = categoriesResult;
+  }
+
+  const income = budget ? Number(budget.income) : 0;
+  const spent = totalSpent(expenses);
+  const remaining = income - spent;
+  const bySuper = groupExpensesBySupercategory(expenses, categories);
+  const byCategory = groupExpensesByCategory(expenses, categories);
+  const donutData = buildDonutChartData(byCategory);
+  const lineData = buildLineChartData(budgets);
+  const percentSpent = percentOfIncomeSpent(spent, income);
+  const { needsPercent, wantsPercent } = needsWantsRatio(bySuper);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
-        <h1 className="font-display text-6xl font-semibold text-white tracking-tight">Budgets</h1>
+        <h1 className="font-display text-6xl font-semibold text-white tracking-tight">
+          Dashboard
+        </h1>
         <CreateBudgetForm />
       </div>
 
@@ -40,52 +95,178 @@ export default async function DashboardPage() {
           <p className="text-sm">Create a monthly budget above to get started.</p>
         </div>
       ) : (
-        <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {budgets.map((b) => {
-            const { border, text } = getNetColorClass(b.netIncome, minNet, maxNet, isSingleOrTied);
-            return (
-              <li key={b.id} className="size-full min-w-0">
-                <Link
-                  href={`/dashboard/${b.id}`}
-                  className={`@container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center hover:bg-charcoal-800/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
-                >
-                  <div
-                    className="grid min-h-0 flex-1 w-full"
-                    style={{ gridTemplateRows: "2fr 1fr 1fr", padding: "3cqi" }}
+        <>
+          {/* Month / budget selector */}
+          <section aria-label="Select month to view">
+            <h2 className="mb-3 text-center text-sm font-medium text-charcoal-300">
+              View month
+            </h2>
+            <div className="flex flex-wrap justify-center gap-2">
+              {budgets.map((b) => {
+                const isSelected = b.id === selectedId;
+                return (
+                  <Link
+                    key={b.id}
+                    href={`/dashboard?budget=${b.id}`}
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-950 ${
+                      isSelected
+                        ? "bg-accent-violet-500 text-white"
+                        : "bg-charcoal-800 text-charcoal-200 hover:bg-charcoal-700"
+                    }`}
                   >
-                    <div
-                      className="flex min-h-0 items-center justify-center overflow-hidden"
-                      style={{ paddingBottom: "2cqi" }}
+                    {formatMonthYear(b.month, b.year)}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Summary cards (when a month is selected) */}
+          {budget && (
+            <section>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-sm text-charcoal-300">Income</p>
+                  <p className="text-xl font-semibold text-white">
+                    {formatCurrency(income)}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-sm text-charcoal-300">Spent</p>
+                  <p className="text-xl font-semibold text-white">
+                    {formatCurrency(spent)}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-sm text-charcoal-300">Remaining</p>
+                  <p
+                    className={`text-xl font-semibold ${
+                      remaining >= 0
+                        ? "text-accent-emerald-400"
+                        : "text-accent-rose-400"
+                    }`}
+                  >
+                    {formatCurrency(remaining)}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-sm text-charcoal-300">% of income spent</p>
+                  <p className="text-xl font-semibold text-white">
+                    {percentSpent.toFixed(0)}%
+                  </p>
+                </div>
+                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-sm text-charcoal-300">Needs vs Wants</p>
+                  <p className="text-lg font-semibold">
+                    <span className="text-needs">Needs {needsPercent.toFixed(0)}%</span>
+                    <span className="text-charcoal-400 mx-1">/</span>
+                    <span className="text-wants">Wants {wantsPercent.toFixed(0)}%</span>
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Charts: donut + bar, then line */}
+          {budget && (
+            <section
+              className="space-y-6"
+              aria-label="Spending charts"
+            >
+              <h2 className="text-center text-lg font-medium text-white">
+                Spending overview
+              </h2>
+              <div className="grid gap-6 lg:grid-cols-2">
+                <div>
+                  <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                    By category
+                  </h3>
+                  <DonutChartSpending data={donutData} />
+                </div>
+                <div>
+                  <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                    Needs vs Wants
+                  </h3>
+                  <BarChartNeedsWants
+                    needs={bySuper.needs}
+                    wants={bySuper.wants}
+                    misc={bySuper.misc}
+                  />
+                </div>
+              </div>
+              <div>
+                <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                  Spending over time
+                </h3>
+                <LineChartSpendingOverTime data={lineData} />
+              </div>
+            </section>
+          )}
+
+          {/* Your budgets grid */}
+          <section>
+            <h2 className="mb-4 text-center font-display text-2xl font-semibold text-white tracking-tight">
+              Your budgets
+            </h2>
+            <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {budgets.map((b) => {
+                const { border, text } = getNetColorClass(
+                  b.netIncome,
+                  minNet,
+                  maxNet,
+                  isSingleOrTied
+                );
+                return (
+                  <li key={b.id} className="size-full min-w-0">
+                    <Link
+                      href={`/dashboard/${b.id}`}
+                      className={`@container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center hover:bg-charcoal-800/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
                     >
-                      <span
-                        className="font-display max-w-full overflow-hidden text-ellipsis font-semibold text-white select-none leading-[0.85]"
-                        style={{ fontSize: "40cqi", letterSpacing: "0.02em" }}
+                      <div
+                        className="grid min-h-0 flex-1 w-full"
+                        style={{
+                          gridTemplateRows: "2fr 1fr 1fr",
+                          padding: "3cqi",
+                        }}
                       >
-                        {getMonthAbbrevUpper(b.month)}
-                      </span>
-                    </div>
-                    <div className="flex min-h-0 items-center justify-center overflow-hidden">
-                      <span
-                        className="max-w-full overflow-hidden text-ellipsis font-medium text-white"
-                        style={{ fontSize: "10cqi" }}
-                      >
-                        {b.year}
-                      </span>
-                    </div>
-                    <div className="flex min-h-0 items-center justify-center overflow-hidden">
-                      <span
-                        className={`max-w-full overflow-hidden text-ellipsis font-semibold ${text}`}
-                        style={{ fontSize: "8cqi" }}
-                      >
-                        {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                        <div
+                          className="flex min-h-0 items-center justify-center overflow-hidden"
+                          style={{ paddingBottom: "2cqi" }}
+                        >
+                          <span
+                            className="font-display max-w-full overflow-hidden text-ellipsis font-semibold text-white select-none leading-[0.85]"
+                            style={{
+                              fontSize: "40cqi",
+                              letterSpacing: "0.02em",
+                            }}
+                          >
+                            {getMonthAbbrevUpper(b.month)}
+                          </span>
+                        </div>
+                        <div className="flex min-h-0 items-center justify-center overflow-hidden">
+                          <span
+                            className="max-w-full overflow-hidden text-ellipsis font-medium text-white"
+                            style={{ fontSize: "10cqi" }}
+                          >
+                            {b.year}
+                          </span>
+                        </div>
+                        <div className="flex min-h-0 items-center justify-center overflow-hidden">
+                          <span
+                            className={`max-w-full overflow-hidden text-ellipsis font-semibold ${text}`}
+                            style={{ fontSize: "8cqi" }}
+                          >
+                            {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        </>
       )}
     </div>
   );

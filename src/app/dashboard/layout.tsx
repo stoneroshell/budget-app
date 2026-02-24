@@ -20,7 +20,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen bg-charcoal-950">
       <header className="border-b border-charcoal-500 bg-charcoal-900/80">
-        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
           <Link
             href="/dashboard"
             className="font-display text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
@@ -42,7 +42,7 @@ export default async function DashboardLayout({
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
     </div>
   );
 }
