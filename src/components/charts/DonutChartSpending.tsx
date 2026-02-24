@@ -9,16 +9,25 @@ import {
   Legend,
 } from "recharts";
 import { ChartEmptyState } from "@/components/EmptyState";
+import { DONUT_GROUP_STROKE } from "@/lib/dashboard-chart-data";
 
 export type DonutSegment = {
   name: string;
   value: number;
   color: string;
+  supercategory?: string;
 };
 
 type Props = {
   data: DonutSegment[];
 };
+
+const INNER_RADIUS = 60;
+const OUTER_RADIUS = 90;
+/** Gap between main donut and the colored ring */
+const RIM_GAP = 10;
+/** Ring thickness (sits outside the donut, after RIM_GAP) */
+const RIM_WIDTH = 3;
 
 export function DonutChartSpending({ data }: Props) {
   if (!data.length || data.every((d) => d.value <= 0)) {
@@ -36,25 +45,74 @@ export function DonutChartSpending({ data }: Props) {
   const total = data.reduce((s, d) => s + d.value, 0);
   const displayData = data.filter((d) => d.value > 0);
 
+  const groups = {
+    needs: displayData.filter((d) => d.supercategory === "needs"),
+    wants: displayData.filter((d) => d.supercategory === "wants"),
+    misc: displayData.filter((d) => d.supercategory === "misc" || !d.supercategory),
+  };
+
+  let startAngle = 0;
+  const pies = (
+    [
+      { key: "needs" as const, segments: groups.needs, rimColor: DONUT_GROUP_STROKE.needs },
+      { key: "wants" as const, segments: groups.wants, rimColor: DONUT_GROUP_STROKE.wants },
+      { key: "misc" as const, segments: groups.misc, rimColor: DONUT_GROUP_STROKE.misc },
+    ] as const
+  )
+    .filter((g) => g.segments.length > 0)
+    .map((g) => {
+      const groupTotal = g.segments.reduce((s, d) => s + d.value, 0);
+      const angleSpan = total > 0 ? (groupTotal / total) * 360 : 0;
+      const endAngle = startAngle + angleSpan;
+      const result = { ...g, startAngle, endAngle };
+      startAngle = endAngle;
+      return result;
+    });
+
   return (
     <div className="min-h-[280px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
       <ResponsiveContainer width="100%" height={280}>
         <PieChart>
-          <Pie
-            data={displayData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={90}
-            paddingAngle={2}
-            stroke="transparent"
-          >
-            {displayData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
+          {/* Main donut: no stroke so no segment borders */}
+          {pies.map(({ key, segments, startAngle: start, endAngle: end }) => (
+            <Pie
+              key={key}
+              data={segments}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={INNER_RADIUS}
+              outerRadius={OUTER_RADIUS}
+              paddingAngle={2}
+              stroke="transparent"
+              startAngle={start}
+              endAngle={end}
+            >
+              {segments.map((entry, index) => (
+                <Cell key={`${key}-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+          ))}
+          {/* Thin colored line around the outside: needs blue / wants amber / misc grey */}
+          {pies.map(({ key, rimColor, startAngle: start, endAngle: end }) => (
+            <Pie
+              key={`rim-${key}`}
+              data={[{ value: 1 }]}
+              dataKey="value"
+              cx="50%"
+              cy="50%"
+              innerRadius={OUTER_RADIUS + RIM_GAP}
+              outerRadius={OUTER_RADIUS + RIM_GAP + RIM_WIDTH}
+              startAngle={start}
+              endAngle={end}
+              stroke="none"
+              isAnimationActive={false}
+              legendType="none"
+            >
+              <Cell fill={rimColor} />
+            </Pie>
+          ))}
           <Tooltip
             content={({ active, payload }) => {
               if (!active || !payload?.length) return null;

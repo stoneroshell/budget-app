@@ -64,6 +64,21 @@ Official colors for budget categories. Use consistently so users instantly recog
 - **Numbers:** Any value that reflects a needs total, needs spent, needs remaining, or needs percentage should be rendered in the needs color (`#06B6D4`). Likewise, any value for wants should use the wants color (`#F59E0B`). Apply to tables, cards, summaries, and charts.
 - **When to use secondary:** Use needs-secondary / wants-secondary for large or low-emphasis areas (e.g. category row backgrounds, left borders, hover states) so the primary color stays reserved for the main numbers and labels.
 
+### Charts & data analysis only
+
+Use **only** for charts, data series, and data analysis visuals. Do not use for UI, buttons, or general branding.
+
+| Name   | Hex       |
+|--------|-----------|
+| Sky    | `#0EA5E9` |
+| Indigo | `#6366F1` |
+| Teal   | `#14B8A6` |
+| Slate  | `#64748B` |
+| Orange | `#F97316` |
+| Fuchsia| `#D946EF` |
+| Lime   | `#84CC16` |
+| Pink   | `#EC4899` |
+
 ---
 
 ## 3. Typography

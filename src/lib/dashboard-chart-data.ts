@@ -32,36 +32,62 @@ export type DonutChartSegment = {
   name: string;
   value: number;
   color: string;
+  supercategory: string;
 };
 
-/** Stable palette for category donut: needs, wants, misc + accents. */
+/**
+ * Donut palette: 8 chart colors first, then 6 accents, then needs/wants last.
+ * Each category gets a unique color by index (styles.md).
+ */
 const DONUT_PALETTE = [
-  "#06B6D4", // needs (cyan)
-  "#F59E0B", // wants (amber)
-  "#8B5CF6", // violet
-  "#10B981", // emerald
-  "#3B82F6", // blue
-  "#F43F5E", // rose
-  "#22D3EE", // cyan 400
-  "#FBBF24", // amber 400
-  "#A3A3A3", // muted (misc)
-] as const;
+  "#D946EF", // Fuchsia (charts)
+  "#6366F1", // Indigo (charts)
+  "#14B8A6", // Teal (charts)
+  "#F97316", // Orange (charts)
+  "#84CC16", // Lime (charts)
+  "#EC4899", // Pink (charts)
+  "#64748B", // Slate (charts)
+  "#8B5CF6", // Violet (accent)
+  "#06B6D4", // Cyan (accent)
+  "#F59E0B", // Amber (accent)
+  "#F43F5E", // Rose (accent)
+  "#10B981", // Emerald (accent)
+  "#3B82F6", // Blue (accent)
+  "#06B6D4", // Needs (last)
+  "#F59E0B", // Wants (last)
+];
 
-function getDonutColor(supercategory: string, index: number): string {
-  if (supercategory === "needs") return DONUT_PALETTE[0];
-  if (supercategory === "wants") return DONUT_PALETTE[1];
-  return DONUT_PALETTE[Math.min(2 + index, DONUT_PALETTE.length - 1)];
-}
+const SUPERORDER: Record<string, number> = {
+  needs: 0,
+  wants: 1,
+  misc: 2,
+};
 
 /**
- * Map category totals to Recharts PieChart payload with stable colors.
+ * Map category totals to donut segments. Sorted by supercategory (needs, wants, misc)
+ * then by amount desc so groups are contiguous for outline styling.
+ * Each category gets a unique color from the palette.
  */
 export function buildDonutChartData(
   categoryTotals: CategoryTotal[]
 ): DonutChartSegment[] {
-  return categoryTotals.map((row, i) => ({
+  const sorted = [...categoryTotals].sort((a, b) => {
+    const orderA = SUPERORDER[a.supercategory] ?? 2;
+    const orderB = SUPERORDER[b.supercategory] ?? 2;
+    if (orderA !== orderB) return orderA - orderB;
+    return b.amount - a.amount;
+  });
+  return sorted.map((row, i) => ({
     name: row.categoryName,
     value: row.amount,
-    color: getDonutColor(row.supercategory, i),
+    color: DONUT_PALETTE[i % DONUT_PALETTE.length],
+    supercategory: row.supercategory,
   }));
 }
+
+/** Outline colors for needs/wants/misc groups (styles.md). */
+export const DONUT_GROUP_STROKE = {
+  needs: "#06B6D4",
+  wants: "#F59E0B",
+  misc: "#737373",
+} as const;
