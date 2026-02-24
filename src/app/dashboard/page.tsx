@@ -19,26 +19,23 @@ import { CreateBudgetForm } from "./CreateBudgetForm";
 import { EmptyState } from "@/components/EmptyState";
 import { NeedsWantsBar } from "@/components/NeedsWantsBar";
 import { DonutChartSpending } from "@/components/charts/DonutChartSpending";
-import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
-import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
-
-function getNetColorClass(
+/** Returns text color class for net amount (positive = emerald, negative = rose, etc.). */
+function getNetTextClass(
   netIncome: number,
   minNet: number,
   maxNet: number,
   isSingleOrTied: boolean
-): { border: string; text: string } {
+): string {
   if (isSingleOrTied) {
-    return netIncome >= 0
-      ? { border: "border-accent-emerald-500", text: "text-accent-emerald-400" }
-      : { border: "border-accent-rose-500", text: "text-accent-rose-400" };
+    return netIncome >= 0 ? "text-accent-emerald-400" : "text-accent-rose-400";
   }
-  if (netIncome === minNet)
-    return { border: "border-accent-rose-500", text: "text-accent-rose-400" };
-  if (netIncome === maxNet)
-    return { border: "border-accent-emerald-500", text: "text-accent-emerald-400" };
-  return { border: "border-charcoal-500", text: "text-charcoal-300" };
+  if (netIncome === minNet) return "text-accent-rose-400";
+  if (netIncome === maxNet) return "text-accent-emerald-400";
+  return "text-charcoal-300";
 }
+
+import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
+import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
 
 type PageProps = {
   searchParams: Promise<{ budget?: string }>;
@@ -207,18 +204,18 @@ export default async function DashboardPage({ searchParams }: PageProps) {
             </h2>
             <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {budgets.map((b) => {
-                const { border, text } = getNetColorClass(
+                const netTextClass = getNetTextClass(
                   b.netIncome,
                   minNet,
                   maxNet,
                   isSingleOrTied
                 );
                 return (
-                  <li key={b.id} className="size-full min-w-0">
-                    <Link
-                      href={`/dashboard/${b.id}`}
-                      className={`group relative @container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center transition-colors hover:border-charcoal-400 hover:bg-charcoal-800/80 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
-                    >
+                <li key={b.id} className="size-full min-w-0">
+                  <Link
+                    href={`/dashboard/${b.id}`}
+                    className="group relative @container flex aspect-square size-full min-w-0 flex-col rounded-xl border border-accent-violet-500 bg-charcoal-900/80 text-center transition-colors transition-transform duration-300 ease-out hover:scale-[1.03] hover:z-10 hover:border-accent-violet-400 hover:bg-charcoal-800/80 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] origin-center"
+                  >
                       <div
                         className="grid min-h-0 flex-1 w-full"
                         style={{
@@ -254,7 +251,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                         </div>
                         <div className="flex min-h-0 items-center justify-center overflow-hidden">
                           <span
-                            className={`max-w-full overflow-hidden text-ellipsis font-light ${text}`}
+                            className={`max-w-full overflow-hidden text-ellipsis font-light ${netTextClass}`}
                             style={{ fontSize: "8cqi" }}
                           >
                             {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
@@ -279,9 +276,9 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                           <path d="m12 5 7 7-7 7" />
                         </svg>
                       </span>
-                    </Link>
-                  </li>
-                );
+                  </Link>
+                </li>
+              );
               })}
             </ul>
           </section>

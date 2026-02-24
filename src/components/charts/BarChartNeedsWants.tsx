@@ -10,9 +10,36 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import type { TooltipProps } from "recharts";
 import { ChartEmptyState } from "@/components/EmptyState";
 
 const NEEDS_COLOR = "#06B6D4";
+const LABEL_COLOR = "#A3A3A3";
+const VALUE_COLOR = "#8B5CF6";
+
+function NeedsWantsTooltipContent({
+  active,
+  payload,
+}: TooltipProps<number, string>) {
+  if (!active || !payload?.length) return null;
+  const item = payload[0];
+  const name = item.payload?.name ?? item.name ?? "";
+  const value = typeof item.value === "number" ? item.value : 0;
+  return (
+    <div
+      style={{
+        backgroundColor: "#1A1A1A",
+        border: "1px solid #2E2E2E",
+        borderRadius: "8px",
+        padding: "8px 12px",
+      }}
+    >
+      <div style={{ color: LABEL_COLOR }}>{name}:</div>
+      <div style={{ color: VALUE_COLOR }}>${value.toFixed(2)}</div>
+    </div>
+  );
+}
+
 const WANTS_COLOR = "#F59E0B";
 const MISC_COLOR = "#737373";
 
@@ -63,15 +90,15 @@ export function BarChartNeedsWants({ needs, wants, misc = 0 }: Props) {
             tickFormatter={(v) => `$${v}`}
           />
           <Tooltip
-            formatter={(value: number) => [`$${value.toFixed(2)}`, ""]}
-            contentStyle={{
-              backgroundColor: "#1A1A1A",
-              border: "1px solid #2E2E2E",
-              borderRadius: "8px",
-            }}
-            labelStyle={{ color: "#A3A3A3" }}
+            cursor={{ fill: "transparent" }}
+            content={<NeedsWantsTooltipContent />}
           />
-          <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+          <Bar
+            dataKey="value"
+            radius={[4, 4, 0, 0]}
+            stroke="none"
+            activeBar={{ stroke: "#A3A3A3", strokeWidth: 1 }}
+          >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
