@@ -36,35 +36,35 @@ export default async function BudgetDetailPage({
   const byCategory = groupExpensesByCategory(expenses, categories);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="relative flex items-center justify-center py-1">
         <Link
           href="/dashboard"
-          className="absolute left-0 shrink-0 text-charcoal-300 hover:text-white transition-colors duration-200"
+          className="btn-secondary absolute left-0 shrink-0"
           aria-label="Back to budgets"
         >
           ← Back
         </Link>
-        <h1 className="text-2xl font-semibold text-white tracking-tight">
+        <h1 className="text-2xl font-light text-white tracking-tight">
           {formatMonthYear(budget.month, budget.year)}
         </h1>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-          <p className="text-sm text-charcoal-300">Income</p>
+        <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+          <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Income</p>
           <EditableIncome budgetId={id} income={Number(budget.income)} />
         </div>
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-          <p className="text-sm text-charcoal-300">Spent</p>
-          <p className="text-xl font-semibold text-white">
+        <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+          <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Spent</p>
+          <p className="text-xl font-light text-white">
             {formatCurrency(spent)}
           </p>
         </div>
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-          <p className="text-sm text-charcoal-300">Remaining</p>
+        <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+          <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Remaining</p>
           <p
-            className={`text-xl font-semibold ${
+            className={`text-xl font-light ${
               remaining >= 0 ? "text-accent-emerald-400" : "text-accent-rose-400"
             }`}
           >
@@ -74,32 +74,32 @@ export default async function BudgetDetailPage({
       </div>
 
       <section>
-        <h2 className="mb-3 text-center text-lg font-medium text-white">
+        <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
           Grouped totals
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-charcoal-500 border-l-4 border-l-needs-secondary bg-needs-secondary/10 p-4 text-center">
-            <p className="text-sm text-needs">Needs</p>
-            <p className="text-lg font-semibold text-needs">
+          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-needs-secondary bg-needs-secondary/10 p-4 text-center">
+            <p className="text-xs font-medium uppercase tracking-widest text-needs">Needs</p>
+            <p className="text-lg font-light text-needs">
               {formatCurrency(bySuper.needs)}
             </p>
           </div>
-          <div className="rounded-lg border border-charcoal-500 border-l-4 border-l-wants-secondary bg-wants-secondary/10 p-4 text-center">
-            <p className="text-sm text-wants">Wants</p>
-            <p className="text-lg font-semibold text-wants">
+          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-wants-secondary bg-wants-secondary/10 p-4 text-center">
+            <p className="text-xs font-medium uppercase tracking-widest text-wants">Wants</p>
+            <p className="text-lg font-light text-wants">
               {formatCurrency(bySuper.wants)}
             </p>
           </div>
-          <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4 text-center">
-            <p className="text-sm text-charcoal-300">Misc</p>
-            <p className="text-lg font-semibold text-white">
+          <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4 text-center">
+            <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Misc</p>
+            <p className="text-lg font-light text-white">
               {formatCurrency(bySuper.misc)}
             </p>
           </div>
         </div>
         {byCategory.length > 0 && (
-          <div className="mt-3 rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4">
-            <p className="mb-2 text-sm text-charcoal-300">By category</p>
+          <div className="mt-3 rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
+            <p className="mb-2 text-xs font-medium uppercase tracking-widest text-charcoal-400">By category</p>
             <ul className="space-y-1 text-sm">
               {byCategory.map((row, i) => (
                 <li
@@ -142,12 +142,12 @@ export default async function BudgetDetailPage({
       </section>
 
       <section>
-        <h2 className="mb-3 text-center text-lg font-medium text-white">Add expense</h2>
+        <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">Add expense</h2>
         <AddExpenseForm budgetId={id} paymentSources={paymentSources} />
       </section>
 
       <section>
-        <h2 className="mb-3 text-center text-lg font-medium text-white">Expenses</h2>
+        <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">Expenses</h2>
         <ExpenseList expenses={expenses} categories={categories} budgetId={id} />
       </section>
 

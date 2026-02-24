@@ -9,7 +9,6 @@ import {
   totalSpent,
   groupExpensesBySupercategory,
   groupExpensesByCategory,
-  percentOfIncomeSpent,
   needsWantsRatio,
 } from "@/lib/helpers";
 import {
@@ -17,6 +16,8 @@ import {
   buildDonutChartData,
 } from "@/lib/dashboard-chart-data";
 import { CreateBudgetForm } from "./CreateBudgetForm";
+import { EmptyState } from "@/components/EmptyState";
+import { NeedsWantsBar } from "@/components/NeedsWantsBar";
 import { DonutChartSpending } from "@/components/charts/DonutChartSpending";
 import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
 import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
@@ -77,28 +78,29 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const byCategory = groupExpensesByCategory(expenses, categories);
   const donutData = buildDonutChartData(byCategory);
   const lineData = buildLineChartData(budgets);
-  const percentSpent = percentOfIncomeSpent(spent, income);
   const { needsPercent, wantsPercent } = needsWantsRatio(bySuper);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
       <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
-        <h1 className="font-display text-6xl font-semibold text-white tracking-tight">
+        <h1 className="font-display text-6xl font-light text-white tracking-tight">
           Dashboard
         </h1>
         <CreateBudgetForm />
       </div>
 
       {budgets.length === 0 ? (
-        <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-8 text-center text-charcoal-300">
-          <p className="mb-2">No budgets yet.</p>
-          <p className="text-sm">Create a monthly budget above to get started.</p>
+        <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-8">
+          <EmptyState
+            title="No budgets yet"
+            description="Create a monthly budget above to get started."
+          />
         </div>
       ) : (
         <>
           {/* Month / budget selector */}
-          <section aria-label="Select month to view">
-            <h2 className="mb-3 text-center text-sm font-medium text-charcoal-300">
+          <section aria-label="Select month to view" className="space-y-3">
+            <h2 className="text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
               View month
             </h2>
             <div className="flex flex-wrap justify-center gap-2">
@@ -108,10 +110,10 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                   <Link
                     key={b.id}
                     href={`/dashboard?budget=${b.id}`}
-                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-950 ${
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-950 ${
                       isSelected
                         ? "bg-accent-violet-500 text-white"
-                        : "bg-charcoal-800 text-charcoal-200 hover:bg-charcoal-700"
+                        : "bg-charcoal-800 text-charcoal-200 hover:border-charcoal-400 hover:bg-charcoal-700"
                     }`}
                   >
                     {formatMonthYear(b.month, b.year)}
@@ -124,23 +126,23 @@ export default async function DashboardPage({ searchParams }: PageProps) {
           {/* Summary cards (when a month is selected) */}
           {budget && (
             <section>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-                  <p className="text-sm text-charcoal-300">Income</p>
-                  <p className="text-xl font-semibold text-white">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Income</p>
+                  <p className="text-xl font-light text-white">
                     {formatCurrency(income)}
                   </p>
                 </div>
-                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-                  <p className="text-sm text-charcoal-300">Spent</p>
-                  <p className="text-xl font-semibold text-white">
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Spent</p>
+                  <p className="text-xl font-light text-white">
                     {formatCurrency(spent)}
                   </p>
                 </div>
-                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-                  <p className="text-sm text-charcoal-300">Remaining</p>
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
+                  <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Remaining</p>
                   <p
-                    className={`text-xl font-semibold ${
+                    className={`text-xl font-light ${
                       remaining >= 0
                         ? "text-accent-emerald-400"
                         : "text-accent-rose-400"
@@ -149,19 +151,14 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                     {formatCurrency(remaining)}
                   </p>
                 </div>
-                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-                  <p className="text-sm text-charcoal-300">% of income spent</p>
-                  <p className="text-xl font-semibold text-white">
-                    {percentSpent.toFixed(0)}%
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5">
+                  <p className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
+                    Needs vs Wants
                   </p>
-                </div>
-                <div className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center">
-                  <p className="text-sm text-charcoal-300">Needs vs Wants</p>
-                  <p className="text-lg font-semibold">
-                    <span className="text-needs">Needs {needsPercent.toFixed(0)}%</span>
-                    <span className="text-charcoal-400 mx-1">/</span>
-                    <span className="text-wants">Wants {wantsPercent.toFixed(0)}%</span>
-                  </p>
+                  <NeedsWantsBar
+                    needsPercent={needsPercent}
+                    wantsPercent={wantsPercent}
+                  />
                 </div>
               </div>
             </section>
@@ -173,18 +170,18 @@ export default async function DashboardPage({ searchParams }: PageProps) {
               className="space-y-6"
               aria-label="Spending charts"
             >
-              <h2 className="text-center text-lg font-medium text-white">
+              <h2 className="text-center text-lg font-light text-white tracking-tight">
                 Spending overview
               </h2>
               <div className="grid gap-6 lg:grid-cols-2">
                 <div>
-                  <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                  <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
                     By category
                   </h3>
                   <DonutChartSpending data={donutData} />
                 </div>
                 <div>
-                  <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                  <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
                     Needs vs Wants
                   </h3>
                   <BarChartNeedsWants
@@ -195,7 +192,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                 </div>
               </div>
               <div>
-                <h3 className="mb-2 text-center text-sm font-medium text-charcoal-300">
+                <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
                   Spending over time
                 </h3>
                 <LineChartSpendingOverTime data={lineData} />
@@ -205,7 +202,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
 
           {/* Your budgets grid */}
           <section>
-            <h2 className="mb-4 text-center font-display text-2xl font-semibold text-white tracking-tight">
+            <h2 className="mb-4 text-center font-display text-2xl font-light text-white tracking-tight">
               Your budgets
             </h2>
             <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -220,7 +217,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                   <li key={b.id} className="size-full min-w-0">
                     <Link
                       href={`/dashboard/${b.id}`}
-                      className={`@container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center hover:bg-charcoal-800/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
+                      className={`group relative @container flex aspect-square size-full min-w-0 flex-col rounded-xl border bg-charcoal-900/80 text-center transition-colors hover:border-charcoal-400 hover:bg-charcoal-800/80 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] ${border}`}
                     >
                       <div
                         className="grid min-h-0 flex-1 w-full"
@@ -234,7 +231,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                           style={{ paddingBottom: "2cqi" }}
                         >
                           <span
-                            className="font-display max-w-full overflow-hidden text-ellipsis font-semibold text-white select-none leading-[0.85]"
+                            className="font-display max-w-full overflow-hidden text-ellipsis font-light text-white select-none leading-[0.85]"
                             style={{
                               fontSize: "40cqi",
                               letterSpacing: "0.02em",
@@ -253,13 +250,31 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                         </div>
                         <div className="flex min-h-0 items-center justify-center overflow-hidden">
                           <span
-                            className={`max-w-full overflow-hidden text-ellipsis font-semibold ${text}`}
+                            className={`max-w-full overflow-hidden text-ellipsis font-light ${text}`}
                             style={{ fontSize: "8cqi" }}
                           >
                             {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
                           </span>
                         </div>
                       </div>
+                      <span
+                        className="absolute bottom-3 right-3 opacity-0 transition-opacity group-hover:opacity-100"
+                        aria-hidden
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-5 w-5 text-charcoal-400"
+                        >
+                          <path d="M5 12h14" />
+                          <path d="m12 5 7 7-7 7" />
+                        </svg>
+                      </span>
                     </Link>
                   </li>
                 );

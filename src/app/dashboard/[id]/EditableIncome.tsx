@@ -72,14 +72,14 @@ export function EditableIncome({
             aria-label="Income amount"
             aria-invalid={!!error}
             aria-describedby={error ? "income-error" : undefined}
-            className="w-28 rounded border border-charcoal-500 bg-charcoal-800 px-2 py-1 text-center text-xl font-semibold text-white focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+            className="w-28 rounded-xl border border-charcoal-500 bg-charcoal-800 px-2 py-1 text-center text-xl font-light text-white focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
           />
           <button
             type="button"
             onClick={handleSave}
             disabled={pending}
             aria-label="Save income"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded border border-charcoal-500 text-charcoal-200 hover:border-accent-emerald-500 hover:bg-accent-emerald-500/10 hover:text-accent-emerald-400 focus:outline-none focus:ring-2 focus:ring-accent-emerald-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 disabled:opacity-50"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-charcoal-500 bg-charcoal-900 text-charcoal-300 transition-colors hover:border-accent-emerald-500 hover:bg-accent-emerald-500/10 hover:text-accent-emerald-400 focus:outline-none focus:ring-2 focus:ring-accent-emerald-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 disabled:opacity-50"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ export function EditableIncome({
           }
         }}
         aria-label="Edit income"
-        className="cursor-text rounded border border-transparent px-2 py-1 text-xl font-semibold text-white outline-none hover:border-charcoal-500 hover:bg-charcoal-800/80 focus:border-accent-violet-500 focus:ring-1 focus:ring-accent-violet-500"
+        className="cursor-text rounded border border-transparent px-2 py-1 text-xl font-light text-white outline-none transition-colors hover:border-charcoal-500 hover:bg-charcoal-800/80 focus:border-accent-violet-500 focus:ring-1 focus:ring-accent-violet-500"
       >
         {formatCurrency(income)}
       </p>

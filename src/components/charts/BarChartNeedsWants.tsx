@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { ChartEmptyState } from "@/components/EmptyState";
 
 const NEEDS_COLOR = "#06B6D4";
 const WANTS_COLOR = "#F59E0B";
@@ -31,14 +32,18 @@ export function BarChartNeedsWants({ needs, wants, misc = 0 }: Props) {
 
   if (!hasData) {
     return (
-      <div className="flex min-h-[240px] items-center justify-center rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-6">
-        <p className="text-center text-charcoal-300">No spending this month.</p>
+      <div className="min-h-[240px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-6">
+        <ChartEmptyState
+          title="No spending this month"
+          description="Add expenses to see needs vs wants."
+          className="min-h-[240px]"
+        />
       </div>
     );
   }
 
   return (
-    <div className="min-h-[240px] w-full rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4">
+    <div className="min-h-[240px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
       <ResponsiveContainer width="100%" height={240}>
         <BarChart
           data={data}

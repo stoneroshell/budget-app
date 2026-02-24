@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter, Caudex } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,14 +8,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const interTight = Inter_Tight({
+const caudex = Caudex({
   subsets: ["latin"],
-  variable: "--font-inter-tight",
-  display: "swap",
-});
-
-const gothicModern = localFont({
-  src: "../../public/fonts/gothic_modern.woff2",
+  weight: ["400", "700"],
   variable: "--font-display",
   display: "swap",
 });
@@ -32,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${interTight.variable} ${gothicModern.variable}`}>
+    <html lang="en" className={`${inter.variable} ${caudex.variable}`}>
       <body className="min-h-screen font-sans antialiased">{children}</body>
     </html>
   );

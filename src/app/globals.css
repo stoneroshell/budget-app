@@ -37,3 +37,24 @@
     @apply outline-none ring-2 ring-accent-violet-500 ring-offset-2 ring-offset-charcoal-900;
   }
 }
+
+@layer components {
+  .btn-secondary {
+    @apply rounded-lg border border-charcoal-500 bg-charcoal-800 px-4 py-2 text-white transition-colors hover:border-charcoal-400 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-950;
+  }
+  .card {
+    @apply rounded-xl border border-charcoal-500 bg-charcoal-900/80;
+  }
+  .empty-state-wrapper {
+    @apply flex h-full flex-col items-center justify-center px-4 text-center;
+  }
+  .empty-state-icon-box {
+    @apply mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-charcoal-500 bg-charcoal-800 text-charcoal-300;
+  }
+  .empty-state-title {
+    @apply mb-2 text-lg font-medium text-charcoal-400;
+  }
+  .empty-state-description {
+    @apply max-w-md text-sm text-charcoal-300;
+  }
+}

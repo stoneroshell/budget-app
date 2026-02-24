@@ -13,28 +13,28 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal-950 flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-sm rounded-lg bg-charcoal-900 border border-charcoal-500 p-8 shadow-xl text-center">
-        <h1 className="font-display text-2xl font-semibold text-white mb-2 tracking-tight">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-charcoal-950 p-6">
+      <div className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-8 shadow-xl text-center">
+        <h1 className="font-display mb-2 text-2xl font-light text-white tracking-tight">
           Guap
         </h1>
-        <p className="text-charcoal-300 text-sm mb-6">
+        <p className="mb-6 text-sm text-charcoal-400">
           Sign in to manage your monthly budgets.
         </p>
         <form action="/auth/signin" method="get">
           <button
             type="submit"
-            className="w-full rounded-md bg-accent-violet-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-violet-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+            className="w-full rounded-lg bg-accent-violet-500 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-violet-400 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
           >
             Sign in with Google
           </button>
         </form>
-        <p className="mt-4 text-center text-xs text-charcoal-300">
+        <p className="mt-4 text-center text-xs text-charcoal-400">
           You will be redirected to Google to sign in securely.
         </p>
       </div>
-      <p className="mt-6 text-sm text-charcoal-300">
-        <Link href="/" className="text-charcoal-200 hover:text-white transition-colors duration-200">
+      <p className="mt-6 text-sm text-charcoal-400">
+        <Link href="/" className="btn-secondary inline-block">
           ← Back
         </Link>
       </p>

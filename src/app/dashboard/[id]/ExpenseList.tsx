@@ -12,6 +12,7 @@ import {
   type Supercategory,
 } from "@/app/actions/categories";
 import { formatCurrency } from "@/lib/helpers";
+import { EmptyState } from "@/components/EmptyState";
 import type { Expense } from "@/types/database";
 import type { Category } from "@/types/database";
 
@@ -126,9 +127,12 @@ export function ExpenseList({
 
   if (expenses.length === 0) {
     return (
-      <p className="rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-5 text-center text-charcoal-300">
-        No expenses yet. Add one above.
-      </p>
+      <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-8">
+        <EmptyState
+          title="No expenses yet"
+          description="Add one above."
+        />
+      </div>
     );
   }
 
@@ -146,7 +150,7 @@ export function ExpenseList({
           return (
           <li
             key={e.id}
-            className={`group flex flex-wrap items-center justify-between gap-2 rounded-lg border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 odd:bg-charcoal-900/50 ${rowAccent}`}
+            className={`group flex flex-wrap items-center justify-between gap-2 rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 transition-colors odd:bg-charcoal-900/50 hover:border-charcoal-400 ${rowAccent}`}
           >
             <div className="flex min-w-0 flex-1 items-center gap-2">
               <span className="text-white">{e.description}</span>
@@ -220,7 +224,7 @@ export function ExpenseList({
                           setFocusedIndex(0);
                         }}
                         onKeyDown={handleComboboxKeyDown}
-                        className="w-32 shrink-0 rounded border border-charcoal-500 bg-charcoal-800 px-2 py-1 text-sm text-charcoal-200 transition-colors duration-150 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+                        className="w-32 shrink-0 rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-2 py-1 text-sm text-charcoal-200 transition-colors focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
                       />
                       {isOpen && (
                         <ul
@@ -322,7 +326,7 @@ export function ExpenseList({
 
       {showAddCategory && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           aria-modal="true"
           role="dialog"
           aria-labelledby="add-category-title"
@@ -333,7 +337,7 @@ export function ExpenseList({
           }}
         >
           <div
-            className="w-full max-w-sm rounded-lg border border-charcoal-500 bg-charcoal-900 p-5 shadow-xl"
+            className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h2
@@ -351,7 +355,7 @@ export function ExpenseList({
               <div>
                 <label
                   htmlFor="new-category-name"
-                  className="mb-1 block text-sm text-charcoal-300"
+                  className="mb-1 block text-xs font-medium uppercase tracking-widest text-charcoal-400"
                 >
                   Name
                 </label>
@@ -362,11 +366,11 @@ export function ExpenseList({
                   onChange={(e) => setAddName(e.target.value)}
                   placeholder="e.g. Pet supplies"
                   autoFocus
-                  className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-white placeholder-charcoal-400 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+                  className="w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 text-white placeholder-charcoal-300 focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
                 />
               </div>
               <div>
-                <span className="mb-2 block text-sm text-charcoal-300">
+                <span className="mb-2 block text-xs font-medium uppercase tracking-widest text-charcoal-400">
                   Type
                 </span>
                 <div
@@ -410,14 +414,14 @@ export function ExpenseList({
                     setAddError(null);
                     setExpenseIdForNewCategory(null);
                   }}
-                  className="flex-1 rounded-md border border-charcoal-500 px-3 py-2 text-sm font-medium text-charcoal-200 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                  className="btn-secondary flex-1"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={addPending}
-                  className="flex-1 rounded-md border border-accent-violet-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-violet-500 hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                  className="flex-1 rounded-lg border border-accent-violet-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-violet-500 transition-colors hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
                 >
                   {addPending ? "Creating…" : "Create"}
                 </button>
@@ -429,7 +433,7 @@ export function ExpenseList({
 
       {deleteConfirmCategoryId && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           aria-modal="true"
           role="dialog"
           aria-labelledby="delete-category-title"
@@ -439,7 +443,7 @@ export function ExpenseList({
           }}
         >
           <div
-            className="w-full max-w-sm rounded-lg border border-charcoal-500 bg-charcoal-900 p-5 shadow-xl"
+            className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h2
@@ -457,7 +461,7 @@ export function ExpenseList({
               <button
                 type="button"
                 onClick={() => setDeleteConfirmCategoryId(null)}
-                className="flex-1 rounded-md border border-charcoal-500 px-3 py-2 text-sm font-medium text-charcoal-200 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                className="btn-secondary flex-1"
               >
                 No
               </button>
@@ -465,7 +469,7 @@ export function ExpenseList({
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={deletePending}
-                className="flex-1 rounded-md border border-accent-rose-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-rose-500 hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                className="flex-1 rounded-lg border-2 border-accent-rose-500 bg-transparent px-3 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
               >
                 {deletePending ? "Removing…" : "Yes"}
               </button>

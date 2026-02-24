@@ -68,22 +68,45 @@ Official colors for budget categories. Use consistently so users instantly recog
 
 ## 3. Typography
 
-- **Primary font:** Inter for UI and body text. Use a reliable fallback stack (e.g. `Inter, system-ui, sans-serif`).
-- **Display font:** Gothic Modern (`gothic_modern.woff2`) for site titling. Use for the app name **Guap** (login heading, header logo) and other prominent display headings where a distinct title treatment is desired. Apply via the `font-display` utility or `fontFamily.display` in Tailwind.
+The project uses exactly two fonts:
+
+- **Inter** — UI and body text. Use a reliable fallback stack (e.g. `Inter, system-ui, sans-serif`). This is the default `font-sans` in Tailwind.
+- **Caudex** — Display/titling font. Use for the app name **Guap** (login heading, header logo) and other prominent display headings where a distinct title treatment is desired. Apply via the `font-display` utility or `fontFamily.display` in Tailwind.
 - **Text alignment:** Prefer center-aligned text over left-aligned for headings, cards, and primary content where it improves balance and focus.
 - **Headings:** Clear hierarchy (e.g. one h1 per page). Slightly tighter letter-spacing on large display type.
 - **Body:** Comfortable line-height (1.5–1.6). Use muted gray for secondary text.
 - **Code / data:** Monospace for code and numeric data; consider a dedicated mono font. Keep code blocks on a darker surface with a subtle border.
 - **Scale:** Use a consistent scale (e.g. 0.75rem → 1rem → 1.25rem → 1.5rem → 2rem+) for rhythm.
 
+### Hierarchy (size and weight)
+
+- **Hero numbers / big stats:** Use **light** font weight (`font-light`) for large numbers (e.g. Income, Spent, Remaining, card totals). Size creates emphasis; avoid bold for these.
+- **Section labels:** Small, uppercase, widely tracked. Use `text-xs` (or `text-[10px]` / `text-[11px]` for metadata), `uppercase`, `tracking-widest`, and `font-medium` for labels like “View month”, “Income”, “Spent”, “By category”.
+- **Metadata / timestamps:** Use `text-[10px]` or `text-[11px]` (Tailwind arbitrary values) so metadata reads as secondary to body text.
+- **Emphasis:** Prefer **size** or **color** (accent/needs/wants) for hierarchy rather than bold. Use `font-semibold` only where a middle tier is needed (e.g. important labels); avoid `font-bold` for emphasis.
+
+### Text hierarchy (opacity levels)
+
+Use a consistent ladder so hierarchy comes from size and opacity, not color (except where accents are intentional):
+
+| Role        | Use |
+|-------------|-----|
+| **Primary** | `text-white` — titles, main numbers |
+| **Secondary** | `text-charcoal-200` or `text-charcoal-300` — body, descriptions |
+| **Muted**   | `text-charcoal-400` or `text-charcoal-300` — labels, supporting copy |
+| **Very muted** | `text-charcoal-500` or `text-charcoal-600` — placeholders, hints, timestamps |
+
+Ensure the charcoal palette includes steps (e.g. 200) for secondary text. Use these tiers consistently; reserve accent colors for needs/wants, status, and primary CTAs.
+
 ---
 
 ## 4. Layout & spacing
 
-- **Sections:** Generous vertical spacing between major sections (e.g. 4–6rem) so the page breathes.
+- **Sections:** Generous vertical spacing between major sections. Use `gap-6` (1.5rem) between page sections so the layout breathes; `gap-4` for card grids.
 - **Containers:** Max-width content area (e.g. 1200–1280px) with horizontal padding; center main content.
-- **Cards / feature blocks:** Consistent padding (e.g. 1.5rem–2rem), subtle border or elevation so they read as “surfaces” on the charcoal background.
-- **Grids:** Use grids for feature lists, dashboards, and data; keep gaps even (e.g. 1.5rem–2rem).
+- **Cards / feature blocks:** Consistent padding: `p-4` or `p-5` for standard cards. Subtle border or elevation so they read as “surfaces” on the charcoal background.
+- **Grids:** Use grids for feature lists, dashboards, and data; keep gaps even (e.g. `gap-4` for cards, `gap-6` for sections).
+- **Border radius:** `rounded-lg` (8px) for small cards and buttons; `rounded-xl` (12px) for standard cards; `rounded-2xl` (16px) for large cards and modals; `rounded-full` for pills and tabs.
 
 ---
 
@@ -91,17 +114,23 @@ Official colors for budget categories. Use consistently so users instantly recog
 
 - **Buttons**
   - Primary: Use the chosen primary accent (e.g. violet) with sufficient contrast; white or light text.
-  - Secondary: Outline or subtle fill on charcoal; hover slightly brighter.
+  - Secondary: Neutral fill so primary accent stays for main CTAs. Example: `bg-charcoal-800 border border-charcoal-500 text-white hover:bg-charcoal-700 hover:border-charcoal-400 rounded-lg px-4 py-2`. Use for “Back”, secondary actions, and non-primary controls.
+  - Icon button: `h-8 w-8 rounded-lg border border-charcoal-500 bg-charcoal-900 text-charcoal-300 hover:text-white hover:border-charcoal-400`. Keep small and muted by default; brighten on hover.
   - Destructive: Rose accent; reserve for delete/danger.
 - **Cards**
-  - Dark surface, subtle border or soft shadow. Optional small accent (left border or icon) for category/status.
+  - Dark surface, subtle border. Default border: `border-charcoal-500` (or equivalent). On hover for interactive cards: `hover:border-charcoal-400` so the border brightens slightly. Optional small accent (left border or icon) for category/status.
 - **Code blocks**
   - Dark background, monospace, rounded corners. Use one accent for syntax or key tokens if desired; avoid full rainbow.
 - **Badges / tags**
-  - Small, pill-shaped. Background = accent at low opacity or solid accent with contrasting text.
+  - **Needs/wants:** Use needs and wants colors for category labels and amounts (see color palette).
+  - **Other tags (e.g. Misc, type badges):** Neutral pill so we don’t introduce extra accent colors. Example: `px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-charcoal-800 text-charcoal-300 border border-charcoal-500`.
 - **Data display**
-  - Numbers and key metrics: consider bold + accent color for positive/negative or category. **Needs** amounts use needs color (`#06B6D4`); **wants** amounts use wants color (`#F59E0B`).
+  - Numbers and key metrics: use **light** weight for hero stats; use accent color for positive/negative or category. **Needs** amounts use needs color (`#06B6D4`); **wants** amounts use wants color (`#F59E0B`).
   - Tables: Zebra or alternating row tint at very low opacity; accent for headers or key columns.
+- **Empty states**
+  - Centered layout: icon in a rounded container, title below, short description. Example: wrapper `h-full flex flex-col items-center justify-center text-center px-4`; icon box `w-16 h-16 rounded-2xl bg-charcoal-800 border border-charcoal-500 flex items-center justify-center mb-4` with icon `w-8 h-8 text-charcoal-600`; title `text-charcoal-400 text-lg font-medium mb-2`; description `text-charcoal-600 text-sm max-w-md`. Use for “No budgets”, “No spending”, “No expenses”, etc.
+- **Reveal on hover**
+  - For list items or cards that link: add an arrow or chevron with `opacity-0 group-hover:opacity-100 transition-opacity` and put `group` on the parent. Hover states should reveal affordances rather than only decorate.
 - **Alerts / banners**
   - Success: emerald tint; warning: amber; error: rose; info: blue or cyan. Icon + short copy.
 
@@ -109,8 +138,8 @@ Official colors for budget categories. Use consistently so users instantly recog
 
 ## 6. Motion & feedback
 
-- **Transitions:** Short (150–300ms) for hover, focus, and toggle states.
-- **Loading:** Subtle skeleton or spinner; prefer accent color for progress/spinner.
+- **Transitions:** Use ~300ms for hover, focus, and toggle states where it improves perceived calm (e.g. `duration-300`). Shorter (150–200ms) is fine for small controls.
+- **Loading:** Prefer a simple spinner (e.g. `border-2 border-charcoal-500 border-t-transparent rounded-full animate-spin`) or minimal reveal. Avoid skeleton loaders; keep loading states subtle.
 - **Micro-interactions:** Light scale or brightness change on buttons/cards on hover; keep motion purposeful, not decorative.
 
 ---
@@ -128,7 +157,7 @@ Official colors for budget categories. Use consistently so users instantly recog
 - **CSS variables:** Define charcoal shades and the six accents as variables (e.g. `--color-charcoal-bg`, `--color-accent-violet`) for theming and consistency.
 - **Tailwind:** Map the palette to theme colors (e.g. `charcoal-900/800/700`, `accent-violet`, `accent-cyan`) and use semantic names (e.g. `success`, `warning`, `error`) that map to emerald, amber, rose. Expose **needs** (`#06B6D4`) and **wants** (`#F59E0B`) as semantic colors (e.g. `needs`, `wants` or `accent-needs`, `accent-wants`) for category-based numbers and labels. Expose **needs-secondary** (`#0E7490`) and **wants-secondary** (`#B45309`) for subtle backgrounds, borders, and secondary UI.
 - **Dark-only:** This spec is for a dark theme; if you add a light theme later, define a parallel palette and surface rules.
-- **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling. Render **Guap** and other display titling in the **Gothic Modern** display font (`public/fonts/gothic_modern.woff2`).
+- **Branding:** Use the app name **Guap** for page titles, login screen, header, and any user-facing app titling. Render **Guap** and other display titling in the **Caudex** display font.
 
 ---
 

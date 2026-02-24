@@ -171,7 +171,7 @@ export function AddExpenseForm({
     <form
       id="add-expense-form"
       action={handleSubmit}
-      className="rounded-lg border border-charcoal-500 bg-charcoal-900 p-5"
+      className="rounded-xl border border-charcoal-500 bg-charcoal-900 p-5"
     >
       {error && (
         <p className="mb-3 text-sm text-accent-rose-400" role="alert">
@@ -182,7 +182,7 @@ export function AddExpenseForm({
         <div className="sm:col-span-2 lg:col-span-1">
           <label
             htmlFor="description"
-            className="mb-1 block text-sm text-charcoal-300"
+            className="mb-1 block text-xs font-medium uppercase tracking-widest text-charcoal-400"
           >
             Description
           </label>
@@ -192,13 +192,13 @@ export function AddExpenseForm({
             type="text"
             required
             placeholder="e.g. Groceries"
-            className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-white placeholder-charcoal-300 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+            className="w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 text-white placeholder-charcoal-300 focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
           />
         </div>
         <div>
           <label
             htmlFor="amount"
-            className="mb-1 block text-sm text-charcoal-300"
+            className="mb-1 block text-xs font-medium uppercase tracking-widest text-charcoal-400"
           >
             Amount ($)
           </label>
@@ -210,13 +210,13 @@ export function AddExpenseForm({
             step="0.01"
             required
             placeholder="0.00"
-            className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-white placeholder-charcoal-300 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
+            className="w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 text-white placeholder-charcoal-300 focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
           />
         </div>
         <div ref={dropdownRef} className="relative">
           <label
             htmlFor="payment_label"
-            className="mb-1 block text-sm text-charcoal-300"
+            className="mb-1 block text-xs font-medium uppercase tracking-widest text-charcoal-400"
           >
             Source (optional)
           </label>
@@ -233,7 +233,7 @@ export function AddExpenseForm({
             aria-label="Payment source"
             onClick={() => setDropdownOpen((open) => !open)}
             onKeyDown={handleDropdownKeyDown}
-            className="w-full rounded-xl border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-left text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+            className="w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 text-left text-sm transition-colors focus:border-charcoal-400 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
             style={{ color: triggerColor }}
           >
             {triggerLabel}
@@ -288,7 +288,7 @@ export function AddExpenseForm({
             <div>
               <label
                 htmlFor="new_source_name"
-                className="mb-1 block text-xs text-charcoal-300"
+                className="mb-1 block text-xs font-medium uppercase tracking-widest text-charcoal-400"
               >
                 Name
               </label>
@@ -298,11 +298,11 @@ export function AddExpenseForm({
                 value={addSourceName}
                 onChange={(e) => setAddSourceName(e.target.value)}
                 placeholder="e.g. Chase Freedom"
-                className="w-full rounded border border-charcoal-500 bg-charcoal-800 px-3 py-2 text-sm text-white placeholder-charcoal-300 focus:border-accent-violet-500 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
+                className="w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 text-sm text-white placeholder-charcoal-300 focus:border-charcoal-400 focus:outline-none focus:ring-1 focus:ring-accent-violet-500"
               />
             </div>
             <div>
-              <span className="mb-2 block text-xs text-charcoal-300">Color</span>
+              <span className="mb-2 block text-xs font-medium uppercase tracking-widest text-charcoal-400">Color</span>
               <div className="flex flex-wrap gap-2">
                 {PAYMENT_SOURCE_COLORS.map((hex) => (
                   <button
@@ -326,7 +326,7 @@ export function AddExpenseForm({
                 type="button"
                 onClick={handleAddSource}
                 disabled={addSourcePending}
-                className="rounded-md bg-charcoal-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-charcoal-500 transition-colors duration-200 disabled:opacity-50"
+                className="btn-secondary rounded-lg px-3 py-1.5 text-sm disabled:opacity-50"
               >
                 {addSourcePending ? "Saving…" : "Save source"}
               </button>
@@ -338,7 +338,7 @@ export function AddExpenseForm({
                   setAddSourceError(null);
                   setSelectedSource("");
                 }}
-                className="rounded-md border border-charcoal-500 px-3 py-1.5 text-sm text-charcoal-300 hover:bg-charcoal-700 transition-colors duration-200"
+                className="btn-secondary rounded-lg px-3 py-1.5 text-sm"
               >
                 Cancel
               </button>
@@ -351,7 +351,7 @@ export function AddExpenseForm({
         <button
           type="submit"
           disabled={pending}
-          className="rounded-md bg-accent-violet-500 px-4 py-2 text-sm font-medium text-white hover:bg-accent-violet-400 transition-colors duration-200 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+          className="rounded-lg bg-accent-violet-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-violet-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
         >
           {pending ? "Adding…" : "Add expense"}
         </button>
@@ -360,7 +360,7 @@ export function AddExpenseForm({
             type="button"
             onClick={handleDeleteSource}
             disabled={deletePending}
-            className="rounded-md border-2 border-accent-rose-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-rose-500 hover:bg-charcoal-700 hover:border-accent-rose-400 hover:text-accent-rose-400 transition-colors duration-200 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+            className="rounded-lg border-2 border-accent-rose-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:border-accent-rose-400 hover:bg-charcoal-700 hover:text-accent-rose-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
             aria-label={`Remove payment source ${selectedPaymentSource.name}`}
           >
             {deletePending ? "Removing…" : "Remove source"}

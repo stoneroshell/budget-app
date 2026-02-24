@@ -32,7 +32,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
             setShowConfirm(true);
             setError(null);
           }}
-          className="rounded-md border-2 border-accent-rose-500 bg-transparent px-4 py-2 text-sm font-medium text-accent-rose-500 hover:bg-charcoal-800 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+          className="rounded-lg border-2 border-accent-rose-500 bg-transparent px-4 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:bg-charcoal-800 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
         >
           Delete budget
         </button>
@@ -40,7 +40,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
 
       {showConfirm && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           aria-modal="true"
           role="dialog"
           aria-labelledby="delete-budget-title"
@@ -50,7 +50,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
           }}
         >
           <div
-            className="w-full max-w-sm rounded-lg border border-charcoal-500 bg-charcoal-900 p-5 shadow-xl"
+            className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h2
@@ -78,7 +78,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
                   setShowConfirm(false);
                   setError(null);
                 }}
-                className="flex-1 rounded-md border border-charcoal-500 px-3 py-2 text-sm font-medium text-charcoal-200 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                className="btn-secondary flex-1"
               >
                 No
               </button>
@@ -86,7 +86,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
                 type="button"
                 onClick={handleConfirm}
                 disabled={pending}
-                className="flex-1 rounded-md border-2 border-accent-rose-500 bg-transparent px-3 py-2 text-sm font-medium text-accent-rose-500 hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+                className="flex-1 rounded-lg border-2 border-accent-rose-500 bg-transparent px-3 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:bg-charcoal-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
               >
                 {pending ? "Deleting…" : "Yes"}
               </button>

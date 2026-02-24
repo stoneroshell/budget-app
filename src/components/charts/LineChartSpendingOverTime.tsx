@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { ChartEmptyState } from "@/components/EmptyState";
 
 export type LineChartPoint = {
   monthYear: string;
@@ -22,16 +23,18 @@ type Props = {
 export function LineChartSpendingOverTime({ data }: Props) {
   if (!data.length) {
     return (
-      <div className="flex min-h-[260px] items-center justify-center rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-6">
-        <p className="text-center text-charcoal-300">
-          Add more months to see your spending trend.
-        </p>
+      <div className="min-h-[260px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-6">
+        <ChartEmptyState
+          title="No trend data yet"
+          description="Add more months to see your spending trend."
+          className="min-h-[260px]"
+        />
       </div>
     );
   }
 
   return (
-    <div className="min-h-[260px] w-full rounded-lg border border-charcoal-500 bg-charcoal-900/80 p-4">
+    <div className="min-h-[260px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
       <ResponsiveContainer width="100%" height={260}>
         <LineChart
           data={data}

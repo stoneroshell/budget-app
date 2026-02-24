@@ -23,18 +23,18 @@ export default async function DashboardLayout({
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
           <Link
             href="/dashboard"
-            className="font-display text-lg font-semibold text-white hover:text-accent-violet-400 transition-colors duration-200 tracking-tight"
+            className="font-display text-lg font-semibold text-white tracking-tight transition-colors hover:text-accent-violet-400"
           >
             Guap
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-charcoal-300 truncate max-w-[180px]">
+            <span className="max-w-[180px] truncate text-sm text-charcoal-400">
               {user.email}
             </span>
             <form action={signOut}>
               <button
                 type="submit"
-                className="text-sm text-charcoal-300 hover:text-white transition-colors duration-200"
+                className="text-sm text-charcoal-400 transition-colors hover:text-white"
               >
                 Sign out
               </button>
