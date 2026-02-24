@@ -42,7 +42,9 @@
       "ralphs",
       "vons",
       "marketplace",
-      "supermarket"
+      "supermarket",
+      "gelsons",
+      "erewhon"
     ]
   },
   {
@@ -332,7 +334,9 @@
       "sports bar",
       "wine shop",
       "bevmo",
-      "total wine"
+      "total wine",
+      "drink",
+      "beer"
     ]
   },
   {
@@ -381,7 +385,8 @@
       "shein",
       "nike",
       "adidas",
-      "apparel"
+      "apparel",
+      "clothes"
     ]
   }
 ]

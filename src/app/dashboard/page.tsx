@@ -170,7 +170,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
               className="space-y-6"
               aria-label="Spending charts"
             >
-              <h2 className="text-center text-lg font-light text-white tracking-tight">
+              <h2 className="mb-4 font-display text-center text-2xl font-light text-white tracking-tight">
                 Spending overview
               </h2>
               <div className="grid gap-6 lg:grid-cols-2">
@@ -227,22 +227,26 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                         }}
                       >
                         <div
-                          className="flex min-h-0 items-center justify-center overflow-hidden"
-                          style={{ paddingBottom: "2cqi" }}
+                          className="flex min-h-0 items-center justify-center overflow-visible"
+                          style={{ paddingBottom: "4cqi", marginTop: "15cqi" }}
                         >
                           <span
-                            className="font-display max-w-full overflow-hidden text-ellipsis font-light text-white select-none leading-[0.85]"
+                            className="font-display max-w-full overflow-hidden text-ellipsis font-light text-white select-none"
                             style={{
-                              fontSize: "40cqi",
-                              letterSpacing: "0.02em",
+                              fontSize: "35cqi",
+                              letterSpacing: "0.01em",
+                              lineHeight: 1.05,
                             }}
                           >
                             {getMonthAbbrevUpper(b.month)}
                           </span>
                         </div>
-                        <div className="flex min-h-0 items-center justify-center overflow-hidden">
+                        <div
+                          className="flex min-h-0 items-center justify-center overflow-hidden"
+                          style={{ marginTop: "5cqi" }}
+                        >
                           <span
-                            className="max-w-full overflow-hidden text-ellipsis font-medium text-white"
+                            className="font-display max-w-full overflow-hidden text-ellipsis font-medium text-white"
                             style={{ fontSize: "10cqi" }}
                           >
                             {b.year}

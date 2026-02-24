@@ -72,6 +72,7 @@ The project uses exactly two fonts:
 
 - **Inter** — UI and body text. Use a reliable fallback stack (e.g. `Inter, system-ui, sans-serif`). This is the default `font-sans` in Tailwind.
 - **Caudex** — Display/titling font. Use for the app name **Guap** (login heading, header logo) and other prominent display headings where a distinct title treatment is desired. Apply via the `font-display` utility or `fontFamily.display` in Tailwind.
+- **Section titles (H2) in white:** Use Caudex (`font-display`) for all section titles that are white text and sit outside cards (e.g. “Spending overview”, “Your budgets”).
 - **Text alignment:** Prefer center-aligned text over left-aligned for headings, cards, and primary content where it improves balance and focus.
 - **Headings:** Clear hierarchy (e.g. one h1 per page). Slightly tighter letter-spacing on large display type.
 - **Body:** Comfortable line-height (1.5–1.6). Use muted gray for secondary text.
