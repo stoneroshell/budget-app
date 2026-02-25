@@ -4,12 +4,10 @@ import { getExpensesByBudgetId, getExpensesByBudgetIds } from "@/app/actions/exp
 import { getCategories } from "@/app/actions/categories";
 import {
   formatCurrency,
-  getMonthAbbrevUpper,
   totalSpent,
   groupExpensesBySupercategory,
   groupExpensesByCategory,
   needsWantsRatio,
-  getNetAmountGradientColor,
 } from "@/lib/helpers";
 import {
   buildLineChartData,
@@ -22,7 +20,7 @@ import {
 } from "@/lib/monthly-insights";
 import { CreateBudgetForm } from "./CreateBudgetForm";
 import { CsvImportTrigger } from "./CsvImportTrigger";
-import { ViewMonthSelector } from "./ViewMonthSelector";
+import { YearMonthGrid } from "./YearMonthGrid";
 import { EmptyState } from "@/components/EmptyState";
 import { NeedsWantsBar } from "@/components/NeedsWantsBar";
 import { ChartScopeToggle } from "@/components/ChartScopeToggle";
@@ -35,8 +33,6 @@ type PageProps = {
 export default async function DashboardPage({ searchParams }: PageProps) {
   const { budget: budgetParam } = await searchParams;
   const budgets = await getBudgetsWithNetIncome();
-  const minNet = budgets.length ? Math.min(...budgets.map((b) => b.netIncome)) : 0;
-  const maxNet = budgets.length ? Math.max(...budgets.map((b) => b.netIncome)) : 0;
 
   const selectedId =
     budgetParam && budgets.some((b) => b.id === budgetParam)
@@ -132,12 +128,12 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         </div>
       ) : (
         <>
-          {/* Month / budget selector */}
-          <section aria-label="Select month to view" className="space-y-3">
+          {/* Year + month grid selector */}
+          <section className="space-y-4 py-2 sm:space-y-5 sm:py-4">
             <h2 className="text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
               View month
             </h2>
-            <ViewMonthSelector
+            <YearMonthGrid
               budgets={budgets}
               selectedBudgetId={selectedId}
               selectedMonth={budget?.month ?? budgets[0]?.month ?? new Date().getMonth() + 1}
@@ -246,98 +242,15 @@ export default async function DashboardPage({ searchParams }: PageProps) {
             </section>
           )}
 
-          {/* Your budgets grid */}
-          <section>
-            <h2 className="mb-4 text-center font-display text-2xl font-light text-white tracking-tight">
-              Your budgets
-            </h2>
-            <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {budgets.map((b) => {
-                const netColor = getNetAmountGradientColor(
-                  b.netIncome,
-                  minNet,
-                  maxNet
-                );
-                return (
-                <li key={b.id} className="size-full min-w-0">
-                  <Link
-                    href={`/dashboard/${b.id}`}
-                    className="group relative @container flex aspect-square size-full min-w-0 flex-col rounded-xl border border-accent-violet-500 bg-charcoal-900/80 text-center transition-colors transition-transform duration-300 ease-out hover:scale-[1.03] hover:z-10 hover:border-accent-violet-400 hover:bg-charcoal-800/80 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 [container-type:inline-size] origin-center"
-                  >
-                      <div
-                        className="grid min-h-0 flex-1 w-full"
-                        style={{
-                          gridTemplateRows: "2fr 1fr 1fr",
-                          padding: "3cqi",
-                        }}
-                      >
-                        <div
-                          className="flex min-h-0 items-center justify-center overflow-visible"
-                          style={{ paddingBottom: "4cqi", marginTop: "15cqi" }}
-                        >
-                          <span
-                            className="font-display max-w-full overflow-hidden text-ellipsis font-light text-white select-none"
-                            style={{
-                              fontSize: "35cqi",
-                              letterSpacing: "0.01em",
-                              lineHeight: 1.05,
-                            }}
-                          >
-                            {getMonthAbbrevUpper(b.month)}
-                          </span>
-                        </div>
-                        <div
-                          className="flex min-h-0 items-center justify-center overflow-hidden"
-                          style={{ marginTop: "5cqi" }}
-                        >
-                          <span
-                            className="font-display max-w-full overflow-hidden text-ellipsis font-medium text-white"
-                            style={{ fontSize: "10cqi" }}
-                          >
-                            {b.year}
-                          </span>
-                        </div>
-                        <div className="flex min-h-0 items-center justify-center overflow-hidden">
-                          <span
-                            className="max-w-full overflow-hidden text-ellipsis font-light"
-                            style={{ fontSize: "8cqi", color: netColor }}
-                          >
-                            {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
-                          </span>
-                        </div>
-                      </div>
-                      <span
-                        className="absolute bottom-3 right-3 opacity-0 transition-opacity group-hover:opacity-100"
-                        aria-hidden
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="h-5 w-5 text-charcoal-400"
-                        >
-                          <path d="M5 12h14" />
-                          <path d="m12 5 7 7-7 7" />
-                        </svg>
-                      </span>
-                  </Link>
-                </li>
-              );
-              })}
-            </ul>
-            {budgets.length > 0 && categories.length > 0 && (
-              <div className="mt-6 flex justify-end">
-                <CsvImportTrigger
-                  categories={categories}
-                  budgets={budgets.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
-                />
-              </div>
-            )}
-          </section>
+          {/* Export */}
+          {budgets.length > 0 && categories.length > 0 && (
+            <div className="flex justify-end">
+              <CsvImportTrigger
+                categories={categories}
+                budgets={budgets.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
+              />
+            </div>
+          )}
         </>
       )}
       </div>

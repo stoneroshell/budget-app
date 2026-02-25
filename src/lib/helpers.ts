@@ -83,6 +83,9 @@ export const MONTH_ABBREV = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ] as const;
 
+/** Uppercase 3-letter month labels for grid (JAN, FEB, …). */
+export const MONTH_ABBREV_UPPER = MONTH_ABBREV.map((m) => m.toUpperCase());
+
 export function getMonthAbbrev(month: number): string {
   return MONTH_ABBREV[month - 1] ?? "";
 }
@@ -146,19 +149,21 @@ function lerpRgb(
 }
 
 /**
- * Returns a CSS color for net budget amount: white at $0, bold red at the
- * lowest (most negative) net across all months, bold green at the highest net.
+ * Returns a CSS color for net budget amount: zeroColor at $0, rose at the
+ * lowest (most negative) net, emerald at the highest net.
+ * @param zeroColor - Hex color for zero (e.g. "#D5D5D5" for grey, "#FFFFFF" for white)
  */
 export function getNetAmountGradientColor(
   netIncome: number,
   minNet: number,
-  maxNet: number
+  maxNet: number,
+  zeroColor: string = NET_GRADIENT_ZERO
 ): string {
-  const zero = hexToRgb(NET_GRADIENT_ZERO);
+  const zero = hexToRgb(zeroColor);
   const red = hexToRgb(NET_GRADIENT_RED);
   const green = hexToRgb(NET_GRADIENT_GREEN);
 
-  if (netIncome === 0) return NET_GRADIENT_ZERO;
+  if (netIncome === 0) return zeroColor;
   if (netIncome < 0) {
     const t = minNet === 0 ? 1 : netIncome / minNet;
     return lerpRgb(zero, red, t);
