@@ -9,6 +9,7 @@ import {
   groupExpensesBySupercategory,
   groupExpensesByCategory,
   needsWantsRatio,
+  getNetAmountGradientColor,
 } from "@/lib/helpers";
 import {
   buildLineChartData,
@@ -24,21 +25,6 @@ import { ViewMonthSelector } from "./ViewMonthSelector";
 import { EmptyState } from "@/components/EmptyState";
 import { NeedsWantsBar } from "@/components/NeedsWantsBar";
 import { ChartScopeToggle } from "@/components/ChartScopeToggle";
-/** Returns text color class for net amount (positive = emerald, negative = rose, etc.). */
-function getNetTextClass(
-  netIncome: number,
-  minNet: number,
-  maxNet: number,
-  isSingleOrTied: boolean
-): string {
-  if (isSingleOrTied) {
-    return netIncome >= 0 ? "text-accent-emerald-400" : "text-accent-rose-400";
-  }
-  if (netIncome === minNet) return "text-accent-rose-400";
-  if (netIncome === maxNet) return "text-accent-emerald-400";
-  return "text-charcoal-300";
-}
-
 import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
 
 type PageProps = {
@@ -50,7 +36,6 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const budgets = await getBudgetsWithNetIncome();
   const minNet = budgets.length ? Math.min(...budgets.map((b) => b.netIncome)) : 0;
   const maxNet = budgets.length ? Math.max(...budgets.map((b) => b.netIncome)) : 0;
-  const isSingleOrTied = budgets.length <= 1 || minNet === maxNet;
 
   const selectedId =
     budgetParam && budgets.some((b) => b.id === budgetParam)
@@ -266,11 +251,10 @@ export default async function DashboardPage({ searchParams }: PageProps) {
             </h2>
             <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {budgets.map((b) => {
-                const netTextClass = getNetTextClass(
+                const netColor = getNetAmountGradientColor(
                   b.netIncome,
                   minNet,
-                  maxNet,
-                  isSingleOrTied
+                  maxNet
                 );
                 return (
                 <li key={b.id} className="size-full min-w-0">
@@ -313,8 +297,8 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                         </div>
                         <div className="flex min-h-0 items-center justify-center overflow-hidden">
                           <span
-                            className={`max-w-full overflow-hidden text-ellipsis font-light ${netTextClass}`}
-                            style={{ fontSize: "8cqi" }}
+                            className="max-w-full overflow-hidden text-ellipsis font-light"
+                            style={{ fontSize: "8cqi", color: netColor }}
                           >
                             {`${b.netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(b.netIncome))}`}
                           </span>
