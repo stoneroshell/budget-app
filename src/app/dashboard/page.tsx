@@ -144,11 +144,10 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                     {formatCurrency(remaining)}
                   </p>
                 </div>
-                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5">
-                  <p className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
-                    Needs vs Wants
-                  </p>
+                <div className="flex min-h-0 flex-1 flex-col rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5">
                   <NeedsWantsBar
+                    needsAmount={bySuper.needs}
+                    wantsAmount={bySuper.wants}
                     needsPercent={needsPercent}
                     wantsPercent={wantsPercent}
                   />

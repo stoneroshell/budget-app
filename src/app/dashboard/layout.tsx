@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { signOut } from "@/app/actions/auth";
 import Link from "next/link";
+import { GuapLogo } from "@/components/GuapLogo";
 
 export default async function DashboardLayout({
   children,
@@ -23,9 +24,10 @@ export default async function DashboardLayout({
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
           <Link
             href="/dashboard"
-            className="font-display text-lg font-semibold text-white tracking-tight transition-colors hover:text-accent-violet-400"
+            className="transition-opacity hover:opacity-90"
+            aria-label="Guap home"
           >
-            Guap
+            <GuapLogo height={28} />
           </Link>
           <div className="flex items-center gap-4">
             <span className="max-w-[180px] truncate text-sm text-charcoal-400">
