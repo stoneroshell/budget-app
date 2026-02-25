@@ -320,7 +320,7 @@ export function ExpenseList({
                 onClick={() => handleDeleteExpense(e.id)}
                 disabled={deletingExpenseId === e.id}
                 aria-label={`Delete expense ${e.description}`}
-                className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-charcoal-700 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 disabled:opacity-50"
+                className="flex h-[17px] w-[17px] shrink-0 items-center justify-center rounded border border-accent-rose-500 bg-charcoal-800/80 text-accent-rose-500 opacity-0 transition-colors group-hover:opacity-100 hover:bg-accent-rose-500 hover:text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900 disabled:opacity-50"
               >
                 <span className="text-xs font-medium leading-none">×</span>
               </button>
@@ -391,7 +391,7 @@ export function ExpenseList({
                     onClick={() => setAddSupercategory("needs")}
                     className={`flex-1 rounded-md px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-needs focus:ring-offset-2 focus:ring-offset-charcoal-900 ${
                       addSupercategory === "needs"
-                        ? "bg-needs text-white"
+                        ? "bg-needs text-charcoal-900"
                         : "bg-transparent text-needs hover:bg-needs-secondary/20"
                     }`}
                   >
@@ -404,7 +404,7 @@ export function ExpenseList({
                     onClick={() => setAddSupercategory("wants")}
                     className={`flex-1 rounded-md px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-wants focus:ring-offset-2 focus:ring-offset-charcoal-900 ${
                       addSupercategory === "wants"
-                        ? "bg-wants text-white"
+                        ? "bg-wants text-charcoal-900"
                         : "bg-transparent text-wants hover:bg-wants-secondary/20"
                     }`}
                   >

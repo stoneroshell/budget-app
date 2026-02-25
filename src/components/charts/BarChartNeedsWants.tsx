@@ -25,6 +25,9 @@ function NeedsWantsTooltipContent({
   const item = payload[0];
   const name = item.payload?.name ?? item.name ?? "";
   const value = typeof item.value === "number" ? item.value : 0;
+  const pct = typeof (item.payload as { pct?: number })?.pct === "number"
+    ? (item.payload as { pct: number }).pct
+    : 0;
   return (
     <div
       style={{
@@ -35,7 +38,9 @@ function NeedsWantsTooltipContent({
       }}
     >
       <div style={{ color: LABEL_COLOR }}>{name}:</div>
-      <div style={{ color: VALUE_COLOR }}>${value.toFixed(2)}</div>
+      <div style={{ color: VALUE_COLOR }}>
+        ${value.toFixed(2)} ({pct.toFixed(0)}%)
+      </div>
     </div>
   );
 }
@@ -59,10 +64,11 @@ export function BarChartNeedsWants({
   emptyDescription = "Add expenses to see needs vs wants.",
 }: Props) {
   const hasData = needs > 0 || wants > 0 || misc > 0;
+  const total = needs + wants + misc;
   const data = [
-    { name: "Needs", value: needs, color: NEEDS_COLOR },
-    { name: "Wants", value: wants, color: WANTS_COLOR },
-    ...(misc > 0 ? [{ name: "Misc", value: misc, color: MISC_COLOR }] : []),
+    { name: "Needs", value: needs, color: NEEDS_COLOR, pct: total > 0 ? (needs / total) * 100 : 0 },
+    { name: "Wants", value: wants, color: WANTS_COLOR, pct: total > 0 ? (wants / total) * 100 : 0 },
+    ...(misc > 0 ? [{ name: "Misc", value: misc, color: MISC_COLOR, pct: (misc / total) * 100 }] : []),
   ].filter((d) => d.value > 0);
 
   if (!hasData) {

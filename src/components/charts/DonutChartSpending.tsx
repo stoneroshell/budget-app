@@ -77,8 +77,8 @@ export function DonutChartSpending({
     });
 
   return (
-    <div className="min-h-[280px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
-      <ResponsiveContainer width="100%" height={280}>
+    <div className="min-h-[320px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
+      <ResponsiveContainer width="100%" height={320}>
         <PieChart>
           {/* Main donut: no stroke so no segment borders */}
           {pies.map(({ key, segments, startAngle: start, endAngle: end }) => (
@@ -191,7 +191,7 @@ export function DonutChartSpending({
             }}
           />
           <Legend
-            wrapperStyle={{ fontSize: "12px" }}
+            wrapperStyle={{ fontSize: "12px", marginTop: "40px" }}
             formatter={(value) => (
               <span className="text-charcoal-200">{value}</span>
             )}

@@ -389,6 +389,8 @@ Phase 5 – CSV Import
 
 Stretch Goals (Post v1)
 
+    Allow users to add custom rules-based categorization for custom rules
+
     Recurring expenses
 
     Light mode
