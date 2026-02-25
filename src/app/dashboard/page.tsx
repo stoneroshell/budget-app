@@ -72,6 +72,19 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const lineData = buildLineChartData(budgets);
   const { needsPercent, wantsPercent } = needsWantsRatio(bySuper);
 
+  // Year-scoped data for "This year" chart scope (selected budget's year)
+  const selectedYear =
+    budget?.year ?? budgets[0]?.year ?? new Date().getFullYear();
+  const yearBudgetIds = budgets
+    .filter((b) => b.year === selectedYear)
+    .map((b) => b.id);
+  const yearExpenses = allTimeExpenses.filter((e) =>
+    yearBudgetIds.includes(e.budget_id)
+  );
+  const bySuperYear = groupExpensesBySupercategory(yearExpenses, categories);
+  const byCategoryYear = groupExpensesByCategory(yearExpenses, categories);
+  const yearDonutData = buildDonutChartData(byCategoryYear);
+
   // Resolve previous calendar month for insights (no extra fetch: use allTimeExpenses)
   let previousBudget: (typeof budgets)[0] | null = null;
   let prevExpenses: typeof expenses = [];
@@ -195,6 +208,9 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                 allTimeDonutData={donutDataAllTime}
                 monthBySuper={bySuper}
                 allTimeBySuper={bySuperAllTime}
+                yearDonutData={yearDonutData}
+                yearBySuper={bySuperYear}
+                selectedYear={selectedYear}
               />
               <div>
                 <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">

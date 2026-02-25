@@ -45,7 +45,9 @@ function MonthCell({
     "cursor-pointer border-charcoal-500 text-white hover:border-charcoal-400 hover:scale-[1.02] hover:outline hover:outline-1.2 hover:outline-accent-violet-500 hover:outline-offset-2";
   const disabledClasses =
     "cursor-not-allowed border-charcoal-500 text-charcoal-500";
-  const selectedClasses = isSelected ? "ring-2 ring-charcoal-400 ring-inset" : "";
+  const selectedClasses = isSelected
+    ? "ring-2 ring-accent-violet-500/25 ring-inset"
+    : "";
 
   if (budget) {
     const netColor = getNetAmountGradientColor(netIncome, minNet, maxNet, NET_ZERO_COLOR);
@@ -70,7 +72,13 @@ function MonthCell({
         )}
         <div className="flex h-full w-full flex-col">
           <div className="flex flex-1 items-center justify-center">
-            <span>{label}</span>
+            <span
+              className={
+                isSelected ? "text-accent-violet-400" : undefined
+              }
+            >
+              {label}
+            </span>
           </div>
           <div
             className="shrink-0 pb-1.5 text-center text-[10px] font-light sm:text-xs"

@@ -6,13 +6,16 @@ import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
 import type { DonutChartSegment } from "@/lib/dashboard-chart-data";
 import type { SupercategoryTotals } from "@/lib/helpers";
 
-type Scope = "month" | "all";
+type Scope = "month" | "year" | "all";
 
 type ChartScopeToggleProps = {
   monthDonutData: DonutChartSegment[];
   allTimeDonutData: DonutChartSegment[];
   monthBySuper: SupercategoryTotals;
   allTimeBySuper: SupercategoryTotals;
+  yearDonutData: DonutChartSegment[];
+  yearBySuper: SupercategoryTotals;
+  selectedYear: number;
 };
 
 const EMPTY_MONTH = {
@@ -25,18 +28,41 @@ const EMPTY_ALL_TIME = {
   donutDesc: "Add expenses to see your breakdown by category.",
   barDesc: "Add expenses to see needs vs wants.",
 };
+const EMPTY_YEAR = {
+  title: "No spending this year",
+  donutDesc: "Add expenses to see your breakdown by category.",
+  barDesc: "Add expenses to see needs vs wants.",
+};
 
 export function ChartScopeToggle({
   monthDonutData,
   allTimeDonutData,
   monthBySuper,
   allTimeBySuper,
+  yearDonutData,
+  yearBySuper,
+  selectedYear,
 }: ChartScopeToggleProps) {
   const [scope, setScope] = useState<Scope>("month");
 
-  const donutData = scope === "month" ? monthDonutData : allTimeDonutData;
-  const bySuper = scope === "month" ? monthBySuper : allTimeBySuper;
-  const empty = scope === "month" ? EMPTY_MONTH : EMPTY_ALL_TIME;
+  const donutData =
+    scope === "month"
+      ? monthDonutData
+      : scope === "year"
+        ? yearDonutData
+        : allTimeDonutData;
+  const bySuper =
+    scope === "month"
+      ? monthBySuper
+      : scope === "year"
+        ? yearBySuper
+        : allTimeBySuper;
+  const empty =
+    scope === "month"
+      ? EMPTY_MONTH
+      : scope === "year"
+        ? EMPTY_YEAR
+        : EMPTY_ALL_TIME;
 
   return (
     <div className="space-y-6">
@@ -57,6 +83,19 @@ export function ChartScopeToggle({
             }`}
           >
             This month
+          </button>
+          <button
+            type="button"
+            onClick={() => setScope("year")}
+            aria-pressed={scope === "year"}
+            title={`Spending for ${selectedYear}`}
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+              scope === "year"
+                ? "bg-accent-violet-500 text-white"
+                : "text-charcoal-300 hover:text-charcoal-200"
+            }`}
+          >
+            This year
           </button>
           <button
             type="button"
