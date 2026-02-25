@@ -143,9 +143,9 @@ export function ExpenseList({
           const supercat = categorySuper.get(e.category_id ?? miscCategoryId);
           const rowAccent =
             supercat === "needs"
-              ? "border-l-4 border-l-needs-secondary bg-needs-secondary/10"
+              ? "border-l-4 border-l-needs-secondary"
               : supercat === "wants"
-                ? "border-l-4 border-l-wants-secondary bg-wants-secondary/10"
+                ? "border-l-4 border-l-wants-secondary"
                 : "";
           return (
           <li

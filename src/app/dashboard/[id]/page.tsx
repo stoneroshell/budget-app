@@ -45,7 +45,7 @@ export default async function BudgetDetailPage({
         >
           ← Back
         </Link>
-        <h1 className="text-2xl font-light text-white tracking-tight">
+        <h1 className="font-display text-2xl font-light text-white tracking-tight">
           {formatMonthYear(budget.month, budget.year)}
         </h1>
       </div>
@@ -78,13 +78,13 @@ export default async function BudgetDetailPage({
           Grouped totals
         </h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-needs-secondary bg-needs-secondary/10 p-4 text-center">
+          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-needs-secondary p-4 text-center">
             <p className="text-xs font-medium uppercase tracking-widest text-needs">Needs</p>
             <p className="text-lg font-light text-needs">
               {formatCurrency(bySuper.needs)}
             </p>
           </div>
-          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-wants-secondary bg-wants-secondary/10 p-4 text-center">
+          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-wants-secondary p-4 text-center">
             <p className="text-xs font-medium uppercase tracking-widest text-wants">Wants</p>
             <p className="text-lg font-light text-wants">
               {formatCurrency(bySuper.wants)}
@@ -106,9 +106,9 @@ export default async function BudgetDetailPage({
                   key={i}
                   className={`flex justify-between gap-2 rounded px-2 py-1 ${
                     row.supercategory === "needs"
-                      ? "border-l-2 border-l-needs-secondary bg-needs-secondary/10 pl-3"
+                      ? "border-l-2 border-l-needs-secondary pl-3"
                       : row.supercategory === "wants"
-                        ? "border-l-2 border-l-wants-secondary bg-wants-secondary/10 pl-3"
+                        ? "border-l-2 border-l-wants-secondary pl-3"
                         : ""
                   }`}
                 >

@@ -72,6 +72,32 @@ export async function getExpensesByBudgetId(budgetId: string) {
   return data ?? [];
 }
 
+export async function getExpensesByBudgetIds(budgetIds: string[]) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+  if (budgetIds.length === 0) return [];
+
+  const { data: userBudgets } = await supabase
+    .from("budgets")
+    .select("id")
+    .eq("user_id", user.id)
+    .in("id", budgetIds);
+
+  const validIds = (userBudgets ?? []).map((b) => b.id);
+  if (validIds.length === 0) return [];
+
+  const { data } = await supabase
+    .from("expenses")
+    .select("*")
+    .in("budget_id", validIds)
+    .order("id", { ascending: true });
+
+  return data ?? [];
+}
+
 export async function updateExpenseCategory(
   expenseId: string,
   categoryId: string | null

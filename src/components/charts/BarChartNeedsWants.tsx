@@ -47,9 +47,17 @@ type Props = {
   needs: number;
   wants: number;
   misc?: number;
+  emptyTitle?: string;
+  emptyDescription?: string;
 };
 
-export function BarChartNeedsWants({ needs, wants, misc = 0 }: Props) {
+export function BarChartNeedsWants({
+  needs,
+  wants,
+  misc = 0,
+  emptyTitle = "No spending this month",
+  emptyDescription = "Add expenses to see needs vs wants.",
+}: Props) {
   const hasData = needs > 0 || wants > 0 || misc > 0;
   const data = [
     { name: "Needs", value: needs, color: NEEDS_COLOR },
@@ -61,8 +69,8 @@ export function BarChartNeedsWants({ needs, wants, misc = 0 }: Props) {
     return (
       <div className="min-h-[240px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-6">
         <ChartEmptyState
-          title="No spending this month"
-          description="Add expenses to see needs vs wants."
+          title={emptyTitle}
+          description={emptyDescription}
           className="min-h-[240px]"
         />
       </div>

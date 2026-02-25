@@ -20,6 +20,8 @@ export type DonutSegment = {
 
 type Props = {
   data: DonutSegment[];
+  emptyTitle?: string;
+  emptyDescription?: string;
 };
 
 const INNER_RADIUS = 60;
@@ -29,13 +31,17 @@ const RIM_GAP = 10;
 /** Ring thickness (sits outside the donut, after RIM_GAP) */
 const RIM_WIDTH = 3;
 
-export function DonutChartSpending({ data }: Props) {
+export function DonutChartSpending({
+  data,
+  emptyTitle = "No spending this month",
+  emptyDescription = "Add expenses to see your breakdown by category.",
+}: Props) {
   if (!data.length || data.every((d) => d.value <= 0)) {
     return (
       <div className="min-h-[280px] w-full rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-6">
         <ChartEmptyState
-          title="No spending this month"
-          description="Add expenses to see your breakdown by category."
+          title={emptyTitle}
+          description={emptyDescription}
           className="min-h-[280px]"
         />
       </div>

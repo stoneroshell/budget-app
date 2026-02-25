@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { getBudgetsWithNetIncome, getBudgetById } from "@/app/actions/budgets";
-import { getExpensesByBudgetId } from "@/app/actions/expenses";
+import { getExpensesByBudgetId, getExpensesByBudgetIds } from "@/app/actions/expenses";
 import { getCategories } from "@/app/actions/categories";
 import {
   formatCurrency,
   getMonthAbbrevUpper,
-  formatMonthYear,
   totalSpent,
   groupExpensesBySupercategory,
   groupExpensesByCategory,
@@ -16,9 +15,10 @@ import {
   buildDonutChartData,
 } from "@/lib/dashboard-chart-data";
 import { CreateBudgetForm } from "./CreateBudgetForm";
+import { ViewMonthSelector } from "./ViewMonthSelector";
 import { EmptyState } from "@/components/EmptyState";
 import { NeedsWantsBar } from "@/components/NeedsWantsBar";
-import { DonutChartSpending } from "@/components/charts/DonutChartSpending";
+import { ChartScopeToggle } from "@/components/ChartScopeToggle";
 /** Returns text color class for net amount (positive = emerald, negative = rose, etc.). */
 function getNetTextClass(
   netIncome: number,
@@ -34,7 +34,6 @@ function getNetTextClass(
   return "text-charcoal-300";
 }
 
-import { BarChartNeedsWants } from "@/components/charts/BarChartNeedsWants";
 import { LineChartSpendingOverTime } from "@/components/charts/LineChartSpendingOverTime";
 
 type PageProps = {
@@ -55,17 +54,23 @@ export default async function DashboardPage({ searchParams }: PageProps) {
 
   let budget: Awaited<ReturnType<typeof getBudgetById>> = null;
   let expenses: Awaited<ReturnType<typeof getExpensesByBudgetId>> = [];
+  let allTimeExpenses: Awaited<ReturnType<typeof getExpensesByBudgetIds>> = [];
   let categories: Awaited<ReturnType<typeof getCategories>> = [];
 
   if (selectedId) {
-    const [budgetResult, expensesResult, categoriesResult] = await Promise.all([
-      getBudgetById(selectedId),
-      getExpensesByBudgetId(selectedId),
-      getCategories(),
-    ]);
+    const [budgetResult, expensesResult, categoriesResult, allTimeResult] =
+      await Promise.all([
+        getBudgetById(selectedId),
+        getExpensesByBudgetId(selectedId),
+        getCategories(),
+        budgets.length > 0
+          ? getExpensesByBudgetIds(budgets.map((b) => b.id))
+          : Promise.resolve([]),
+      ]);
     budget = budgetResult;
     expenses = expensesResult;
     categories = categoriesResult;
+    allTimeExpenses = allTimeResult;
   }
 
   const income = budget ? Number(budget.income) : 0;
@@ -74,6 +79,9 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const bySuper = groupExpensesBySupercategory(expenses, categories);
   const byCategory = groupExpensesByCategory(expenses, categories);
   const donutData = buildDonutChartData(byCategory);
+  const bySuperAllTime = groupExpensesBySupercategory(allTimeExpenses, categories);
+  const byCategoryAllTime = groupExpensesByCategory(allTimeExpenses, categories);
+  const donutDataAllTime = buildDonutChartData(byCategoryAllTime);
   const lineData = buildLineChartData(budgets);
   const { needsPercent, wantsPercent } = needsWantsRatio(bySuper);
 
@@ -100,24 +108,12 @@ export default async function DashboardPage({ searchParams }: PageProps) {
             <h2 className="text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
               View month
             </h2>
-            <div className="flex flex-wrap justify-center gap-2">
-              {budgets.map((b) => {
-                const isSelected = b.id === selectedId;
-                return (
-                  <Link
-                    key={b.id}
-                    href={`/dashboard?budget=${b.id}`}
-                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-950 ${
-                      isSelected
-                        ? "bg-accent-violet-500 text-white"
-                        : "bg-charcoal-800 text-charcoal-200 hover:border-charcoal-400 hover:bg-charcoal-700"
-                    }`}
-                  >
-                    {formatMonthYear(b.month, b.year)}
-                  </Link>
-                );
-              })}
-            </div>
+            <ViewMonthSelector
+              budgets={budgets}
+              selectedBudgetId={selectedId}
+              selectedMonth={budget?.month ?? budgets[0]?.month ?? new Date().getMonth() + 1}
+              selectedYear={budget?.year ?? budgets[0]?.year ?? new Date().getFullYear()}
+            />
           </section>
 
           {/* Summary cards (when a month is selected) */}
@@ -170,24 +166,12 @@ export default async function DashboardPage({ searchParams }: PageProps) {
               <h2 className="mb-4 font-display text-center text-2xl font-light text-white tracking-tight">
                 Spending overview
               </h2>
-              <div className="grid gap-6 lg:grid-cols-2">
-                <div>
-                  <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
-                    By category
-                  </h3>
-                  <DonutChartSpending data={donutData} />
-                </div>
-                <div>
-                  <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
-                    Needs vs Wants
-                  </h3>
-                  <BarChartNeedsWants
-                    needs={bySuper.needs}
-                    wants={bySuper.wants}
-                    misc={bySuper.misc}
-                  />
-                </div>
-              </div>
+              <ChartScopeToggle
+                monthDonutData={donutData}
+                allTimeDonutData={donutDataAllTime}
+                monthBySuper={bySuper}
+                allTimeBySuper={bySuperAllTime}
+              />
               <div>
                 <h3 className="mb-2 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
                   Spending over time
