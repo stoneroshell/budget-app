@@ -124,8 +124,8 @@ export function needsWantsRatio(
   };
 }
 
-/** Grey at 0, bold red at minNet, bold green at maxNet (styles.md accents). */
-const NET_GRADIENT_GREY = "#A3A3A3";
+/** At 0 use primary text (white); bold red at minNet, bold green at maxNet (styles.md). */
+const NET_GRADIENT_ZERO = "#FFFFFF";
 const NET_GRADIENT_RED = "#F43F5E";
 const NET_GRADIENT_GREEN = "#10B981";
 
@@ -146,7 +146,7 @@ function lerpRgb(
 }
 
 /**
- * Returns a CSS color for net budget amount: grey at $0, bold red at the
+ * Returns a CSS color for net budget amount: white at $0, bold red at the
  * lowest (most negative) net across all months, bold green at the highest net.
  */
 export function getNetAmountGradientColor(
@@ -154,15 +154,15 @@ export function getNetAmountGradientColor(
   minNet: number,
   maxNet: number
 ): string {
-  const grey = hexToRgb(NET_GRADIENT_GREY);
+  const zero = hexToRgb(NET_GRADIENT_ZERO);
   const red = hexToRgb(NET_GRADIENT_RED);
   const green = hexToRgb(NET_GRADIENT_GREEN);
 
-  if (netIncome === 0) return NET_GRADIENT_GREY;
+  if (netIncome === 0) return NET_GRADIENT_ZERO;
   if (netIncome < 0) {
     const t = minNet === 0 ? 1 : netIncome / minNet;
-    return lerpRgb(grey, red, t);
+    return lerpRgb(zero, red, t);
   }
   const t = maxNet === 0 ? 1 : netIncome / maxNet;
-  return lerpRgb(grey, green, t);
+  return lerpRgb(zero, green, t);
 }

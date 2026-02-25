@@ -121,6 +121,28 @@ export async function getBudgetById(id: string) {
   return data;
 }
 
+/** Resolve (month, year) to budget id for the current user. Returns null if no budget exists. */
+export async function getBudgetIdByMonthYear(
+  month: number,
+  year: number
+): Promise<string | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data } = await supabase
+    .from("budgets")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("month", month)
+    .eq("year", year)
+    .maybeSingle();
+
+  return data?.id ?? null;
+}
+
 export async function updateBudgetIncome(id: string, income: number) {
   const supabase = await createClient();
   const {

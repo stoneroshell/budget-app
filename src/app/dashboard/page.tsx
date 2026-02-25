@@ -21,6 +21,7 @@ import {
   type MonthSnapshot,
 } from "@/lib/monthly-insights";
 import { CreateBudgetForm } from "./CreateBudgetForm";
+import { CsvImportTrigger } from "./CsvImportTrigger";
 import { ViewMonthSelector } from "./ViewMonthSelector";
 import { EmptyState } from "@/components/EmptyState";
 import { NeedsWantsBar } from "@/components/NeedsWantsBar";
@@ -113,13 +114,14 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
-        <h1 className="font-display text-6xl font-light text-white tracking-tight">
-          Dashboard
-        </h1>
-        <CreateBudgetForm />
-      </div>
+    <div className="relative min-h-full">
+      <div className="space-y-6">
+        <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
+          <h1 className="font-display text-6xl font-light text-white tracking-tight">
+            Dashboard
+          </h1>
+          <CreateBudgetForm />
+        </div>
 
       {budgets.length === 0 ? (
         <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-8">
@@ -327,9 +329,18 @@ export default async function DashboardPage({ searchParams }: PageProps) {
               );
               })}
             </ul>
+            {budgets.length > 0 && categories.length > 0 && (
+              <div className="mt-6 flex justify-end">
+                <CsvImportTrigger
+                  categories={categories}
+                  budgets={budgets.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
+                />
+              </div>
+            )}
           </section>
         </>
       )}
+      </div>
     </div>
   );
 }

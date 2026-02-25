@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getBudgetById } from "@/app/actions/budgets";
+import { getBudgetById, getBudgets } from "@/app/actions/budgets";
 import { getExpensesByBudgetId } from "@/app/actions/expenses";
 import { getPaymentSources } from "@/app/actions/payment-sources";
 import { getCategories } from "@/app/actions/categories";
@@ -15,6 +15,7 @@ import { AddExpenseForm } from "./AddExpenseForm";
 import { EditableIncome } from "./EditableIncome";
 import { ExpenseList } from "./ExpenseList";
 import { DeleteBudgetButton } from "./DeleteBudgetButton";
+import { CsvImportTrigger } from "../CsvImportTrigger";
 
 export default async function BudgetDetailPage({
   params,
@@ -22,12 +23,14 @@ export default async function BudgetDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [budget, expenses, paymentSources, categories] = await Promise.all([
-    getBudgetById(id),
-    getExpensesByBudgetId(id),
-    getPaymentSources(),
-    getCategories(),
-  ]);
+  const [budget, expenses, paymentSources, categories, budgetsList] =
+    await Promise.all([
+      getBudgetById(id),
+      getExpensesByBudgetId(id),
+      getPaymentSources(),
+      getCategories(),
+      getBudgets(),
+    ]);
   if (!budget) notFound();
 
   const spent = totalSpent(expenses);
@@ -142,7 +145,15 @@ export default async function BudgetDetailPage({
       </section>
 
       <section>
-        <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">Add expense</h2>
+        <div className="mb-3 flex flex-wrap items-center justify-center gap-3">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-charcoal-400">
+            Add expense
+          </h2>
+          <CsvImportTrigger
+            categories={categories}
+            budgets={budgetsList.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
+          />
+        </div>
         <AddExpenseForm budgetId={id} paymentSources={paymentSources} />
       </section>
 

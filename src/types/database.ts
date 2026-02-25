@@ -135,6 +135,32 @@ export interface Database {
           category_id?: string;
         };
       };
+      import_log: {
+        Row: {
+          id: string;
+          user_id: string;
+          budget_id: string;
+          row_count: number;
+          filename: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          budget_id: string;
+          row_count: number;
+          filename?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          budget_id?: string;
+          row_count?: number;
+          filename?: string | null;
+          created_at?: string;
+        };
+      };
     };
   };
 }
@@ -148,3 +174,5 @@ export type ExpenseInsert = Database["public"]["Tables"]["expenses"]["Insert"];
 export type PaymentSourceInsert = Database["public"]["Tables"]["payment_sources"]["Insert"];
 export type Category = Database["public"]["Tables"]["categories"]["Row"];
 export type CategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
+export type ImportLog = Database["public"]["Tables"]["import_log"]["Row"];
+export type ImportLogInsert = Database["public"]["Tables"]["import_log"]["Insert"];
