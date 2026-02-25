@@ -125,7 +125,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   return (
     <div className="relative min-h-full">
       <div className="space-y-6">
-        <div className="flex flex-col gap-4 text-center sm:flex-row sm:justify-center sm:items-center sm:gap-6">
+        <div className="-mb-3 mt-8 flex flex-col items-center gap-3 text-center">
           <h1 className="font-display text-6xl font-light text-white tracking-tight">
             Dashboard
           </h1>
@@ -143,9 +143,6 @@ export default async function DashboardPage({ searchParams }: PageProps) {
         <>
           {/* Year + month grid selector */}
           <section className="space-y-4 py-2 sm:space-y-5 sm:py-4">
-            <h2 className="text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
-              View month
-            </h2>
             <YearMonthGrid
               budgets={budgets}
               selectedBudgetId={selectedId}

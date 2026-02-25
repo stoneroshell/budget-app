@@ -94,7 +94,6 @@ export async function importExpensesFromCsv(
       description: r.description,
       amount: r.amount,
       category_id: r.category_id,
-      payment_label: null,
     }));
 
     const { error: insertError } = await supabase.from("expenses").insert(payload);

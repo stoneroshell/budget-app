@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getBudgetById, getBudgets } from "@/app/actions/budgets";
 import { getExpensesByBudgetId } from "@/app/actions/expenses";
-import { getPaymentSources } from "@/app/actions/payment-sources";
 import { getCategories } from "@/app/actions/categories";
 import {
   totalSpent,
@@ -24,11 +23,10 @@ export default async function BudgetDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [budget, expenses, paymentSources, categories, budgetsList] =
+  const [budget, expenses, categories, budgetsList] =
     await Promise.all([
       getBudgetById(id),
       getExpensesByBudgetId(id),
-      getPaymentSources(),
       getCategories(),
       getBudgets(),
     ]);
@@ -142,7 +140,6 @@ export default async function BudgetDetailPage({
         </h2>
         <AddExpenseForm
           budgetId={id}
-          paymentSources={paymentSources}
           categories={categories}
           budgets={budgetsList.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
         />

@@ -59,7 +59,6 @@ export interface Database {
           description: string;
           amount: number;
           category_id: string | null;
-          payment_label: string | null;
         };
         Insert: {
           id?: string;
@@ -67,7 +66,6 @@ export interface Database {
           description: string;
           amount: number;
           category_id?: string | null;
-          payment_label?: string | null;
         };
         Update: {
           id?: string;
@@ -75,30 +73,6 @@ export interface Database {
           description?: string;
           amount?: number;
           category_id?: string | null;
-          payment_label?: string | null;
-        };
-      };
-      payment_sources: {
-        Row: {
-          id: string;
-          user_id: string;
-          name: string;
-          color: string;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          user_id: string;
-          name: string;
-          color: string;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          user_id?: string;
-          name?: string;
-          color?: string;
-          created_at?: string;
         };
       };
       categories: {
@@ -168,10 +142,8 @@ export interface Database {
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type Budget = Database["public"]["Tables"]["budgets"]["Row"];
 export type Expense = Database["public"]["Tables"]["expenses"]["Row"];
-export type PaymentSource = Database["public"]["Tables"]["payment_sources"]["Row"];
 export type BudgetInsert = Database["public"]["Tables"]["budgets"]["Insert"];
 export type ExpenseInsert = Database["public"]["Tables"]["expenses"]["Insert"];
-export type PaymentSourceInsert = Database["public"]["Tables"]["payment_sources"]["Insert"];
 export type Category = Database["public"]["Tables"]["categories"]["Row"];
 export type CategoryInsert = Database["public"]["Tables"]["categories"]["Insert"];
 export type ImportLog = Database["public"]["Tables"]["import_log"]["Row"];

@@ -16,9 +16,6 @@ export async function addExpense(budgetId: string, formData: FormData) {
 
   const description = String(formData.get("description")).trim();
   const amount = Number(formData.get("amount"));
-  const paymentLabel = formData.get("payment_label")
-    ? String(formData.get("payment_label")).trim()
-    : null;
 
   if (!description) return { error: "Description is required." };
   if (Number.isNaN(amount) || amount < 0) return { error: "Amount must be 0 or more." };
@@ -37,7 +34,6 @@ export async function addExpense(budgetId: string, formData: FormData) {
     description,
     amount,
     category_id: category_id,
-    payment_label: paymentLabel || null,
   } as ExpenseInsert);
 
   if (error) return { error: error.message };
