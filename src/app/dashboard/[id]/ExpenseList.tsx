@@ -28,6 +28,9 @@ export function ExpenseList({
   const router = useRouter();
   const miscCategoryId = categories.find((c) => c.name === "Misc")?.id ?? "";
   const categorySuper = new Map(categories.map((c) => [c.id, c.supercategory]));
+  const userAddedCategoryIds = new Set(
+    categories.filter((c) => c.user_id != null).map((c) => c.id)
+  );
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [addName, setAddName] = useState("");
   const [addSupercategory, setAddSupercategory] = useState<Supercategory>("wants");
@@ -141,17 +144,18 @@ export function ExpenseList({
       <ul className="space-y-2">
         {expenses.map((e) => {
           const supercat = categorySuper.get(e.category_id ?? miscCategoryId);
-          const rowAccent =
-            supercat === "needs"
-              ? "border-l-4 border-l-needs-secondary"
-              : supercat === "wants"
-                ? "border-l-4 border-l-wants-secondary"
-                : "";
           return (
           <li
             key={e.id}
-            className={`group flex flex-wrap items-center justify-between gap-2 rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 transition-colors odd:bg-charcoal-900/50 hover:border-charcoal-400 ${rowAccent}`}
+            className="group flex flex-wrap items-center justify-between gap-2 rounded-xl border border-charcoal-500 bg-charcoal-900/80 px-4 py-3 transition-colors odd:bg-charcoal-900/50 hover:border-charcoal-400"
           >
+            {supercat === "needs" ? (
+              <span className="h-2 w-2 shrink-0 rounded-full bg-needs" aria-hidden />
+            ) : supercat === "wants" ? (
+              <span className="h-2 w-2 shrink-0 rounded-full bg-wants" aria-hidden />
+            ) : (
+              <span className="w-2 shrink-0" aria-hidden />
+            )}
             <div className="flex min-w-0 flex-1 items-center gap-2">
               <span className="text-white">{e.description}</span>
               <div
@@ -282,7 +286,9 @@ export function ExpenseList({
                     </>
                   );
                 })()}
-                {(e.category_id ?? miscCategoryId) !== miscCategoryId && (
+                {(e.category_id ?? miscCategoryId) !== miscCategoryId &&
+                  e.category_id != null &&
+                  userAddedCategoryIds.has(e.category_id) && (
                   <button
                     type="button"
                     onClick={() =>

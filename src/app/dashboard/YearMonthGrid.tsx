@@ -52,7 +52,7 @@ function MonthCell({
     const formattedNet = `${netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(netIncome))}`;
     return (
       <Link
-        href={`/dashboard?budget=${budget.id}`}
+        href={`/dashboard/${budget.id}`}
         role="gridcell"
         aria-label={ariaLabel}
         aria-selected={isSelected}

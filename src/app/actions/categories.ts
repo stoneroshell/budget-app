@@ -96,12 +96,12 @@ export async function deleteOrHideCategory(
 
   if (!category) return { error: "Category not found." };
 
+  if (category.user_id === null) {
+    return { error: "Universal categories cannot be removed." };
+  }
+
   const miscId = await getMiscCategoryId();
   if (!miscId) return { error: "Cannot remove category." };
-
-  if (category.name === "Misc" && category.user_id === null) {
-    return { error: "Cannot remove the Misc category." };
-  }
 
   if (category.user_id === user.id) {
     const { error: updateErr } = await supabase

@@ -14,8 +14,9 @@ import {
 import { AddExpenseForm } from "./AddExpenseForm";
 import { EditableIncome } from "./EditableIncome";
 import { ExpenseList } from "./ExpenseList";
+import { DonutChartSpending } from "@/components/charts/DonutChartSpending";
+import { buildDonutChartData } from "@/lib/dashboard-chart-data";
 import { DeleteBudgetButton } from "./DeleteBudgetButton";
-import { CsvImportTrigger } from "../CsvImportTrigger";
 
 export default async function BudgetDetailPage({
   params,
@@ -37,6 +38,7 @@ export default async function BudgetDetailPage({
   const remaining = Number(budget.income) - spent;
   const bySuper = groupExpensesBySupercategory(expenses, categories);
   const byCategory = groupExpensesByCategory(expenses, categories);
+  const donutData = buildDonutChartData(byCategory);
 
   return (
     <div className="space-y-6">
@@ -78,43 +80,32 @@ export default async function BudgetDetailPage({
 
       <section>
         <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
-          Grouped totals
+          Spending breakdown
         </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-needs-secondary p-4 text-center">
-            <p className="text-xs font-medium uppercase tracking-widest text-needs">Needs</p>
-            <p className="text-lg font-light text-needs">
-              {formatCurrency(bySuper.needs)}
-            </p>
-          </div>
-          <div className="rounded-xl border border-charcoal-500 border-l-4 border-l-wants-secondary p-4 text-center">
-            <p className="text-xs font-medium uppercase tracking-widest text-wants">Wants</p>
-            <p className="text-lg font-light text-wants">
-              {formatCurrency(bySuper.wants)}
-            </p>
-          </div>
-          <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4 text-center">
-            <p className="text-xs font-medium uppercase tracking-widest text-charcoal-400">Misc</p>
-            <p className="text-lg font-light text-white">
-              {formatCurrency(bySuper.misc)}
-            </p>
-          </div>
-        </div>
+        <DonutChartSpending
+          data={donutData}
+          emptyTitle="No spending this month"
+          emptyDescription="Add expenses to see your breakdown by category."
+        />
         {byCategory.length > 0 && (
-          <div className="mt-3 rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
-            <p className="mb-2 text-xs font-medium uppercase tracking-widest text-charcoal-400">By category</p>
+          <>
+            <h2 className="mb-3 mt-6 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
+              By category
+            </h2>
+            <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-4">
             <ul className="space-y-1 text-sm">
               {byCategory.map((row, i) => (
                 <li
                   key={i}
-                  className={`flex justify-between gap-2 rounded px-2 py-1 ${
-                    row.supercategory === "needs"
-                      ? "border-l-2 border-l-needs-secondary pl-3"
-                      : row.supercategory === "wants"
-                        ? "border-l-2 border-l-wants-secondary pl-3"
-                        : ""
-                  }`}
+                  className="flex items-center justify-between gap-2 rounded px-2 py-1"
                 >
+                  {row.supercategory === "needs" ? (
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-needs" aria-hidden />
+                  ) : row.supercategory === "wants" ? (
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-wants" aria-hidden />
+                  ) : (
+                    <span className="w-2 shrink-0" aria-hidden />
+                  )}
                   <span
                     className={
                       row.supercategory === "needs"
@@ -141,20 +132,20 @@ export default async function BudgetDetailPage({
               ))}
             </ul>
           </div>
+          </>
         )}
       </section>
 
       <section>
-        <div className="mb-3 flex flex-wrap items-center justify-center gap-3">
-          <h2 className="text-xs font-medium uppercase tracking-widest text-charcoal-400">
-            Add expense
-          </h2>
-          <CsvImportTrigger
-            categories={categories}
-            budgets={budgetsList.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
-          />
-        </div>
-        <AddExpenseForm budgetId={id} paymentSources={paymentSources} />
+        <h2 className="mb-3 text-center text-xs font-medium uppercase tracking-widest text-charcoal-400">
+          Add expense
+        </h2>
+        <AddExpenseForm
+          budgetId={id}
+          paymentSources={paymentSources}
+          categories={categories}
+          budgets={budgetsList.map((b) => ({ id: b.id, month: b.month, year: b.year }))}
+        />
       </section>
 
       <section>

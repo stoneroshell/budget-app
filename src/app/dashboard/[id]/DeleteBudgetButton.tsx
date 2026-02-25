@@ -32,7 +32,7 @@ export function DeleteBudgetButton({ budgetId }: { budgetId: string }) {
             setShowConfirm(true);
             setError(null);
           }}
-          className="rounded-lg border-2 border-accent-rose-500 bg-transparent px-4 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:bg-charcoal-800 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+          className="rounded-lg border-2 border-accent-rose-500 bg-transparent px-4 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:bg-accent-rose-500 hover:text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
         >
           Delete budget
         </button>

@@ -6,6 +6,8 @@ import { addExpense } from "@/app/actions/expenses";
 import { createPaymentSource, deletePaymentSource } from "@/app/actions/payment-sources";
 import { PAYMENT_SOURCE_COLORS, type PaymentSourceColor } from "@/lib/payment-source-colors";
 import type { PaymentSource } from "@/types/database";
+import type { Category } from "@/types/database";
+import { CsvImportTrigger } from "../CsvImportTrigger";
 
 const ADD_SOURCE_VALUE = "__add__";
 const NONE_COLOR = "#A3A3A3";
@@ -14,9 +16,13 @@ const ADD_SOURCE_COLOR = "#3B82F6";
 export function AddExpenseForm({
   budgetId,
   paymentSources,
+  categories,
+  budgets,
 }: {
   budgetId: string;
   paymentSources: PaymentSource[];
+  categories?: Category[];
+  budgets?: { id: string; month: number; year: number }[];
 }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -347,24 +353,29 @@ export function AddExpenseForm({
         </div>
       )}
 
-      <div className="mt-4 flex items-center justify-between gap-4">
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded-lg bg-accent-violet-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-violet-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
-        >
-          {pending ? "Adding…" : "Add expense"}
-        </button>
-        {selectedPaymentSource && (
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <button
-            type="button"
-            onClick={handleDeleteSource}
-            disabled={deletePending}
-            className="rounded-lg border-2 border-accent-rose-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:border-accent-rose-400 hover:bg-charcoal-700 hover:text-accent-rose-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
-            aria-label={`Remove payment source ${selectedPaymentSource.name}`}
+            type="submit"
+            disabled={pending}
+            className="rounded-lg bg-accent-violet-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-violet-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
           >
-            {deletePending ? "Removing…" : "Remove source"}
+            {pending ? "Adding…" : "Add expense"}
           </button>
+          {selectedPaymentSource && (
+            <button
+              type="button"
+              onClick={handleDeleteSource}
+              disabled={deletePending}
+              className="rounded-lg border-2 border-accent-rose-500 bg-charcoal-800 px-3 py-2 text-sm font-medium text-accent-rose-500 transition-colors hover:border-accent-rose-400 hover:bg-charcoal-700 hover:text-accent-rose-400 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent-rose-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+              aria-label={`Remove payment source ${selectedPaymentSource.name}`}
+            >
+              {deletePending ? "Removing…" : "Remove source"}
+            </button>
+          )}
+        </div>
+        {categories && budgets && budgets.length > 0 && (
+          <CsvImportTrigger categories={categories} budgets={budgets} />
         )}
       </div>
     </form>

@@ -70,7 +70,8 @@ export function DonutChartSpending({
       const groupTotal = g.segments.reduce((s, d) => s + d.value, 0);
       const angleSpan = total > 0 ? (groupTotal / total) * 360 : 0;
       const endAngle = startAngle + angleSpan;
-      const result = { ...g, startAngle, endAngle };
+      const groupPct = total > 0 ? (groupTotal / total) * 100 : 0;
+      const result = { ...g, startAngle, endAngle, groupTotal, groupPct };
       startAngle = endAngle;
       return result;
     });
@@ -101,10 +102,18 @@ export function DonutChartSpending({
             </Pie>
           ))}
           {/* Thin colored line around the outside: needs blue / wants amber / misc grey */}
-          {pies.map(({ key, rimColor, startAngle: start, endAngle: end }) => (
+          {pies.map(({ key, rimColor, startAngle: start, endAngle: end, groupTotal, groupPct }) => (
             <Pie
               key={`rim-${key}`}
-              data={[{ value: 1 }]}
+              data={[
+                {
+                  value: 1,
+                  isRim: true as const,
+                  groupKey: key,
+                  groupTotal,
+                  groupPct,
+                },
+              ]}
               dataKey="value"
               cx="50%"
               cy="50%"
@@ -122,7 +131,38 @@ export function DonutChartSpending({
           <Tooltip
             content={({ active, payload }) => {
               if (!active || !payload?.length) return null;
-              const segment = payload[0].payload as DonutSegment;
+              const payload0 = payload[0].payload as
+                | DonutSegment
+                | { isRim: true; groupKey: string; groupTotal: number; groupPct: number };
+              if ("isRim" in payload0 && payload0.isRim) {
+                const label =
+                  payload0.groupKey === "needs"
+                    ? "Needs"
+                    : payload0.groupKey === "wants"
+                      ? "Wants"
+                      : "Misc";
+                const color =
+                  payload0.groupKey === "needs"
+                    ? DONUT_GROUP_STROKE.needs
+                    : payload0.groupKey === "wants"
+                      ? DONUT_GROUP_STROKE.wants
+                      : DONUT_GROUP_STROKE.misc;
+                return (
+                  <div
+                    className="rounded-lg border border-charcoal-500 bg-charcoal-900 px-3 py-2 shadow-lg"
+                    style={{ borderColor: "#2E2E2E" }}
+                  >
+                    <div className="text-sm font-medium" style={{ color }}>
+                      {label}
+                    </div>
+                    <div className="text-sm" style={{ color }}>
+                      ${payload0.groupTotal.toFixed(2)} (
+                      {payload0.groupPct.toFixed(0)}%)
+                    </div>
+                  </div>
+                );
+              }
+              const segment = payload0 as DonutSegment;
               const segmentColor = segment.color ?? "#A3A3A3";
               const value = Number(segment.value);
               const pct =

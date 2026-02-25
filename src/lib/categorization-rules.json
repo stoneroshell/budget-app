@@ -95,6 +95,8 @@
     "categoryName": "Transportation",
     "keywords": [
       "uber",
+      "transport",
+      "transportation",
       "lyft",
       "transit",
       "metro",
@@ -119,6 +121,7 @@
     "categoryName": "Gas",
     "keywords": [
       "shell",
+      "gas",
       "chevron",
       "exxon",
       "mobil",
@@ -196,6 +199,7 @@
       "walgreens",
       "medical",
       "health",
+      "healthcare",
       "prescription",
       "clinic",
       "urgent care",
@@ -266,6 +270,7 @@
     "categoryName": "Entertainment",
     "keywords": [
       "movie",
+      "entertainment",
       "cinema",
       "game",
       "steam",
@@ -286,7 +291,8 @@
       "stadium",
       "sports event",
       "festival",
-      "escape room"
+      "escape room",
+      "events"
     ]
   },
   {

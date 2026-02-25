@@ -36,8 +36,8 @@ export type DonutChartSegment = {
 };
 
 /**
- * Donut palette: 8 chart colors first, then 6 accents, then needs/wants last.
- * Each category gets a unique color by index (styles.md).
+ * Donut palette: chart colors for needs/wants segments only. Slate is reserved for misc.
+ * Each non-misc category gets a unique color by index (styles.md).
  */
 const DONUT_PALETTE = [
   "#D946EF", // Fuchsia (charts)
@@ -46,16 +46,16 @@ const DONUT_PALETTE = [
   "#F97316", // Orange (charts)
   "#84CC16", // Lime (charts)
   "#EC4899", // Pink (charts)
-  "#64748B", // Slate (charts)
   "#8B5CF6", // Violet (accent)
   "#06B6D4", // Cyan (accent)
   "#F59E0B", // Amber (accent)
   "#F43F5E", // Rose (accent)
   "#10B981", // Emerald (accent)
   "#3B82F6", // Blue (accent)
-  "#06B6D4", // Needs (last)
-  "#F59E0B", // Wants (last)
 ];
+
+/** Slate: reserved for misc category segments only (styles.md charts). */
+const DONUT_MISC_COLOR = "#64748B";
 
 const SUPERORDER: Record<string, number> = {
   needs: 0,
@@ -66,7 +66,7 @@ const SUPERORDER: Record<string, number> = {
 /**
  * Map category totals to donut segments. Sorted by supercategory (needs, wants, misc)
  * then by amount desc so groups are contiguous for outline styling.
- * Each category gets a unique color from the palette.
+ * Needs/wants get palette colors; misc always gets slate.
  */
 export function buildDonutChartData(
   categoryTotals: CategoryTotal[]
@@ -77,17 +77,24 @@ export function buildDonutChartData(
     if (orderA !== orderB) return orderA - orderB;
     return b.amount - a.amount;
   });
-  return sorted.map((row, i) => ({
-    name: row.categoryName,
-    value: row.amount,
-    color: DONUT_PALETTE[i % DONUT_PALETTE.length],
-    supercategory: row.supercategory,
-  }));
+  let paletteIndex = 0;
+  return sorted.map((row) => {
+    const color =
+      row.supercategory === "misc"
+        ? DONUT_MISC_COLOR
+        : DONUT_PALETTE[paletteIndex++ % DONUT_PALETTE.length];
+    return {
+      name: row.categoryName,
+      value: row.amount,
+      color,
+      supercategory: row.supercategory,
+    };
+  });
 }
 
-/** Outline colors for needs/wants/misc groups (styles.md). */
+/** Outline colors for needs/wants/misc groups (styles.md). Misc uses slate. */
 export const DONUT_GROUP_STROKE = {
   needs: "#06B6D4",
   wants: "#F59E0B",
-  misc: "#737373",
+  misc: DONUT_MISC_COLOR,
 } as const;
