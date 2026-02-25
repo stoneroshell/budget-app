@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-const LOGO_ASPECT = 510 / 274;
+const LOGO_ASPECT = 629 / 338;
 
 export interface GuapLogoProps {
   /** Height in pixels (width scales to preserve aspect ratio). Default: 32 */

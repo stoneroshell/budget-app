@@ -6,11 +6,13 @@
 
 Use the official Guap logo for the app name in headers, login, and any user-facing branding. Do not replace it with plain text "Guap" where the logo is specified.
 
-- **Asset:** `guap.svg` (and optional PNG for contexts that require raster). SVG is preferred for sharp rendering at any size.
-- **Composition:** The word "Guap" (capital G, lowercase uap) in a serif typeface, with two circular accent dots—**cyan** (`#06B6D4`) to the left of the "G" and **amber/orange** (`#F59E0B`) to the right of the "p". These match the Needs (cyan) and Wants (amber) category colors.
-- **Text color:** Light grey/off-white (e.g. `#D5D5D5`–`#DADADA` in the source artwork). On dark backgrounds the logo reads as light; ensure contrast on the charcoal base.
+- **Assets:**  
+  - **Logo (wordmark):** `guap.svg` — full wordmark “Guap” (serif, capital G, lowercase uap) with two circular accent dots. Use in headers, login, and branding. Optional PNG for contexts that require raster; SVG is preferred for sharp rendering at any size.  
+  - **Icon:** `guap-icon.svg` — simplified mark (capital G with the same two dots). Use for favicon, app icon, PWA, and anywhere a compact symbol is needed (e.g. browser tab, bookmarks).
+- **Composition:** The word “Guap” in a light grey serif typeface, with two circular accent dots—**cyan** (`#06B6D4`) to the left of the “G” and **amber** (`#F59E0B`) to the right of the “p”. These match the Needs (cyan) and Wants (amber) category colors.
+- **Text color:** Light grey (e.g. `#D5D5D5` in the source artwork). On dark backgrounds the logo reads as light; ensure contrast on the charcoal base.
 - **Background:** The logo is designed for dark (e.g. black or charcoal) backgrounds. For light backgrounds, use a version with darker wordmark or ensure sufficient contrast.
-- **Usage:** Prefer the inline SVG or `<GuapLogo />` component so the logo scales cleanly; use `className` for size (e.g. header: ~28–32px height, login hero: ~40–48px height). Always set `alt="Guap"` or equivalent for accessibility when using an image.
+- **Usage:** Prefer the `<GuapLogo />` component (which uses `guap.svg`) so the logo scales cleanly; use `height` and `className` for size (e.g. header: ~28–38px height, login hero: ~40–48px height). Always set `alt="Guap"` or equivalent for accessibility when using an image. Favicon and app icon should reference `guap-icon.svg` (or a PNG export of it if required).
 
 General visual and interaction guidelines inspired by [Liveblocks](https://liveblocks.io/?ref=godly): dark charcoal base with vivid, saturated color highlights for data and emphasis.
 

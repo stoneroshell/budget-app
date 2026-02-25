@@ -18,6 +18,9 @@ const caudex = Caudex({
 export const metadata: Metadata = {
   title: "Guap",
   description: "Monthly budgeting with smart insights",
+  icons: {
+    icon: "/guap-icon.svg",
+  },
 };
 
 export default function RootLayout({

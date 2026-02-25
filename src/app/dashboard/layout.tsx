@@ -27,7 +27,7 @@ export default async function DashboardLayout({
             className="transition-opacity hover:opacity-90"
             aria-label="Guap home"
           >
-            <GuapLogo height={38} />
+            <GuapLogo height={44} />
           </Link>
           <div className="flex items-center gap-4">
             <span className="max-w-[180px] truncate text-sm text-charcoal-400">
