@@ -14,6 +14,11 @@ import {
   buildLineChartData,
   buildDonutChartData,
 } from "@/lib/dashboard-chart-data";
+import {
+  getPreviousMonth,
+  generateMonthlyInsights,
+  type MonthSnapshot,
+} from "@/lib/monthly-insights";
 import { CreateBudgetForm } from "./CreateBudgetForm";
 import { ViewMonthSelector } from "./ViewMonthSelector";
 import { EmptyState } from "@/components/EmptyState";
@@ -84,6 +89,43 @@ export default async function DashboardPage({ searchParams }: PageProps) {
   const donutDataAllTime = buildDonutChartData(byCategoryAllTime);
   const lineData = buildLineChartData(budgets);
   const { needsPercent, wantsPercent } = needsWantsRatio(bySuper);
+
+  // Resolve previous calendar month for insights (no extra fetch: use allTimeExpenses)
+  let previousBudget: (typeof budgets)[0] | null = null;
+  let prevExpenses: typeof expenses = [];
+  let insights: { text: string; type?: "info" | "highlight" }[] = [];
+  if (budget && budgets.length > 0) {
+    const prev = getPreviousMonth(budget.month, budget.year);
+    previousBudget =
+      budgets.find((b) => b.month === prev.month && b.year === prev.year) ??
+      null;
+    if (previousBudget) {
+      prevExpenses = allTimeExpenses.filter(
+        (e) => e.budget_id === previousBudget!.id
+      );
+      const spentPrev = totalSpent(prevExpenses);
+      const bySuperPrev = groupExpensesBySupercategory(
+        prevExpenses,
+        categories
+      );
+      const byCategoryPrev = groupExpensesByCategory(prevExpenses, categories);
+      const currentSnapshot: MonthSnapshot = {
+        income,
+        spent,
+        bySuper,
+        byCategory,
+        month: budget.month,
+        year: budget.year,
+      };
+      const previousSnapshot: MonthSnapshot = {
+        income: Number(previousBudget.income),
+        spent: spentPrev,
+        bySuper: bySuperPrev,
+        byCategory: byCategoryPrev,
+      };
+      insights = generateMonthlyInsights(currentSnapshot, previousSnapshot);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -177,6 +219,43 @@ export default async function DashboardPage({ searchParams }: PageProps) {
                 </h3>
                 <LineChartSpendingOverTime data={lineData} />
               </div>
+            </section>
+          )}
+
+          {/* Monthly Insights */}
+          {budget && (
+            <section aria-label="Monthly insights">
+              <h2 className="mb-4 font-display text-center text-2xl font-light text-white tracking-tight">
+                Monthly insights
+              </h2>
+              {previousBudget === null ? (
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-8">
+                  <EmptyState
+                    title="No month-over-month data"
+                    description="Add another month to see month-over-month comparisons."
+                  />
+                </div>
+              ) : (
+                <div className="rounded-xl border border-charcoal-500 bg-charcoal-900/80 p-5">
+                  <ul
+                    className="space-y-3 text-sm"
+                    aria-label="Insights for this month"
+                  >
+                    {insights.map((insight, i) => (
+                      <li
+                        key={i}
+                        className={
+                          insight.type === "highlight"
+                            ? "text-accent-violet-400"
+                            : "text-charcoal-300"
+                        }
+                      >
+                        {insight.text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </section>
           )}
 
