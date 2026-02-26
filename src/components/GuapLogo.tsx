@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 const LOGO_ASPECT = 629 / 338;
 
 export interface GuapLogoProps {
@@ -15,6 +13,7 @@ export interface GuapLogoProps {
 
 /**
  * Official Guap logo (SVG). Use in header, login, and any app branding.
+ * Uses <img> so the SVG from public/guap.svg is loaded directly (avoids Next Image caching/optimization).
  * See styles.md § Logo for usage guidelines.
  */
 export function GuapLogo({
@@ -24,13 +23,13 @@ export function GuapLogo({
 }: GuapLogoProps) {
   const width = Math.round(height * LOGO_ASPECT);
   return (
-    <Image
+    <img
       src="/guap.svg"
       alt="Guap"
       width={width}
       height={height}
       className={className}
-      priority={priority}
+      fetchPriority={priority ? "high" : undefined}
     />
   );
 }

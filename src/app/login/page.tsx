@@ -17,7 +17,7 @@ export default async function LoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-charcoal-950 p-6">
       <div className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-8 shadow-xl text-center">
         <h1 className="mb-2 flex justify-center">
-          <GuapLogo height={44} priority />
+          <GuapLogo height={53} priority />
         </h1>
         <p className="mb-6 text-sm text-charcoal-400">
           Sign in to manage your monthly budgets.

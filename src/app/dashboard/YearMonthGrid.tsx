@@ -35,7 +35,9 @@ function MonthCell({
 }: MonthCellProps) {
   const monthName = MONTH_NAMES[month - 1] ?? "";
   const ariaLabel = budget
-    ? `${monthName} ${year}, budget`
+    ? isSelected
+      ? `Open budget for ${monthName} ${year}`
+      : `${monthName} ${year}, select for dashboard`
     : `${monthName} ${year}, no budget`;
 
   const baseClasses =
@@ -54,11 +56,11 @@ function MonthCell({
     const formattedNet = `${netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(netIncome))}`;
     return (
       <Link
-        href={`/dashboard/${budget.id}`}
+        href={isSelected ? `/dashboard/${budget.id}` : `/dashboard?budget=${budget.id}`}
         role="gridcell"
         aria-label={ariaLabel}
         aria-selected={isSelected}
-        className={`${baseClasses} ${activeClasses} ${selectedClasses}`}
+        className={`group ${baseClasses} ${activeClasses} ${selectedClasses}`}
       >
         {indicatorVariant && (
           <span
@@ -70,7 +72,7 @@ function MonthCell({
             aria-hidden
           />
         )}
-        <div className="flex h-full w-full flex-col">
+        <div className="relative flex h-full w-full flex-col">
           <div className="flex flex-1 items-center justify-center">
             <span
               className={
@@ -80,6 +82,26 @@ function MonthCell({
               {label}
             </span>
           </div>
+          {isSelected && (
+            <div
+              className="absolute inset-x-0 bottom-6 flex -translate-y-1/2 justify-center opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+              aria-hidden
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 text-accent-violet-400 sm:h-5 sm:w-5"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </div>
+          )}
           <div
             className="shrink-0 pb-1.5 text-center text-[10px] font-light sm:text-xs"
             style={{ color: netColor }}
