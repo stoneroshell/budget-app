@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Marquee keyframes (referenced by LoginSloganMarquee inline styles) */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @layer base {
   :root {
     /* Charcoal (styles.md) */
