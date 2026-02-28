@@ -35,13 +35,17 @@ interface LoginSloganMarqueeProps {
 export function LoginSloganMarquee({ slogans }: LoginSloganMarqueeProps) {
   const rows = useMemo(() => {
     const list = Array.isArray(slogans) ? [...slogans] : [...slogans];
-    return Array.from({ length: ROW_COUNT }, (_, i) => ({
-      strip: buildStripForRow(list, i),
-      scrollLeft: i % 2 === 0,
-      duration: DURATION_MIN + (i * 13) % (DURATION_MAX - DURATION_MIN + 1),
-      delay: (i * 2.7) % 5,
-      size: i % 3 === 0 ? "text-xl" : i % 3 === 1 ? "text-2xl" : "text-3xl",
-    }));
+    return Array.from({ length: ROW_COUNT }, (_, i) => {
+      const duration = DURATION_MIN + (i * 13) % (DURATION_MAX - DURATION_MIN + 1);
+      return {
+        strip: buildStripForRow(list, i),
+        scrollLeft: i % 2 === 0,
+        duration,
+        /* Negative delay = start mid-cycle so row is moving immediately at a different phase */
+        delay: -(i * (duration / ROW_COUNT)),
+        size: i % 3 === 0 ? "text-xl" : i % 3 === 1 ? "text-2xl" : "text-3xl",
+      };
+    });
   }, [slogans]);
 
   return (

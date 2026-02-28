@@ -21,7 +21,7 @@ export default async function LoginPage() {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center p-6">
         <div className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-8 shadow-xl text-center text-[#DADADA]">
           <h1 className="mb-2 flex justify-center">
-            <GuapLogo height={80} priority />
+            <GuapLogo height={100} priority />
           </h1>
           <p className="mb-6 text-sm">
             Take Care of Your Chicken.
