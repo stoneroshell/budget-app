@@ -41,6 +41,16 @@ Monthly budgeting web app with Supabase auth and PostgreSQL. Phase 1: auth, one 
 
    Open [http://localhost:3000](http://localhost:3000). You’ll be sent to login; use “Sign in with Google” to continue.
 
+## Demo data (portfolio / try-it-out)
+
+The **Demo** at `/demo` uses a static seed so visitors can try the app without signing in. Data is stored in `sessionStorage` and resets when the tab is closed.
+
+To update the demo seed:
+
+1. Edit **`scripts/budgets.csv`** (headers: `month,year,income`) and **`scripts/expenses.csv`** (headers: `month,year,description,amount,category_name`). Use category names that match the app (e.g. Rent, Groceries, Restaurants, Misc).
+2. Run: `node scripts/build-demo-seed.js`
+3. Commit the updated **`public/demo-seed.json`**.
+
 ## Phase 1 scope
 
 - Sign in with Google, sign out, protected dashboard.

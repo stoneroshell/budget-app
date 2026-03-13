@@ -1,0 +1,111 @@
+month,year,description,amount,category_name
+1,2025,Rent,1650,Rent
+1,2025,Renter's Insurance,18.50,Insurance
+1,2025,Eversource Electric,74.20,Utilities
+1,2025,National Grid Gas,52.80,Utilities
+1,2025,Xfinity Internet,59.99,Utilities
+1,2025,Safeway,112.34,Groceries
+1,2025,Trader Joe's,67.45,Groceries
+1,2025,Shell,48.00,Gas
+1,2025,Chipotle,13.75,Restaurants
+1,2025,Olive Garden,54.20,Restaurants
+1,2025,Netflix,17.99,Subscriptions
+1,2025,Spotify,11.99,Subscriptions
+1,2025,Amazon Prime,15.99,Subscriptions
+1,2025,AMC Theaters,32.50,Entertainment
+1,2025,Target,86.40,Shopping
+1,2025,Student Loan,220.00,Debt Payments
+1,2025,CVS Pharmacy,24.60,Healthcare
+2,2025,Rent,1650,Rent
+2,2025,Renter's Insurance,18.50,Insurance
+2,2025,Eversource Electric,68.90,Utilities
+2,2025,National Grid Gas,61.10,Utilities
+2,2025,Xfinity Internet,59.99,Utilities
+2,2025,Safeway,98.75,Groceries
+2,2025,Whole Foods,54.30,Groceries
+2,2025,Shell,45.00,Gas
+2,2025,Costco Gas,38.20,Gas
+2,2025,Panera Bread,16.40,Restaurants
+2,2025,Sushi Palace,48.00,Restaurants
+2,2025,Netflix,17.99,Subscriptions
+2,2025,Spotify,11.99,Subscriptions
+2,2025,Hulu,18.99,Subscriptions
+2,2025,Student Loan,220.00,Debt Payments
+2,2025,Bowling Night,28.00,Entertainment
+2,2025,Valentine's Dinner,95.00,Restaurants
+2,2025,CVS Pharmacy,18.20,Healthcare
+3,2025,Rent,1650,Rent
+3,2025,Renter's Insurance,18.50,Insurance
+3,2025,Eversource Electric,55.40,Utilities
+3,2025,National Grid Gas,44.60,Utilities
+3,2025,Xfinity Internet,59.99,Utilities
+3,2025,Safeway,105.80,Groceries
+3,2025,Trader Joe's,72.10,Groceries
+3,2025,Shell,50.00,Gas
+3,2025,Chipotle,11.25,Restaurants
+3,2025,The Cheesecake Factory,67.80,Restaurants
+3,2025,Netflix,17.99,Subscriptions
+3,2025,Spotify,11.99,Subscriptions
+3,2025,Amazon Prime,15.99,Subscriptions
+3,2025,Student Loan,220.00,Debt Payments
+3,2025,Concert Tickets,85.00,Entertainment
+3,2025,H&M,74.50,Shopping
+3,2025,Amazon,43.20,Shopping
+3,2025,Doctor Copay,30.00,Healthcare
+3,2025,St. Patrick's Day Bar,62.00,Bars
+4,2025,Rent,1650,Rent
+4,2025,Renter's Insurance,18.50,Insurance
+4,2025,Eversource Electric,48.30,Utilities
+4,2025,National Grid Gas,31.20,Utilities
+4,2025,Xfinity Internet,59.99,Utilities
+4,2025,Safeway,118.60,Groceries
+4,2025,Trader Joe's,55.90,Groceries
+4,2025,Shell,47.00,Gas
+4,2025,Taco Bell,9.80,Restaurants
+4,2025,Local Bistro,52.40,Restaurants
+4,2025,Netflix,17.99,Subscriptions
+4,2025,Spotify,11.99,Subscriptions
+4,2025,Hulu,18.99,Subscriptions
+4,2025,Student Loan,220.00,Debt Payments
+4,2025,Birthday Gift - Sarah,55.00,Gifts
+4,2025,Nike,89.99,Shopping
+4,2025,Bowling,24.00,Entertainment
+4,2025,Plumber,180.00,Home Maintenance
+5,2025,Rent,1650,Rent
+5,2025,Renter's Insurance,18.50,Insurance
+5,2025,Eversource Electric,42.10,Utilities
+5,2025,National Grid Gas,18.90,Utilities
+5,2025,Xfinity Internet,59.99,Utilities
+5,2025,Safeway,109.25,Groceries
+5,2025,Whole Foods,61.40,Groceries
+5,2025,Shell,52.00,Gas
+5,2025,Costco Gas,40.00,Gas
+5,2025,Chipotle,14.50,Restaurants
+5,2025,Chili's,38.90,Restaurants
+5,2025,Netflix,17.99,Subscriptions
+5,2025,Spotify,11.99,Subscriptions
+5,2025,Amazon Prime,15.99,Subscriptions
+5,2025,Student Loan,220.00,Debt Payments
+5,2025,Mother's Day Gift,75.00,Gifts
+5,2025,Rooftop Bar,44.00,Bars
+5,2025,State Park Pass,35.00,Entertainment
+5,2025,Old Navy,62.30,Shopping
+6,2025,Rent,1650,Rent
+6,2025,Renter's Insurance,18.50,Insurance
+6,2025,Eversource Electric,66.80,Utilities
+6,2025,Xfinity Internet,59.99,Utilities
+6,2025,Safeway,122.40,Groceries
+6,2025,Trader Joe's,58.70,Groceries
+6,2025,Shell,55.00,Gas
+6,2025,McDonald's,8.90,Restaurants
+6,2025,Sushi Palace,61.00,Restaurants
+6,2025,Netflix,17.99,Subscriptions
+6,2025,Spotify,11.99,Subscriptions
+6,2025,Hulu,18.99,Subscriptions
+6,2025,Student Loan,220.00,Debt Payments
+6,2025,Flight to Miami,310.00,Travel
+6,2025,Hotel - Miami,420.00,Travel
+6,2025,Amazon,97.50,Shopping
+6,2025,Bar Tab - Pride,58.00,Bars
+6,2025,Urgent Care,50.00,Healthcare
+6,2025,Sunglasses,34.99,Shopping

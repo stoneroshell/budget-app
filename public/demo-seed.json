@@ -1,0 +1,928 @@
+{
+  "budgets": [
+    {
+      "id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "user_id": "demo",
+      "month": 1,
+      "year": 2025,
+      "income": 5200,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    },
+    {
+      "id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "user_id": "demo",
+      "month": 2,
+      "year": 2025,
+      "income": 5200,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    },
+    {
+      "id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "user_id": "demo",
+      "month": 3,
+      "year": 2025,
+      "income": 5800,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    },
+    {
+      "id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "user_id": "demo",
+      "month": 4,
+      "year": 2025,
+      "income": 5200,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    },
+    {
+      "id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "user_id": "demo",
+      "month": 5,
+      "year": 2025,
+      "income": 5200,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    },
+    {
+      "id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "user_id": "demo",
+      "month": 6,
+      "year": 2025,
+      "income": 6100,
+      "created_at": "2026-03-13T20:11:30.805Z"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "e1bfb250-4f1a-47b0-a99a-09bb2a191c16",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "7a98a5bb-f692-4611-ac06-06ac6fe92d09",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "226f2685-9cbe-446b-ae62-cb7c19e12f85",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Eversource Electric",
+      "amount": 74.2,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "27027122-a413-4391-8c10-7d8957316853",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "National Grid Gas",
+      "amount": 52.8,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "ae8b352d-017e-4ffd-88cc-2a205299ce27",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "69aed04d-1ca3-47ca-becd-5230e8d9500d",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Safeway",
+      "amount": 112.34,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "701bcf43-a897-4ae7-9b78-269fab9a8b6c",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Trader Joe's",
+      "amount": 67.45,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "28706e22-feb4-4948-94c4-7a0d81c68738",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Shell",
+      "amount": 48,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "a2dd8ec9-66b7-4121-9aa6-7c41c8e14f3d",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Chipotle",
+      "amount": 13.75,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "f76a937e-15d4-4801-b05c-b0f0ebfee486",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Olive Garden",
+      "amount": 54.2,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "89e9c413-5ae0-46e5-809c-d0e32e638cde",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "4db9553b-8b55-435b-8870-ce6aeb5453d9",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "3d09a558-e564-48ab-9189-738768711d77",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Amazon Prime",
+      "amount": 15.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "6f1c0bd1-2b22-41f5-aeba-a352aeea7360",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "AMC Theaters",
+      "amount": 32.5,
+      "category_id": "cat-demo-12"
+    },
+    {
+      "id": "5ff1ab56-f6ac-47ad-b867-0b12c6655d12",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Target",
+      "amount": 86.4,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "66a098f0-67e0-414b-9791-8c6908041569",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "fff5e307-8acd-4f89-8a5a-99a630f0d662",
+      "budget_id": "d13b0acd-c8c2-4ac5-801a-b169fb7ed496",
+      "description": "CVS Pharmacy",
+      "amount": 24.6,
+      "category_id": "cat-demo-9"
+    },
+    {
+      "id": "fa5a6c94-30f4-4c11-9c8a-7bfc62d775b9",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "3ca7698f-9ec6-4242-85cd-d3babd3c9df0",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "bfee4cef-ab00-49bc-b299-4962b2d719e9",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Eversource Electric",
+      "amount": 68.9,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "1e0e2131-81c3-476a-ad2f-6f43c51456a2",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "National Grid Gas",
+      "amount": 61.1,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "a849b59e-4742-4c40-8878-fa4a5847683a",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "90534647-b715-4af1-b4aa-998b7575bbcd",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Safeway",
+      "amount": 98.75,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "24112c46-1fd8-4884-b7e3-39f0f43b4302",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Whole Foods",
+      "amount": 54.3,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "8eb41c85-103b-42b0-993a-81013531448e",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Shell",
+      "amount": 45,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "bcd3fa86-9537-4226-aeb8-2d2fde3c6057",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Costco Gas",
+      "amount": 38.2,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "0609f181-e1f9-4009-95a3-79c2888f08b7",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Panera Bread",
+      "amount": 16.4,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "4d5647c9-52bd-4fb8-84a4-3a0010bf3942",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Sushi Palace",
+      "amount": 48,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "0503fd0d-eb9e-4773-98c9-a8f3ed05df90",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "e58f2fa3-954a-4c5e-8e1e-bb0b94406aba",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "146500f8-9a4b-4683-9fa2-50e14b2b8ab3",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Hulu",
+      "amount": 18.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "22566790-655f-49ea-b3ca-2377856bbe0d",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "c1dba312-85f9-4998-a778-2ac55248ec9d",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Bowling Night",
+      "amount": 28,
+      "category_id": "cat-demo-12"
+    },
+    {
+      "id": "deef2d74-0d3f-4cb4-b555-173faa17fb02",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "Valentine's Dinner",
+      "amount": 95,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "875215bc-9eec-48ba-a52d-ef272ab68419",
+      "budget_id": "5a0bd23b-caff-4cfc-bac3-2fdd70b81eef",
+      "description": "CVS Pharmacy",
+      "amount": 18.2,
+      "category_id": "cat-demo-9"
+    },
+    {
+      "id": "159afc78-5e89-41e5-8190-285c850be940",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "fce256da-ef9c-4d8d-88ad-9ec5159c998c",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "9b765d5d-a012-4fd3-8d34-8b0851e6df50",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Eversource Electric",
+      "amount": 55.4,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "69d199c1-4b35-4195-9596-ba6b35e74383",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "National Grid Gas",
+      "amount": 44.6,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "5b2dd0cd-42ab-4057-a5b7-f297ef54e311",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "ce055bf1-f2fc-41e6-9d96-fc75119db8e4",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Safeway",
+      "amount": 105.8,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "6a8a7b0a-e3a5-41f6-8818-dec2e6327577",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Trader Joe's",
+      "amount": 72.1,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "59161f81-5089-4e28-8093-2f7cce85b96b",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Shell",
+      "amount": 50,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "931fec09-7a57-4003-a7b2-d9a507083a5e",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Chipotle",
+      "amount": 11.25,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "b6d98cd0-eaaa-4abb-8524-a5221280cf20",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "The Cheesecake Factory",
+      "amount": 67.8,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "190cdf4d-49df-4b15-bb62-224b0cfdadaa",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "f2e1d903-7e68-4960-b275-9c659b50636b",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "65889efd-8952-4414-a696-73c5e034aacc",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Amazon Prime",
+      "amount": 15.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "5c43e61f-a3cb-4e79-8983-1c9f66a8745b",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "ee095a34-48ec-4770-aff3-7d4e7540f2bd",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Concert Tickets",
+      "amount": 85,
+      "category_id": "cat-demo-12"
+    },
+    {
+      "id": "192db1fe-2686-4f30-b0f2-5033521c4acc",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "H&M",
+      "amount": 74.5,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "ae7e9532-de22-46e5-95ed-f5d7ed701e14",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Amazon",
+      "amount": 43.2,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "c6780184-2543-4962-aae5-767490dc2c5b",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "Doctor Copay",
+      "amount": 30,
+      "category_id": "cat-demo-9"
+    },
+    {
+      "id": "ffa2d939-599e-466e-9de8-1a913e44171a",
+      "budget_id": "33b8fbbd-3c16-4b27-bb7f-d615e4e4345a",
+      "description": "St. Patrick's Day Bar",
+      "amount": 62,
+      "category_id": "cat-demo-14"
+    },
+    {
+      "id": "d6ba4b29-49ac-40be-a4fd-4616f7301114",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "b266e881-1703-44c6-8706-3dcaffc87636",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "623d7757-79a8-494a-a971-c1899e475581",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Eversource Electric",
+      "amount": 48.3,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "a11c2d7d-4087-4e1f-b7bd-5518d9aae00c",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "National Grid Gas",
+      "amount": 31.2,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "82285b35-f1e2-4173-953f-f0226ef782e5",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "0e41d30f-9d9a-4cb6-be71-47b6cad0167c",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Safeway",
+      "amount": 118.6,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "59246ab7-fc96-4a77-99e4-9ff6d17d3000",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Trader Joe's",
+      "amount": 55.9,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "8d2029da-cfa5-4629-9a8d-9936bd686899",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Shell",
+      "amount": 47,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "ec377f06-1b85-4a57-af79-fd398a38e52e",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Taco Bell",
+      "amount": 9.8,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "4c6bb99b-3def-4cd2-b62b-e493705be064",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Local Bistro",
+      "amount": 52.4,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "288e8b94-de4b-4d40-87f7-d92253db276d",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "80f5d9be-e681-4be3-9d56-5fefad710fa0",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "07b07536-2e1f-4d67-9559-72b5d0dc2530",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Hulu",
+      "amount": 18.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "42809889-7b41-4ac1-aedd-3ddc2922644c",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "584e6795-557b-4a71-ad5b-0cd4e4afc8ae",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Birthday Gift - Sarah",
+      "amount": 55,
+      "category_id": "cat-demo-13"
+    },
+    {
+      "id": "4f443a90-df67-4a3b-8d83-b4329f81518f",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Nike",
+      "amount": 89.99,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "03cc689f-82f9-4a87-8103-a83b9487b96e",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Bowling",
+      "amount": 24,
+      "category_id": "cat-demo-12"
+    },
+    {
+      "id": "5c830464-62b2-4fa2-b11f-faaaca913dee",
+      "budget_id": "2f28a5d7-51f7-4234-9cca-5c8a0a6965fc",
+      "description": "Plumber",
+      "amount": 180,
+      "category_id": "cat-demo-7"
+    },
+    {
+      "id": "5150229b-55ad-43ed-a53e-bda45b2f2086",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "4484ae67-837d-4068-8162-bef1191b91da",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "a5116913-958f-4619-bf13-6afdd9891cf2",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Eversource Electric",
+      "amount": 42.1,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "db167a86-7b8a-4fda-a825-433c4dd3f285",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "National Grid Gas",
+      "amount": 18.9,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "e937198b-b6f5-43b7-be01-827f9eb85420",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "bfcb0a54-b6c3-4168-87cf-0f2ef973b0f2",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Safeway",
+      "amount": 109.25,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "4ad5c7d5-5b7a-4255-8ee9-6150f2a4a4f0",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Whole Foods",
+      "amount": 61.4,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "9a45e0b9-d8df-4a81-a190-ea87605b0be0",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Shell",
+      "amount": 52,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "8480aacc-a7d8-4b95-a92c-1be5f436bb24",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Costco Gas",
+      "amount": 40,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "3bcaa10d-55fa-43a7-a0e5-eda762193016",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Chipotle",
+      "amount": 14.5,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "b922cf27-32b3-4c23-8c58-fe4efeca6230",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Chili's",
+      "amount": 38.9,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "be57fab3-76b4-4a14-9cda-1dff7fa5c615",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "2aa50481-4d30-4484-800a-c4f394714a7d",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "f6919c65-67b3-4145-b416-3fb59ea6c251",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Amazon Prime",
+      "amount": 15.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "dfafa3d7-f421-473d-96ad-44e8fff9dee6",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "f8db0c9c-f7a4-4b27-9926-69d97795dda1",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Mother's Day Gift",
+      "amount": 75,
+      "category_id": "cat-demo-13"
+    },
+    {
+      "id": "a1a22d40-6efa-4b0a-aa9c-09a8267a2321",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Rooftop Bar",
+      "amount": 44,
+      "category_id": "cat-demo-14"
+    },
+    {
+      "id": "d60d0361-c357-4ca8-aef8-34e2d78c756b",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "State Park Pass",
+      "amount": 35,
+      "category_id": "cat-demo-12"
+    },
+    {
+      "id": "833037bc-0b5e-4851-b974-c1f4c28c3f6c",
+      "budget_id": "731c2e56-ecf4-4220-a47d-a741f951ede1",
+      "description": "Old Navy",
+      "amount": 62.3,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "8365bfcc-7d2a-4ba4-b30e-d5fdc5b7d4c4",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Rent",
+      "amount": 1650,
+      "category_id": "cat-demo-1"
+    },
+    {
+      "id": "0fc58c58-5967-4603-a2d7-8bf50e6f1de7",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Renter's Insurance",
+      "amount": 18.5,
+      "category_id": "cat-demo-4"
+    },
+    {
+      "id": "51054681-60a0-4bde-bfe3-452577c8d435",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Eversource Electric",
+      "amount": 66.8,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "734128e4-f9e6-42c8-91d3-6124bfe5da25",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Xfinity Internet",
+      "amount": 59.99,
+      "category_id": "cat-demo-3"
+    },
+    {
+      "id": "d62d2b40-3f50-465c-b618-e9f179dbfeb1",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Safeway",
+      "amount": 122.4,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "ecfff90f-b7e4-4718-9afd-ae3afa1d671d",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Trader Joe's",
+      "amount": 58.7,
+      "category_id": "cat-demo-2"
+    },
+    {
+      "id": "7b04a5e5-a0ad-4bd4-90c9-13eaccf4987d",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Shell",
+      "amount": 55,
+      "category_id": "cat-demo-6"
+    },
+    {
+      "id": "5dae9ab6-0c20-4179-a6ff-2fb990fd7ed4",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "McDonald's",
+      "amount": 8.9,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "6ecbcce8-b381-4144-a25a-5a2edcd03c63",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Sushi Palace",
+      "amount": 61,
+      "category_id": "cat-demo-10"
+    },
+    {
+      "id": "167b045a-c895-4a26-b471-8a80a4c88b6d",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Netflix",
+      "amount": 17.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "f24c0832-7e65-4277-bab7-92ca95c3518e",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Spotify",
+      "amount": 11.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "c6ac11ce-fc16-462b-972c-93b3ab34c93a",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Hulu",
+      "amount": 18.99,
+      "category_id": "cat-demo-11"
+    },
+    {
+      "id": "5ff00ca9-3d5d-48fb-ab3a-f73d436baedf",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Student Loan",
+      "amount": 220,
+      "category_id": "cat-demo-8"
+    },
+    {
+      "id": "8f5a73f2-6e10-4f7c-891c-96c9eca32982",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Flight to Miami",
+      "amount": 310,
+      "category_id": "cat-demo-15"
+    },
+    {
+      "id": "47bc3f03-5d4a-40ae-8e53-bbb424a4807d",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Hotel - Miami",
+      "amount": 420,
+      "category_id": "cat-demo-15"
+    },
+    {
+      "id": "b1e0f8c3-5994-4ece-aef8-16dcacea3639",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Amazon",
+      "amount": 97.5,
+      "category_id": "cat-demo-16"
+    },
+    {
+      "id": "eb20a2e9-da19-4518-b487-08e1c87d84b3",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Bar Tab - Pride",
+      "amount": 58,
+      "category_id": "cat-demo-14"
+    },
+    {
+      "id": "446f9c15-d8e4-4b12-9621-f58f604f43cb",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Urgent Care",
+      "amount": 50,
+      "category_id": "cat-demo-9"
+    },
+    {
+      "id": "62ed8bb0-bc05-4513-9d52-506ce38c024a",
+      "budget_id": "81574a95-fb3c-4cc6-95df-28c7551020d0",
+      "description": "Sunglasses",
+      "amount": 34.99,
+      "category_id": "cat-demo-16"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-demo-1",
+      "name": "Rent",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-2",
+      "name": "Groceries",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-3",
+      "name": "Utilities",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-4",
+      "name": "Insurance",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-5",
+      "name": "Transportation",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-6",
+      "name": "Gas",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-7",
+      "name": "Home Maintenance",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-8",
+      "name": "Debt Payments",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-9",
+      "name": "Healthcare",
+      "supercategory": "needs",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-10",
+      "name": "Restaurants",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-11",
+      "name": "Subscriptions",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-12",
+      "name": "Entertainment",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-13",
+      "name": "Gifts",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-14",
+      "name": "Bars",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-15",
+      "name": "Travel",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-16",
+      "name": "Shopping",
+      "supercategory": "wants",
+      "user_id": null
+    },
+    {
+      "id": "cat-demo-17",
+      "name": "Misc",
+      "supercategory": "misc",
+      "user_id": null
+    }
+  ]
+}

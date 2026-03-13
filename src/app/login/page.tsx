@@ -19,12 +19,12 @@ export default async function LoginPage() {
     <div className="relative min-h-screen overflow-hidden bg-charcoal-950">
       <LoginSloganMarquee slogans={LOGIN_SLOGANS} />
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center p-6">
-        <div className="w-full max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 p-8 shadow-xl text-center text-[#DADADA]">
+        <div className="w-fit max-w-sm rounded-2xl border border-charcoal-500 bg-charcoal-900 px-6 py-5 shadow-xl text-center text-[#DADADA]">
           <h1 className="mb-2 flex justify-center">
-            <GuapLogo height={100} priority />
+            <GuapLogo height={150} priority />
           </h1>
           <p className="mb-6 text-sm">
-            Take Care of Your Chicken.
+            Your Money, But Smarter.
           </p>
           <form action="/auth/signin" method="get">
             <button
@@ -36,6 +36,14 @@ export default async function LoginPage() {
           </form>
           <p className="mt-4 text-center text-xs text-charcoal-400">
             You will be redirected to Google to sign in securely.
+          </p>
+          <p className="mt-5 text-center">
+            <Link
+              href="/demo"
+              className="inline-block rounded-lg border-2 border-charcoal-500 bg-transparent px-4 py-2 text-sm font-medium text-charcoal-300 transition-colors hover:border-charcoal-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-accent-violet-500 focus:ring-offset-2 focus:ring-offset-charcoal-900"
+            >
+              Try it out!
+            </Link>
           </p>
         </div>
         <p className="mt-6 text-sm text-charcoal-400">

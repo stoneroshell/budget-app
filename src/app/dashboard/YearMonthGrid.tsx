@@ -20,6 +20,7 @@ type MonthCellProps = {
   netIncome: number;
   minNet: number;
   maxNet: number;
+  basePath?: string;
 };
 
 function MonthCell({
@@ -32,6 +33,7 @@ function MonthCell({
   netIncome,
   minNet,
   maxNet,
+  basePath = "/dashboard",
 }: MonthCellProps) {
   const monthName = MONTH_NAMES[month - 1] ?? "";
   const ariaLabel = budget
@@ -56,7 +58,7 @@ function MonthCell({
     const formattedNet = `${netIncome >= 0 ? "+" : "-"}${formatCurrency(Math.abs(netIncome))}`;
     return (
       <Link
-        href={isSelected ? `/dashboard/${budget.id}` : `/dashboard?budget=${budget.id}`}
+        href={isSelected ? `${basePath}/${budget.id}` : `${basePath}?budget=${budget.id}`}
         role="gridcell"
         aria-label={ariaLabel}
         aria-selected={isSelected}
@@ -131,6 +133,7 @@ export type YearMonthGridProps = {
   selectedBudgetId: string | null;
   selectedMonth: number;
   selectedYear: number;
+  basePath?: string;
 };
 
 export function YearMonthGrid({
@@ -138,6 +141,7 @@ export function YearMonthGrid({
   selectedBudgetId,
   selectedMonth,
   selectedYear,
+  basePath = "/dashboard",
 }: YearMonthGridProps) {
   const currentYear = new Date().getFullYear();
   const [viewYear, setViewYear] = useState(selectedYear);
@@ -265,6 +269,7 @@ export function YearMonthGrid({
               netIncome={cell.budget?.netIncome ?? 0}
               minNet={minNet}
               maxNet={maxNet}
+              basePath={basePath}
             />
           ))}
         </div>
